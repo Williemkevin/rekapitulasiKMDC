@@ -16,8 +16,8 @@
 <tr>
     <td>{{ $t->id }}</td>
     <td>{{ $t->nama_tindakan }}</td>
-    <td>Rp. {{ $t->biaya_tindakan }}</td>
-    <td>Rp. {{ $t->biaya_bahan }}</td>
+    <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
+    <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
     {{-- <td><span class="badge bg-label-primary me-1">Active</span></td> --}}
     <td>
         <div class="dropdown">

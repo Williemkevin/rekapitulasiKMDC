@@ -107,4 +107,10 @@ class JenisTindakanController extends Controller
         $jenisTindakan->delete();
         return redirect()->route('jenisTindakan.index')->with('success', 'Jenis tindakan is already deleted');
     }
+
+    public static function rupiah($angka)
+    {
+        $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
+        return $hasil_rupiah;
+    }
 }

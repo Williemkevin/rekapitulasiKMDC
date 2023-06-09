@@ -31,7 +31,7 @@
     </li>
 
     <li class="menu-item">
-      <a href={{ url('employee') }} class="menu-link">
+      <a href={{ url('dokter') }} class="menu-link">
         <i class="menu-icon tf-icons bx bx-user"></i>
         <div data-i18n="Analytics">Doctor</div>
       </a>

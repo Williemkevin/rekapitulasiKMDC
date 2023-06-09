@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiagnosaController;
+use App\Http\Controllers\DokterController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\JenisTindakanController;
 use App\Http\Controllers\PasienController;
@@ -30,7 +31,10 @@ Route::get('/logout', function () {
     return view('login');
 });
 
-Route::resource('employee', EmployeesController::class);
+Route::resource('dokter', DokterController::class);
 Route::resource('jenisTindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
+
+Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
+Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
