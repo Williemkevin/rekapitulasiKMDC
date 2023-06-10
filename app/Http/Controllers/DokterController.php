@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dokter;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DokterController extends Controller
@@ -31,7 +32,7 @@ class DokterController extends Controller
      */
     public function create()
     {
-        //
+        return view('dokter.create');
     }
 
     /**
@@ -42,7 +43,27 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->get('namaDokter');
+        $user->email = $request->get('emailDokter');
+        $user->username = $request->get('usernameDokter');
+        $user->password = "MASIH DEFAULT";
+        $user->role = "dokter";
+        $user->last_login = now("Asia/Bangkok");
+        $user->created_at = now("Asia/Bangkok");
+        $user->updated_at = now("Asia/Bangkok");
+        $user->save();
+
+        $dokter = new Dokter();
+        $dokter->kode_nama_dokter = $request->get('singkatan');
+        $dokter->nama_lengkap = $request->get('namaDokter');
+        $dokter->status = "Aktif";
+        $dokter->user_id = $user->id;
+        $dokter->created_at = now("Asia/Bangkok");
+        $dokter->updated_at = now("Asia/Bangkok");
+        $user->dokter()->save($dokter);
+
+        return redirect()->route('dokter.index')->with('status', 'New Dokter is already inserted');
     }
 
     /**
@@ -64,7 +85,9 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $dokter = Dokter::find($id);
+        $user = User::find($dokter->user_id);
+        return view('dokter.edit', compact('dokter', 'user'));
     }
 
     /**
@@ -76,7 +99,22 @@ class DokterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dokter = Dokter::find($id);
+        $user = User::find($dokter->user_id);
+
+        $user->name = $request->get('namaDokter');
+        $user->email = $request->get('emailDokter');
+        $user->username = $request->get('usernameDokter');
+        $user->updated_at = now("Asia/Bangkok");
+        $user->save();
+
+        $dokter->kode_nama_dokter = $request->get('singkatan');
+        $dokter->nama_lengkap = $request->get('namaDokter');
+        $dokter->created_at = now("Asia/Bangkok");
+        $dokter->updated_at = now("Asia/Bangkok");
+        $user->dokter()->save($dokter);
+
+        return redirect()->route('dokter.index')->with('status', 'Dokter is already updated');
     }
 
     /**

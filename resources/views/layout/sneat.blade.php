@@ -82,21 +82,14 @@
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y" >
+              <div class="card">
+                    @yield('menu')
+              </div>
             <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="container-xxl flex-grow-1 container-p-y" >
                 <div class="card">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th>@yield('nama_menu')</th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                @yield('content')
-                            </tbody>
-                          </table>
-                      </div>
+                      @yield('content')
                 </div>
             </div>
               <!-- / Content -->
@@ -132,7 +125,7 @@
     <script src="../assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>\
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     @yield('script')
   </body>

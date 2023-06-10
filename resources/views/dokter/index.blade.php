@@ -1,13 +1,28 @@
 @extends('layout.sneat')
 
-@section('nama_menu')
-<strong> List Doctor </strong>
+@section('menu')
+<div class="portlet-title">
+    <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
+        List Dokter
+    </div>
+    <div style="float: right; margin: 15px;">
+        <a href="{{url('dokter/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
+    </div>
+</div>
 @endsection
 
 @section('content')
-<div>
-    <div>
-        <table class="table w-auto text-start">
+
+@if (session('status'))
+<div class="alert alert-success">{{session('status')}}</div>
+@endif
+
+<div style="margin: 15px; font-size: 20px;">
+    <strong>List Dokter Aktif</strong>
+</div>
+<div class="table-responsive text-nowrap">
+    <table class="table">
+        <tbody class="table-border-bottom-0">
             <tr>
                 <th>ID</th>
                 <th>Nama Lengkap</th>
@@ -34,21 +49,22 @@
                 <td>{{ $dokterAktif->username }}</td>
                 <td>{{ $dokterAktif->last_login }}</td>
                 <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->id) }}"
-                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                        class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
                 </td>
                 <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->id }})"
-                    class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
+                        class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
                 </td>
             </tr>
-            @endforeach 
+            @endforeach
             @endif
-        </table>        
+    </table>
+</div>
+<br><br>
+<div>
+    <div style="margin: 15px; font-size: 20px;">
+        <strong>List Dokter Nonaktif</strong>
     </div>
-    <div>
-        <table class="table w-auto text-start">
-<tr>
-    <strong> List Doctor Nonaktif </strong>
-</tr>
+    <table class="table w-auto text-start">
         <tr>
             <th>ID</th>
             <th>Nama Lengkap</th>
@@ -59,7 +75,6 @@
             <th>Last Login</th>
             <th>Edit</th>
             <th>Aktifkan</th>
-        
         </tr>
         @if (count($dokterNonaktif) == 0)
         <tr>
@@ -76,57 +91,52 @@
             <td>{{ $dokterNonAktif->username }}</td>
             <td>{{ $dokterNonAktif->last_login }}</td>
             <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->id) }}"
-                class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
             </td>
             <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->id }})"
-                class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
-        </td>
+                    class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
+            </td>
         </tr>
         @endforeach
         @endif
-        </table>       
-    </div>
+    </table>
 </div>
 @endsection
 
 
 @section('script')
-    <script>
-        function nonaktifkan(id) {
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('dokter.nonaktifkan') }}',
-                data: {
-                    '_token': '<?php echo csrf_token(); ?>',
-                    'id': id,
-                },
-                success: function(data) {
-                    if (data['status'] == 'success') {
-                        window.location.reload(true);
-                    }
+<script>
+    function nonaktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('dokter.nonaktifkan') }}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function aktifkan(id) {
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('dokter.aktifkan') }}',
-                data: {
-                    '_token': '<?php echo csrf_token(); ?>',
-                    'id': id,
-                },
-                success: function(data) {
-                    if (data['status'] == 'success') {
-                        window.location.reload(true);
-                    }
+    function aktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('dokter.aktifkan')}}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
                 }
-            });
-        }
-    </script>
+            }
+        });
+    }
+
+</script>
 @endsection
-
-
-
-
-
