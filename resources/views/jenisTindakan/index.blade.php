@@ -9,48 +9,124 @@
         <a href="{{url('jenistindakan/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
     </div>
 </div>
-@endsection
+@endsection 
 
 @section('content')
+
 
 @if (session('status'))
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
 
-<div class="table-responsive text-nowrap">
-    <table class="table">
+<div style="margin: 15px; font-size: 20px;">
+    <strong>List Jenis Tindakan Aktif</strong>
+</div>
+    <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">
             <tr>
                 <td>Id</td>
                 <td>Nama Tindakan</td>
                 <td>Biaya Tindakan</td>
                 <td>Biaya Bahan</td>
+                <td>Edit</td>
                 <td>Action</td>
+
             </tr>
-            @foreach ($jenisTindakan as $t)
+            @if (count($jenisTindakanAktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+            </tr>
+            @else
+            @foreach ($jenisTindakanAktif as $t)
             <tr>
                 <td>{{ $t->id }}</td>
                 <td>{{ $t->nama_tindakan }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
-                {{-- <td><span class="badge bg-label-primary me-1">Active</span></td> --}}
-                <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('jenistindakan.edit', $t->id) }}"><i class="bx bx-edit-alt me-1"></i>
-                                Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                Delete</a>
-                        </div>
-                    </div>
-                </td>
+                <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
+                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+            </td>
+            <td class="text-center"><button onclick="nonaktifkan({{ $t->id }})"
+                    class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
+            </td>
             </tr>
             @endforeach
+            @endif
         </tbody>
     </table>
-</div>
 
+    
+<div style="margin: 15px; font-size: 20px;">
+    <strong>List Jenis Tindakan Nonaktif</strong>
+</div>
+    <table class="table w-auto text-start">
+        <tbody class="table-border-bottom-0">
+            <tr>
+                <td>Id</td>
+                <td>Nama Tindakan</td>
+                <td class="no-wrap">Biaya Tindakan</td>
+                <td class="no-wrap">Biaya Bahan</td>
+                <td>Edit</td>
+                <td>Action</td>
+            </tr>
+            @if (count($jenisTindakanNonAktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+            </tr>
+            @else
+            @foreach ($jenisTindakanNonAktif as $t)
+            <tr>
+                <td>{{ $t->id }}</td>
+                <td>{{ $t->nama_tindakan }}</td>
+                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
+                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
+                <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
+                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+            </td>
+            <td class="text-center"><button onclick="aktifkan({{ $t->id }})"
+                class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
+            </td>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+@endsection
+
+
+@section('script')
+<script>
+    function nonaktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('jenistindakan.nonaktifkan') }}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+
+    function aktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('jenistindakan.aktifkan')}}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+
+</script>
 @endsection

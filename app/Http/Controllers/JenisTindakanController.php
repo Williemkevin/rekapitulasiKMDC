@@ -14,8 +14,9 @@ class JenisTindakanController extends Controller
      */
     public function index()
     {
-        $jenisTindakan = JenisTindakan::all();
-        return view('jenistindakan.index', ['jenisTindakan' => $jenisTindakan]);
+        $jenisTindakanAktif = JenisTindakan::all()->where('status', '1');
+        $jenisTindakanNonAktif = JenisTindakan::all()->where('status', '0');
+        return view('jenistindakan.index', compact('jenisTindakanAktif', 'jenisTindakanNonAktif'));
     }
 
     /**
@@ -109,5 +110,21 @@ class JenisTindakanController extends Controller
     {
         $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
         return $hasil_rupiah;
+    }
+
+    public function nonaktifkan(Request $request)
+    {
+        $data = JenisTindakan::find($request->get('id'));
+        $data->status = '0';
+        $data->save();
+        return response()->json(array('status' => 'success'), 200);
+    }
+
+    public function aktifkan(Request $request)
+    {
+        $data = JenisTindakan::find($request->get('id'));
+        $data->status = '1';
+        $data->save();
+        return response()->json(array('status' => 'success'), 200);
     }
 }

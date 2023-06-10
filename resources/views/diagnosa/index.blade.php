@@ -16,7 +16,47 @@
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
 
+
 <div class="table-responsive text-nowrap">
+    <div style="margin: 15px; font-size: 20px;">
+        <strong>List Diagnosa Aktif</strong>
+    </div>
+    <table class="table">
+        <tbody class="table-border-bottom-0">
+            <tr>
+                <td><strong>Id</strong></td>
+                <td><strong>Kode Diagnosa</strong></td>
+                <td><strong>Keterangan</strong></td>
+                <td><strong>Edit</strong></td>
+                <td><strong>Action</strong></td>
+            </tr>
+            @if (count($diagnosaAktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
+            </tr>
+            @else
+            @foreach ($diagnosaAktif as $d)
+            <tr>
+                <td>{{ $d->id }}</td>
+                <td>{{ $d->kode_diagnosa }}</td>
+                <td>{{ $d->nama_diagnosa }}</td>
+                <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
+                            class='bx bx-edit-alt'></i></a>
+                </td>
+                <td class="text-center"><button onclick="nonaktifkan({{ $d->id }})" class="btn btn-sm btn-danger"><i
+                            class='bx bx-power-off'></i></button>
+                </td>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive text-nowrap">
+    <div style="margin: 15px; font-size: 20px;">
+        <strong>List Diagnosa Nonaktif</strong>
+    </div>
     <table class="table">
         <tbody class="table-border-bottom-0">
             <tr>
@@ -25,28 +65,61 @@
                 <td><strong>Keterangan</strong></td>
                 <td><strong>Action</strong></td>
             </tr>
-            @foreach ($diagnosa as $d)
+            @if (count($diagnosaNonAktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
+            </tr>
+            @else
+            @foreach ($diagnosaNonAktif as $d)
             <tr>
                 <td>{{ $d->id }}</td>
                 <td>{{ $d->kode_diagnosa }}</td>
                 <td>{{ $d->nama_diagnosa }}</td>
-                {{-- <td><span class="badge bg-label-primary me-1">Active</span></td> --}}
-                <td>
-                    <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('diagnosa.edit', $d->id) }}"><i class="bx bx-edit-alt me-1"></i>
-                                Edit</a>
-                            <a class="dropdown-item" href="{{ route('diagnosa.destroy', $d->id) }}"><i class="bx bx-trash me-1"></i>
-                                Delete</a>
-                        </div>
-                    </div>
+                <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
+                            class='bx bx-edit-alt'></i></a>
+                </td>
+                <td class="text-center"><button onclick="aktifkan({{ $d->id }})" class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
                 </td>
             </tr>
             @endforeach
+            @endif
         </tbody>
     </table>
 </div>
 @endsection
+
+@section('script')
+<script>
+    function nonaktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('diagnosa.nonaktifkan') }}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+
+    function aktifkan(id) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('diagnosa.aktifkan')}}",
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+                'id': id,
+            },
+            success: function (data) {
+                if (data['status'] == 'success') {
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+
+</script>

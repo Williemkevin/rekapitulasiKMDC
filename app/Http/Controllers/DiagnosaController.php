@@ -14,8 +14,10 @@ class DiagnosaController extends Controller
      */
     public function index()
     {
-        $diagnosa = Diagnosa::all();
-        return view('diagnosa.index', ['diagnosa' => $diagnosa]);
+        $diagnosaNonAktif = Diagnosa::all()->where('status', '0');;
+        $diagnosaAktif = Diagnosa::all()->where('status', '1');;
+
+        return view('diagnosa.index', compact('diagnosaNonAktif', 'diagnosaAktif'));
     }
 
     /**
@@ -96,5 +98,21 @@ class DiagnosaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function nonaktifkan(Request $request)
+    {
+        $data = Diagnosa::find($request->get('id'));
+        $data->status = '0';
+        $data->save();
+        return response()->json(array('status' => 'success'), 200);
+    }
+
+    public function aktifkan(Request $request)
+    {
+        $data = Diagnosa::find($request->get('id'));
+        $data->status = '1';
+        $data->save();
+        return response()->json(array('status' => 'success'), 200);
     }
 }
