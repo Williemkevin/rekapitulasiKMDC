@@ -17,10 +17,10 @@ class DokterController extends Controller
     {
         $dokterAktif = Dokter::join('users', 'dokters.user_id', '=', 'users.id')
             ->select('dokters.*', 'users.*')
-            ->where('status', 'Aktif')->get();
+            ->where('status', '1')->get();
         $dokterNonaktif = Dokter::join('users', 'dokters.user_id', '=', 'users.id')
             ->select('dokters.*', 'users.*')
-            ->where('status', 'Tidak Aktif')->get();
+            ->where('status', '0')->get();
 
         return view('dokter.index', compact('dokterAktif', 'dokterNonaktif'));
     }
@@ -57,7 +57,7 @@ class DokterController extends Controller
         $dokter = new Dokter();
         $dokter->kode_nama_dokter = $request->get('singkatan');
         $dokter->nama_lengkap = $request->get('namaDokter');
-        $dokter->status = "Aktif";
+        $dokter->status = "1";
         $dokter->user_id = $user->id;
         $dokter->created_at = now("Asia/Bangkok");
         $dokter->updated_at = now("Asia/Bangkok");
@@ -131,7 +131,7 @@ class DokterController extends Controller
     public function nonaktifkan(Request $request)
     {
         $data = Dokter::find($request->get('id'));
-        $data->status = 'Tidak Aktif';
+        $data->status = '0';
         $data->save();
         return response()->json(array('status' => 'success'), 200);
     }
@@ -139,7 +139,7 @@ class DokterController extends Controller
     public function aktifkan(Request $request)
     {
         $data = Dokter::find($request->get('id'));
-        $data->status = 'Aktif';
+        $data->status = '1';
         $data->save();
         return response()->json(array('status' => 'success'), 200);
     }
