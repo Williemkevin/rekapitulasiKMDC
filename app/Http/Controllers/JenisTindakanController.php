@@ -15,7 +15,7 @@ class JenisTindakanController extends Controller
     public function index()
     {
         $jenisTindakan = JenisTindakan::all();
-        return view('jenisTindakan.index', ['jenisTindakan' => $jenisTindakan]);
+        return view('jenistindakan.index', ['jenisTindakan' => $jenisTindakan]);
     }
 
     /**
@@ -25,7 +25,7 @@ class JenisTindakanController extends Controller
      */
     public function create()
     {
-        return view('jenisTindakan.formcreate');
+        return view('jenistindakan.create');
     }
 
     /**
@@ -37,17 +37,15 @@ class JenisTindakanController extends Controller
     public function store(Request $request)
     {
         $jenisTindakan = new jenisTindakan();
-        $jenisTindakan->kategories_tindakan_idkategori = $request->get('kategories_tindakan_idkategori');
         $jenisTindakan->nama_tindakan = $request->get('nama_tindakan');
-        $jenisTindakan->biaya = $request->get('biaya');
-        $jenisTindakan->deskripsi = $request->get('deskripsi');
-        $jenisTindakan->status = $request->get('status');
+        $jenisTindakan->biaya_tindakan = $request->get('biaya_tindakan');
+        $jenisTindakan->biaya_bahan = $request->get('biaya_bahan');
 
         $jenisTindakan->created_at = now("Asia/Bangkok");
         $jenisTindakan->updated_at = now("Asia/Bangkok");
 
         $jenisTindakan->save();
-        return redirect()->route('jenisTindakan.index')->with('status', 'New Jenis Tindakan is already inserted');
+        return redirect()->route('jenistindakan.index')->with('status', 'New Jenis Tindakan ' .  $jenisTindakan->nama_tindakan . ' is already inserted');
     }
 
     /**
@@ -67,10 +65,10 @@ class JenisTindakanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(jenisTindakan $jenisTindakan)
+    public function edit($id)
     {
-        $jenisTindakan = JenisTindakan::find($jenisTindakan->idJenis_tindakan);
-        return view('jenisTindakan.formcreate', ['jenisTindakan' => $jenisTindakan]);
+        $jenisTindakan = JenisTindakan::find($id);
+        return view('jenistindakan.edit', compact('jenisTindakan'));
     }
 
     /**
@@ -82,17 +80,16 @@ class JenisTindakanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $jenisTindakan = new JenisTindakan();
-        $jenisTindakan->kategories_tindakan_idkategori = $request->get('kategories_tindakan_idkategori');
+        $jenisTindakan = jenisTindakan::find($id);
+
         $jenisTindakan->nama_tindakan = $request->get('nama_tindakan');
-        $jenisTindakan->biaya = $request->get('biaya');
-        $jenisTindakan->deskripsi = $request->get('deskripsi');
-        $jenisTindakan->status = $request->get('status');
+        $jenisTindakan->biaya_tindakan = $request->get('biaya_tindakan');
+        $jenisTindakan->biaya_bahan = $request->get('biaya_bahan');
 
         $jenisTindakan->updated_at = now("Asia/Bangkok");
 
         $jenisTindakan->save();
-        return redirect()->route('jenisTindakan.index')->with('status', 'Jenis Tindakan is already updated');
+        return redirect()->route('jenistindakan.index')->with('status', 'Jenis Tindakan ' .  $jenisTindakan->nama_tindakan . ' is already updated');
     }
 
     /**
@@ -105,7 +102,7 @@ class JenisTindakanController extends Controller
     {
         $jenisTindakan = JenisTindakan::find($jenisTindakan->idJenis_tindakan);
         $jenisTindakan->delete();
-        return redirect()->route('jenisTindakan.index')->with('success', 'Jenis tindakan is already deleted');
+        return redirect()->route('jenistindakan.index')->with('success', 'Jenis tindakan ' .  $jenisTindakan->nama_tindakan . ' is already deleted');
     }
 
     public static function rupiah($angka)

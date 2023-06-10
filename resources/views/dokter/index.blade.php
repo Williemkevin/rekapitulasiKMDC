@@ -20,8 +20,8 @@
 <div style="margin: 15px; font-size: 20px;">
     <strong>List Dokter Aktif</strong>
 </div>
-<div class="table-responsive text-nowrap">
-    <table class="table">
+<div class="table-responsive">
+    <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">
             <tr>
                 <th>ID</th>

@@ -25,7 +25,7 @@ class DiagnosaController extends Controller
      */
     public function create()
     {
-        //
+        return view('diagnosa.create');
     }
 
     /**
@@ -36,7 +36,14 @@ class DiagnosaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $diagnosa = new Diagnosa();
+        $diagnosa->kode_diagnosa = $request->get('kodeDiagnosa');
+        $diagnosa->nama_diagnosa = $request->get('namaDiagnosa');
+        $diagnosa->created_at = now("Asia/Bangkok");
+        $diagnosa->updated_at = now("Asia/Bangkok");
+        $diagnosa->save();
+
+        return redirect()->route('diagnosa.index')->with('status', 'New Diagnosa ' .  $diagnosa->nama_diagnosa . ' is already inserted');
     }
 
     /**
@@ -58,7 +65,8 @@ class DiagnosaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $diagnosa = Diagnosa::find($id);
+        return view('diagnosa.edit', compact('diagnosa'));
     }
 
     /**
@@ -70,7 +78,13 @@ class DiagnosaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $diagnosa = Diagnosa::find($id);
+        $diagnosa->kode_diagnosa = $request->get('kodeDiagnosa');
+        $diagnosa->nama_diagnosa = $request->get('namaDiagnosa');
+        $diagnosa->updated_at = now("Asia/Bangkok");
+        $diagnosa->save();
+
+        return redirect()->route('diagnosa.index')->with('status', 'Diagnosa ' .  $diagnosa->nama_diagnosa . ' is already updated');
     }
 
     /**

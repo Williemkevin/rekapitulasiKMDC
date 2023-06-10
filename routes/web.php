@@ -32,9 +32,10 @@ Route::get('/logout', function () {
 });
 
 Route::resource('dokter', DokterController::class);
-Route::resource('jenisTindakan', JenisTindakanController::class);
+Route::resource('jenistindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
+
 
 Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
 Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');

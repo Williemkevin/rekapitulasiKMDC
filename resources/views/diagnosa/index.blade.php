@@ -6,12 +6,16 @@
         List Diagnosa
     </div>
     <div style="float: right; margin: 15px;">
-        <a href="{{url('jenisdiagnosa/create')}}" class="btn btn-success btn-sm">Add</a>
+        <a href="{{url('diagnosa/create')}}" class="btn btn-success btn-sm">Add</a>
     </div>
 </div>
 @endsection
 
 @section('content')
+@if (session('status'))
+<div class="alert alert-success">{{session('status')}}</div>
+@endif
+
 <div class="table-responsive text-nowrap">
     <table class="table">
         <tbody class="table-border-bottom-0">
@@ -33,9 +37,9 @@
                             <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
+                            <a class="dropdown-item" href="{{ route('diagnosa.edit', $d->id) }}"><i class="bx bx-edit-alt me-1"></i>
                                 Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
+                            <a class="dropdown-item" href="{{ route('diagnosa.destroy', $d->id) }}"><i class="bx bx-trash me-1"></i>
                                 Delete</a>
                         </div>
                     </div>

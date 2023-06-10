@@ -63,7 +63,7 @@ class DokterController extends Controller
         $dokter->updated_at = now("Asia/Bangkok");
         $user->dokter()->save($dokter);
 
-        return redirect()->route('dokter.index')->with('status', 'New Dokter is already inserted');
+        return redirect()->route('dokter.index')->with('status', 'New Dokter  ' .  $dokter->nama_lengkap . ' is already inserted');
     }
 
     /**
@@ -114,7 +114,7 @@ class DokterController extends Controller
         $dokter->updated_at = now("Asia/Bangkok");
         $user->dokter()->save($dokter);
 
-        return redirect()->route('dokter.index')->with('status', 'Dokter is already updated');
+        return redirect()->route('dokter.index')->with('status', 'Dokter ' .  $dokter->nama_lengkap . ' is already updated');
     }
 
     /**

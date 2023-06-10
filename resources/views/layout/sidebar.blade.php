@@ -24,7 +24,7 @@
     </li>
 
     <li class="menu-item">
-      <a href="{{ url('jenisTindakan') }}" class="menu-link">
+      <a href="{{ url('jenistindakan') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-wrench"></i>
         <div data-i18n="Analytics">Jenis Tindakan</div>
       </a>
