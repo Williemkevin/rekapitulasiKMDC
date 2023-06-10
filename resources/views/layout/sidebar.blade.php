@@ -46,6 +46,20 @@
     </li>
 
     <li class="menu-item">
+      <a href="{{ url('rekapdatatindakan') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-data"></i>
+        <div data-i18n="Analytics">Rekap Data Tindakan</div>
+      </a>
+    </li>
+
+    <li class="menu-item">
+      <a href="{{ url('rekapdatarsia') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
+        <div data-i18n="Analytics">Rekap Data RSIA</div>
+      </a>
+    </li>
+
+    <li class="menu-item">
       <a href="index.html" class="menu-link">
         <i class="menu-icon tf-icons bx bx-log-out"></i>
         <div data-i18n="Analytics" style="color: red">Log Out</div>

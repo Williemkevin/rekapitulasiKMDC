@@ -66,7 +66,7 @@
   </head>
 
   <body>
-    <!-- Layout wrapper -->
+        <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
@@ -83,6 +83,11 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y" >
+              <div class="text-end" style="margin-right: 25px;">
+                @php
+                    echo date('l, d F Y');
+                @endphp
+              </div>
               <div class="card">
                     @yield('menu')
               </div>
