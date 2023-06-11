@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use App\Models\Diagnosa;
-use App\Models\Dokter;
-use App\Models\JenisTindakan;
-use App\Models\Pasien;
 use Illuminate\Http\Request;
 
-class TindakanPasienController extends Controller
+class JenisTindakanPasienController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +13,7 @@ class TindakanPasienController extends Controller
      */
     public function index()
     {
-        return view('tindakanPasien.index');
+        //
     }
 
     /**
@@ -28,12 +23,7 @@ class TindakanPasienController extends Controller
      */
     public function create()
     {
-        $pasiens = Pasien::all();
-        $jenisTindakans = JenisTindakan::all()->where('status', '1');
-        $dokters = Dokter::all()->where('status', '1');
-        $admins = Admin::all();
-        $diagnosas = Diagnosa::all()->where('status', '1');
-        return view('tindakanPasien.create', compact('pasiens', 'jenisTindakans', 'dokters', 'admins', 'diagnosas'));
+        //
     }
 
     /**

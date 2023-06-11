@@ -53,9 +53,9 @@
     </li>
 
     <li class="menu-item">
-      <a href="{{ url('rekapdatarsia') }}" class="menu-link">
+      <a href="{{ url('rekapfeersia') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
-        <div data-i18n="Analytics">Rekap Data RSIA</div>
+        <div data-i18n="Analytics">Rekap Fee RSIA</div>
       </a>
     </li>
 

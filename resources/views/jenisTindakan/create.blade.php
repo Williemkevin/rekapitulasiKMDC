@@ -22,10 +22,10 @@
         <input type="text" name="nama_tindakan" class="form-control" id="nama_tindakan" aria-describedby="nameHelp">
 
         <label>Biaya Tindakan</label>   
-        <input type="text" name="biaya_tindakan" class="form-control" id="biaya_tindakan" aria-describedby="nameHelp">
+        <input type="number" name="biaya_tindakan" class="form-control" id="biaya_tindakan" aria-describedby="nameHelp" step="1000">
         
         <label>Biaya Bahan</label>
-        <input type="text" name="biaya_bahan" class="form-control" id="biaya_bahan" aria-describedby="nameHelp">
+        <input type="number" name="biaya_bahan" class="form-control" id="biaya_bahan" aria-describedby="nameHelp" step="1000">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

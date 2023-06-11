@@ -5,6 +5,9 @@ use App\Http\Controllers\DokterController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\JenisTindakanController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\RekapDataRSIAController;
+use App\Http\Controllers\RekapFeeaRSIAController;
+use App\Http\Controllers\RekapFeeRSIAController;
 use App\Http\Controllers\TindakanPasienController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +38,8 @@ Route::resource('dokter', DokterController::class);
 Route::resource('jenistindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
+Route::resource('rekapfeersia', RekapFeeRSIAController::class);
+
 
 
 Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
