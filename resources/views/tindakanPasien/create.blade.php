@@ -46,7 +46,7 @@
         </div>
         
         <label for="exampleInputEmaill">Tanggal Kunjungan</label>
-        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
+        <input type="datetime-local" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
 
         <label for="exampleInputEmaill">Jumlah Tindakan</label>
         <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">

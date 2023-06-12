@@ -126,6 +126,15 @@
 
 @section('script')
 <script>
+    $(document).ready(function () {
+        $('#jenisTindakanAktif').DataTable({
+            "scrollX": true
+        });
+        $('#jenisTindakanNonaktif').DataTable({
+            "scrollX": true
+        });
+    });
+
     function nonaktifkan(id) {
         $.ajax({
             type: 'POST',

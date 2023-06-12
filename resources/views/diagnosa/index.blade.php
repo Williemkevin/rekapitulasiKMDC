@@ -1,3 +1,6 @@
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 @extends('layout.sneat')
 
 @section('menu')
@@ -16,13 +19,12 @@
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
 
-
 <div class="table-responsive text-nowrap">
-    <div style="margin: 15px; font-size: 20px;">
+    <div style="margin: 20px; font-size: 20px;">
         <strong>List Diagnosa Aktif</strong>
     </div>
-    <table class="table">
-        <tbody class="table-border-bottom-0">
+    <table id="diagnosaAktif" class="table table-striped" style="width:100%">
+        <thead>
             <tr>
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
@@ -30,6 +32,8 @@
                 <td><strong>Edit</strong></td>
                 <td><strong>Action</strong></td>
             </tr>
+        </thead>
+        <tbody>
             @if (count($diagnosaAktif) == 0)
             <tr>
                 <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
@@ -54,17 +58,20 @@
 </div>
 
 <div class="table-responsive text-nowrap">
-    <div style="margin: 15px; font-size: 20px;">
+    <div style="margin: 20px; font-size: 20px;">
         <strong>List Diagnosa Nonaktif</strong>
     </div>
-    <table class="table">
-        <tbody class="table-border-bottom-0">
+    <table id="diagnosaNonAktif" class="table table-striped" style="width:100%">
+        <thead>
             <tr>
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
                 <td><strong>Keterangan</strong></td>
+                <td><strong>Edit</strong></td>
                 <td><strong>Action</strong></td>
             </tr>
+        </thead>
+        <tbody>
             @if (count($diagnosaNonAktif) == 0)
             <tr>
                 <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
@@ -78,7 +85,8 @@
                 <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
                             class='bx bx-edit-alt'></i></a>
                 </td>
-                <td class="text-center"><button onclick="aktifkan({{ $d->id }})" class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
+                <td class="text-center"><button onclick="aktifkan({{ $d->id }})" class="btn btn-sm btn-success"><i
+                            class='bx bx-power-off'></i></button>
                 </td>
             </tr>
             @endforeach
@@ -86,10 +94,21 @@
         </tbody>
     </table>
 </div>
+
+
 @endsection
 
 @section('script')
 <script>
+    $(document).ready(function () {
+        $('#diagnosaAktif').DataTable({
+            "scrollX": true
+        });
+        $('#diagnosaNonAktif').DataTable({
+            "scrollX": true
+        });
+    });
+
     function nonaktifkan(id) {
         $.ajax({
             type: 'POST',
