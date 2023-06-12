@@ -48,11 +48,11 @@
 @endif
 
 
-<div style="margin: 15px; font-size: 20px;">
+<div style="margin: 20px; font-size: 20px;">
     <strong>List Jenis Tindakan Aktif</strong>
 </div>
-<table class="table w-auto text-start">
-    <tbody class="table-border-bottom-0">
+<table id="jenisTindakanAktif" class="table table-striped" style="width:100%">
+    <thead>
         <tr>
             <td>Id</td>
             <td>Nama Tindakan</td>
@@ -62,6 +62,8 @@
             <td>Action</td>
 
         </tr>
+    </thead>
+    <tbody>
         @if (count($jenisTindakanAktif) == 0)
         <tr>
             <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
@@ -86,11 +88,11 @@
 </table>
 
 
-<div style="margin: 15px; font-size: 20px;">
+<div style="margin: 20px; font-size: 20px;">
     <strong>List Jenis Tindakan Nonaktif</strong>
 </div>
-<table class="table w-auto text-start">
-    <tbody class="table-border-bottom-0">
+<table id="jenisTindakanNonaktif" class="table table-striped" style="width:100%">
+    <thead>
         <tr>
             <td>Id</td>
             <td>Nama Tindakan</td>
@@ -99,6 +101,8 @@
             <td>Edit</td>
             <td>Action</td>
         </tr>
+    </thead>
+    <tbody>
         @if (count($jenisTindakanNonAktif) == 0)
         <tr>
             <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
@@ -119,7 +123,7 @@
         </tr>
         @endforeach
         @endif
-    </tbody>
+    </thead>
 </table>
 @endsection
 

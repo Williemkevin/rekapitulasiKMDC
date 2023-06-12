@@ -21,8 +21,8 @@
     <strong>List Dokter Aktif</strong>
 </div>
 <div class="table-responsive">
-    <table class="table w-auto text-start">
-        <tbody class="table-border-bottom-0">
+    <table id="dokterAktif" class="table table-striped" style="width:100%">
+        <thead class="table-border-bottom-0">
             <tr>
                 <th>ID</th>
                 <th>Nama Lengkap</th>
@@ -34,6 +34,8 @@
                 <th>Edit</th>
                 <th>Non Aktifkan</th>
             </tr>
+        </thead>
+        <tbody>
             @if (count($dokterAktif) == 0)
             <tr>
                 <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
@@ -57,6 +59,7 @@
             </tr>
             @endforeach
             @endif
+        </tbody>
     </table>
 </div>
 <br><br>
@@ -64,7 +67,8 @@
     <div style="margin: 15px; font-size: 20px;">
         <strong>List Dokter Nonaktif</strong>
     </div>
-    <table class="table w-auto text-start">
+    <table id="dokterNonAktif" class="table table-striped" style="width:100%">
+        <thead>
         <tr>
             <th>ID</th>
             <th>Nama Lengkap</th>
@@ -76,6 +80,8 @@
             <th>Edit</th>
             <th>Aktifkan</th>
         </tr>
+    </thead>
+    <tbody>
         @if (count($dokterNonaktif) == 0)
         <tr>
             <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
@@ -99,13 +105,23 @@
         </tr>
         @endforeach
         @endif
+    </tbody>
     </table>
 </div>
 @endsection
 
- 
+
 @section('script')
 <script>
+    $(document).ready(function () {
+        $('#dokterAktif').DataTable({
+            "scrollX": true
+        });
+        $('#dokterNonAktif').DataTable({
+            "scrollX": true
+        });
+    });
+
     function nonaktifkan(id) {
         $.ajax({
             type: 'POST',
