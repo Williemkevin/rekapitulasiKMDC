@@ -135,11 +135,11 @@ class JenisTindakanController extends Controller
         $feeRSIA = $request->get('feersia');
         $feeDokter = $request->get('feedokter');
         if ($feeDokter + $feeRSIA == 100) {
-            $query = "INSERT INTO persentasefee (`feedokter`, `feersia`) VALUES (?,?)";
-            DB::insert($query, [$feeDokter, $feeRSIA]);
+            $query = "INSERT INTO persentasefee (`feedokter`, `feersia`,`tahun`) VALUES (?,?,?)";
+            DB::insert($query, [$feeDokter, $feeRSIA, date('Y')]);
             return redirect()->route('jenistindakan.index')->with('status', 'Fee is updated');
         } else {
-            return redirect()->route('jenistindakan.index')->with('status', 'Fee harus berjumlah 100%');
+            return redirect()->route('jenistindakan.index')->with('failed', 'Fee harus berjumlah 100%');
         }
     }
 }

@@ -25,7 +25,6 @@
 @section('content')
 <form method="POST" action="{{ route('jenistindakan.ubahpersentase') }}">
     @csrf
-    @method("PUT")
     <div id="feeCalculator">
         <div>
             <strong> Persentasi Pembagian Fee : </strong>
@@ -43,8 +42,11 @@
 </form>
 
 @if (session('status'))
-<div class="alert alert-success">{{session('status')}}</div>
+<div class="alert alert-success">{{session('status')}}</div>    
+@elseif(session('failed'))
+<div class="alert alert-danger">{{session('failed')}}</div>
 @endif
+
 
 <div style="margin: 15px; font-size: 20px;">
     <strong>List Jenis Tindakan Aktif</strong>
