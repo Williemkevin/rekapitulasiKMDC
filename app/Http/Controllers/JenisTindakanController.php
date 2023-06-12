@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JenisTindakan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JenisTindakanController extends Controller
 {
@@ -16,7 +17,8 @@ class JenisTindakanController extends Controller
     {
         $jenisTindakanAktif = JenisTindakan::all()->where('status', '1');
         $jenisTindakanNonAktif = JenisTindakan::all()->where('status', '0');
-        return view('jenistindakan.index', compact('jenisTindakanAktif', 'jenisTindakanNonAktif'));
+        $persentaseFee = DB::table('persentasefee')->orderBy('id', 'desc')->first();
+        return view('jenistindakan.index', compact('jenisTindakanAktif', 'jenisTindakanNonAktif', 'persentaseFee'));
     }
 
     /**
@@ -126,5 +128,18 @@ class JenisTindakanController extends Controller
         $data->status = '1';
         $data->save();
         return response()->json(array('status' => 'success'), 200);
+    }
+
+    public function ubahpersentase(Request $request)
+    {
+        $feeRSIA = $request->get('feersia');
+        $feeDokter = $request->get('feedokter');
+        if ($feeDokter + $feeRSIA == 100) {
+            $query = "INSERT INTO persentasefee (`feedokter`, `feersia`) VALUES (?,?)";
+            DB::insert($query, [$feeDokter, $feeRSIA]);
+            return redirect()->route('jenistindakan.index')->with('status', 'Fee is updated');
+        } else {
+            return redirect()->route('jenistindakan.index')->with('status', 'Fee harus berjumlah 100%');
+        }
     }
 }

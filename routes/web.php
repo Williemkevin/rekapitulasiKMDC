@@ -50,3 +50,4 @@ Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])-
 
 Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan'])->name('jenistindakan.aktifkan');
 Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
+Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
