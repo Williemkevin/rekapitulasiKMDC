@@ -31,7 +31,6 @@
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Pasien</label>
         <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp">
-
         <label for="exampleInputEmaill">Dokter</label>
         <div>
             <select class="form-select" aria-label="Default select example" name="categoryProduk" id="catProduk">
@@ -57,39 +56,35 @@
         <label for="exampleInputEmaill">Tanggal Kunjungan</label>
         <input type="date" name="tanggalKunjungan" class="form-control" id="tanggalKunjungan"
             aria-describedby="nameHelp">
-
-        <div id="addTindakan">
-            <label>Jenis Tindakan</label>
-            <div>
-                <select class="form-select" aria-label="Default select example" name="jenisTindakan" id="jenisTindakan">
-                    <option>-- Pilih Jenis Tindakan --</option>
-                    @foreach ($jenisTindakans as $jenisTindakan)
-                    <option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <input type="button" id="btnAddTindakan" value="Tambah Tindakan">
-            <div id="listTindakan">
-                <input type="file" name="tindakan"><br>
-            </div>
-            <label for="exampleInputEmaill">Jumlah Tindakan</label>
-            <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
+        <label>Tindakan</label>
+        <div id="tindakan"></div>
+        <input type="button" id="btnAddTindakan" value="Tambah Tindakan" style="width: 100%;" class="btn btn-primary">
+        <div>
+            <label for="exampleInputEmaill">Total Biaya</label>
+            <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"
+                step="1000">
         </div>
-
-        <label for="exampleInputEmaill">Total Biaya</label>
-        <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"
-            step="1000">
-    </div>
-    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>
 
 @endsection
 
 @section('script')
 <script type="text/javascript">
-    $("#btnGambar").click(function () {
-        $("#daftarGambar").append('<input type="file" name="gambar"><br>');
+    var count = 0;
+    $("#btnAddTindakan").click(function () {
+        count++;
+        $("#tindakan").append(
+            '<div id="addTindakan" class=' + count +
+            '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan" id="jenisTindakan">' +
+            '<option>-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
+            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
+            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count + ')">X</button></div>');
     });
+
+    function deletetindakan(id) {
+        $("." + id).remove();
+    }
 
 </script>
 @endsection
