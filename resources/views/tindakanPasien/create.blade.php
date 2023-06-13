@@ -5,7 +5,7 @@
         color: black;
     }
 
-    #addTindakan{
+    #addTindakan {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -68,12 +68,17 @@
                     @endforeach
                 </select>
             </div>
+            <input type="button" id="btnAddTindakan" value="Tambah Tindakan">
+            <div id="listTindakan">
+                <input type="file" name="tindakan"><br>
+            </div>
             <label for="exampleInputEmaill">Jumlah Tindakan</label>
             <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
         </div>
 
         <label for="exampleInputEmaill">Total Biaya</label>
-        <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp" step="1000">
+        <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"
+            step="1000">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>
@@ -82,6 +87,9 @@
 
 @section('script')
 <script type="text/javascript">
+    $("#btnGambar").click(function () {
+        $("#daftarGambar").append('<input type="file" name="gambar"><br>');
+    });
 
 </script>
 @endsection
