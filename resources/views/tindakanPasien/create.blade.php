@@ -30,10 +30,11 @@
     @csrf
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Pasien</label>
-        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp">
+        <input type="text" name="namaPasien" class="form-control" id="namaPasien" aria-describedby="nameHelp">
         <label for="exampleInputEmaill">Dokter</label>
+
         <div>
-            <select class="form-select" aria-label="Default select example" name="categoryProduk" id="catProduk">
+            <select class="form-select" aria-label="Default select example" name="namaDokter" id="namaDokter">
                 <option>-- Pilih Dokter --</option>
                 @foreach ($dokters as $dokter)
                 <option value="{{ $dokter->id }}">{{$dokter->nama_lengkap}}</option>
@@ -41,10 +42,9 @@
             </select>
         </div>
 
-
         <label for="exampleInputEmaill">Diagnosa</label>
         <div>
-            <select class="form-select" aria-label="Default select example" name="categoryProduk" id="catProduk">
+            <select class="form-select" aria-label="Default select example" name="diagnosa" id="diagnosa">
                 <option>-- Pilih Diagnosa --</option>
                 @foreach ($diagnosas as $diagnosa)
                 <option value="{{ $diagnosa->id }}">{{ $diagnosa->kode_diagnosa }} - {{ $diagnosa->nama_diagnosa }}
@@ -61,12 +61,11 @@
         <input type="button" id="btnAddTindakan" value="Tambah Tindakan" style="width: 100%;" class="btn btn-primary">
         <div>
             <label for="exampleInputEmaill">Total Biaya</label>
-            <input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"
+            <input type="number" name="totalBiaya" class="form-control" id="totalBiaya" aria-describedby="nameHelp"
                 step="1000">
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
+        <button onclick="submit()" type="submit" class="btn btn-primary" style="margin-top: 20px;" id="submitt">Submit</button>
 </form>
-
 @endsection
 
 @section('script')
@@ -76,11 +75,36 @@
         count++;
         $("#tindakan").append(
             '<div id="addTindakan" class=' + count +
-            '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan" id="jenisTindakan">' +
-            '<option>-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
-            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
-            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count + ')">X</button></div>');
+            '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan">' +
+            '<option value="-">-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
+            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
+            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
+            ')">X</button></div>');
     });
+
+    $("#submitt").click(function () {
+        var selectElements = document.querySelectorAll('[name="jenisTindakan[]"]');
+        var selectedOptions = [];
+
+        selectElements.forEach(function (selectElement) {
+            var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
+            selectedOptions = selectedOptions.concat(selectedOption);
+        });
+
+        alert(selectedOptions);
+    });
+
+    function submit(id) {
+        var selectElements = document.querySelectorAll('[name="jenisTindakan[]"]');
+        var selectedOptions = [];
+
+        selectElements.forEach(function (selectElement) {
+            var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
+            selectedOptions = selectedOptions.concat(selectedOption);
+        });
+
+        alert(selectedOptions);
+    }
 
     function deletetindakan(id) {
         $("." + id).remove();

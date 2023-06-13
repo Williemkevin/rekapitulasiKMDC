@@ -6,8 +6,11 @@ use App\Models\Admin;
 use App\Models\Diagnosa;
 use App\Models\Dokter;
 use App\Models\JenisTindakan;
+use App\Models\JenisTindakanPasien;
 use App\Models\Pasien;
+use App\Models\TindakanPasien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TindakanPasienController extends Controller
 {
@@ -44,7 +47,33 @@ class TindakanPasienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pasien = new Pasien();
+        $pasien->nama_lengkap = $request->get('namaPasien');
+        $pasien->save();
+
+        $tindakan = $request->get('jenisTindakan');
+        if (empty($tindakan)) {
+            return Redirect::back();
+        } else {
+            foreach ($tindakan as $t) {
+                if ($t != '-') {
+                    $tindakan = new JenisTindakanPasien();
+                    $tindakan->pasien_id = $pasien->id;
+                    $tindakan->jenis_tindakan_id = $t;
+                    $tindakan->dokter_id = $request->get('namaDokter');
+                    $tindakan->admin_id = 1;
+                    $tindakan->diagnosa_id = $request->get('diagnosa');
+                    $tindakan->jumlah_tindakan = 1;
+                    $tindakan->total_biaya = $request->get('totalBiaya');
+
+                    $tindakan->created_at = now("Asia/Bangkok");
+                    $tindakan->updated_at = now("Asia/Bangkok");
+                    $tindakan->save();
+                }
+            }
+        }
+
+        // return redirect()->route('jenistindakan.index')->with('status', 'New Jenis Tindakan ' .  $jenisTindakan->nama_tindakan . ' is already inserted');
     }
 
     /**
