@@ -8,6 +8,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RekapDataRSIAController;
 use App\Http\Controllers\RekapFeeaRSIAController;
 use App\Http\Controllers\RekapFeeRSIAController;
+use App\Http\Controllers\RekapPendapatanController;
 use App\Http\Controllers\TindakanPasienController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ Route::resource('jenistindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
+Route::resource('rekapPendapatan', RekapPendapatanController::class);
+
 
 
 
@@ -51,3 +54,5 @@ Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])-
 Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan'])->name('jenistindakan.aktifkan');
 Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
 Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
+
+Route::post('rekappendapatan/getRekap', [RekapPendapatanController::class, 'getRekapPendapatan'])->name('rekappendapatan.getRekap');

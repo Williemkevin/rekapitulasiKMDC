@@ -46,9 +46,9 @@
     </li>
 
     <li class="menu-item">
-      <a href="{{ url('rekapdatatindakan') }}" class="menu-link">
+      <a href="{{ url('rekapPendapatan') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-data"></i>
-        <div data-i18n="Analytics">Rekap Data Tindakan</div>
+        <div data-i18n="Analytics">Rekap Pendapatan</div>
       </a>
     </li>
 

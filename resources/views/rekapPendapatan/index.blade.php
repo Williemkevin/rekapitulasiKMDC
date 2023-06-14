@@ -8,10 +8,15 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Tindakan Pasien
+        List Rekap Pendapatan
     </div>
-    <div style="float: right; margin: 15px;">
-        <a href="{{url('tindakanPasien/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
+    <div style="display: inline-block; margin: 15px; float: right;">
+        <form action="{{ route('rekappendapatan.getRekap') }}" method="POST">
+            @csrf
+            Pilih Tanggal : 
+            <input type="date" name="start"> s/d <input type="date" name="end">
+            <button class="btn btn-primary btn-sm">PILIH</button>
+        </form>
     </div>
 </div>
 @endsection
@@ -22,9 +27,6 @@
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
 
-<div style="margin: 15px; font-size: 20px;">
-    <strong>List Tindakan Pasien</strong>
-</div>
 <div class="table-responsive">
     <table id="tindakanPasien" class="table table-striped" style="width:100%">
         <thead class="table-border-bottom-0">

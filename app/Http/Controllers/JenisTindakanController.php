@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JenisTindakan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Type\Integer;
 
 class JenisTindakanController extends Controller
 {
@@ -141,5 +142,11 @@ class JenisTindakanController extends Controller
         } else {
             return redirect()->route('jenistindakan.index')->with('failed', 'Fee harus berjumlah 100%');
         }
+    }
+
+    public function getBiaya(int $id)
+    {
+        $biaya = JenisTindakan::find($id, ['biaya_tindakan', 'biaya_bahan']);
+        return $biaya;
     }
 }

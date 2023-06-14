@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class JenisTindakanPasienController extends Controller
+class FeeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +13,7 @@ class JenisTindakanPasienController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
