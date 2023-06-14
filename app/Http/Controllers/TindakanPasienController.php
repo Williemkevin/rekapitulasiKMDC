@@ -52,9 +52,12 @@ class TindakanPasienController extends Controller
         $pasien->save();
 
         $tindakan = $request->get('jenisTindakan');
+        $jumlah = $request->get('jumlah');
+
         if (empty($tindakan)) {
             return Redirect::back();
         } else {
+            $i = 0;
             foreach ($tindakan as $t) {
                 if ($t != '-') {
                     $tindakan = new JenisTindakanPasien();
@@ -62,18 +65,20 @@ class TindakanPasienController extends Controller
                     $tindakan->jenis_tindakan_id = $t;
                     $tindakan->dokter_id = $request->get('namaDokter');
                     $tindakan->admin_id = 1;
+                    $tindakan->tanggal_kunjungan = $request->get('tanggalKunjungan');
                     $tindakan->diagnosa_id = $request->get('diagnosa');
-                    $tindakan->jumlah_tindakan = 1;
+                    $tindakan->jumlah_tindakan = $jumlah[$i];
                     $tindakan->total_biaya = $request->get('totalBiaya');
 
                     $tindakan->created_at = now("Asia/Bangkok");
                     $tindakan->updated_at = now("Asia/Bangkok");
                     $tindakan->save();
+                    $i++;
                 }
             }
         }
 
-        // return redirect()->route('jenistindakan.index')->with('status', 'New Jenis Tindakan ' .  $jenisTindakan->nama_tindakan . ' is already inserted');
+        return redirect()->route('tindakanPasien.index')->with('status', 'New Tindakan is already inserted');
     }
 
     /**
