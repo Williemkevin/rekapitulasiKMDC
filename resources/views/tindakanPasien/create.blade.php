@@ -77,7 +77,7 @@
             '<div id="addTindakan" class=' + count +
             '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan">' +
             '<option value="-">-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
-            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
+            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
             '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
             ')">X</button></div>');
     });

@@ -60,7 +60,7 @@
     </li>
 
     <li class="menu-item">
-      <a href="index.html" class="menu-link">
+      <a href="{{ url('login') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-log-out"></i>
         <div data-i18n="Analytics" style="color: red">Log Out</div>
       </a>
