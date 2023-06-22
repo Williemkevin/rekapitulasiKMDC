@@ -5,9 +5,13 @@
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         List Dokter
     </div>
+
+    @if(str_contains(Auth::user()->role, 'superadmin'))
     <div style="float: right; margin: 15px;">
         <a href="{{url('dokter/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
     </div>
+    @endif
+
 </div>
 @endsection
 
@@ -31,8 +35,10 @@
                 <th>Email</th>
                 <th>Username</th>
                 <th>Last Login</th>
-                <th>Edit</th>
-                <th>Non Aktifkan</th>
+                @if(str_contains(Auth::user()->role, 'supersuperadmin'))
+                    <th>Edit</th>
+                    <th>Non Aktifkan</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -50,12 +56,15 @@
                 <td>{{ $dokterAktif->email }}</td>
                 <td>{{ $dokterAktif->username }}</td>
                 <td>{{ $dokterAktif->last_login }}</td>
-                <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->id) }}"
-                        class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
-                </td>
-                <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->id }})"
-                        class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
-                </td>
+
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->id) }}"
+                            class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                    </td>
+                    <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->id }})"
+                            class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
+                    </td>
+                @endif
             </tr>
             @endforeach
             @endif
@@ -77,8 +86,10 @@
             <th>Email</th>
             <th>Username</th>
             <th>Last Login</th>
-            <th>Edit</th>
-            <th>Aktifkan</th>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <th>Edit</th>
+                <th>Non Aktifkan</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -96,12 +107,14 @@
             <td>{{ $dokterNonAktif->email }}</td>
             <td>{{ $dokterNonAktif->username }}</td>
             <td>{{ $dokterNonAktif->last_login }}</td>
-            <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->id) }}"
-                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
-            </td>
-            <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->id }})"
-                    class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
-            </td>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->id) }}"
+                        class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                </td>
+                <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->id }})"
+                        class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
+                </td>
+            @endif
         </tr>
         @endforeach
         @endif

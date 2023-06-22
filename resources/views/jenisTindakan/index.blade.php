@@ -58,8 +58,10 @@
             <td>Nama Tindakan</td>
             <td>Biaya Tindakan</td>
             <td>Biaya Bahan</td>
-            <td>Edit</td>
-            <td>Action</td>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <td>Edit</td>
+                <td>Action</td>
+            @endif
 
         </tr>
     </thead>
@@ -75,12 +77,14 @@
             <td>{{ $t->nama_tindakan }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
-            <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
-                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
-            </td>
-            <td class="text-center"><button onclick="nonaktifkan({{ $t->id }})" class="btn btn-sm btn-danger"><i
-                        class='bx bx-power-off'></i></button>
-            </td>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
+                        class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                </td>
+                <td class="text-center"><button onclick="nonaktifkan({{ $t->id }})" class="btn btn-sm btn-danger"><i
+                            class='bx bx-power-off'></i></button>
+                </td>
+            @endif
         </tr>
         @endforeach
         @endif
@@ -98,8 +102,11 @@
             <td>Nama Tindakan</td>
             <td class="no-wrap">Biaya Tindakan</td>
             <td class="no-wrap">Biaya Bahan</td>
-            <td>Edit</td>
-            <td>Action</td>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <td>Edit</td>
+                <td>Action</td>
+            @endif
+
         </tr>
     </thead>
     <tbody>
@@ -114,12 +121,14 @@
             <td>{{ $t->nama_tindakan }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
-            <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
-                    class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
-            </td>
-            <td class="text-center"><button onclick="aktifkan({{ $t->id }})" class="btn btn-sm btn-success"><i
-                        class='bx bx-power-off'></i></button>
-            </td>
+            @if(str_contains(Auth::user()->role, 'superadmin'))
+                <td class="text-center"><a href="{{ route('jenistindakan.edit', $t->id) }}"
+                        class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
+                </td>
+                <td class="text-center"><button onclick="aktifkan({{ $t->id }})" class="btn btn-sm btn-success"><i
+                            class='bx bx-power-off'></i></button>
+                </td>
+            @endif
         </tr>
         @endforeach
         @endif

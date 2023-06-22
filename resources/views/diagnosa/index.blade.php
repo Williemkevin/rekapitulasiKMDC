@@ -29,8 +29,11 @@
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
                 <td><strong>Keterangan</strong></td>
-                <td><strong>Edit</strong></td>
-                <td><strong>Action</strong></td>
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <td><strong>Edit</strong></td>
+                    <td><strong>Action</strong></td>
+                @endif
+
             </tr>
         </thead>
         <tbody>
@@ -44,12 +47,14 @@
                 <td>{{ $d->id }}</td>
                 <td>{{ $d->kode_diagnosa }}</td>
                 <td>{{ $d->nama_diagnosa }}</td>
-                <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
-                            class='bx bx-edit-alt'></i></a>
-                </td>
-                <td class="text-center"><button onclick="nonaktifkan({{ $d->id }})" class="btn btn-sm btn-danger"><i
-                            class='bx bx-power-off'></i></button>
-                </td>
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
+                                class='bx bx-edit-alt'></i></a>
+                    </td>
+                    <td class="text-center"><button onclick="nonaktifkan({{ $d->id }})" class="btn btn-sm btn-danger"><i
+                                class='bx bx-power-off'></i></button>
+                    </td>
+                @endif
             </tr>
             @endforeach
             @endif
@@ -67,8 +72,11 @@
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
                 <td><strong>Keterangan</strong></td>
-                <td><strong>Edit</strong></td>
-                <td><strong>Action</strong></td>
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <td><strong>Edit</strong></td>
+                    <td><strong>Action</strong></td>
+                @endif
+
             </tr>
         </thead>
         <tbody>
@@ -82,12 +90,14 @@
                 <td>{{ $d->id }}</td>
                 <td>{{ $d->kode_diagnosa }}</td>
                 <td>{{ $d->nama_diagnosa }}</td>
-                <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
-                            class='bx bx-edit-alt'></i></a>
-                </td>
-                <td class="text-center"><button onclick="aktifkan({{ $d->id }})" class="btn btn-sm btn-success"><i
-                            class='bx bx-power-off'></i></button>
-                </td>
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <td class="text-center"><a href="{{ route('diagnosa.edit', $d->id) }}" class="btn btn-sm btn-primary"><i
+                                class='bx bx-edit-alt'></i></a>
+                    </td>
+                    <td class="text-center"><button onclick="aktifkan({{ $d->id }})" class="btn btn-sm btn-success"><i
+                                class='bx bx-power-off'></i></button>
+                    </td>
+                @endif
             </tr>
             @endforeach
             @endif

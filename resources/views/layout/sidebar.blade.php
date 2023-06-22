@@ -37,33 +37,43 @@
       </a>
     </li>
 
+    @if (str_contains(Auth::user()->role, 'admin'))
     <li class="menu-item">
       <a href="{{ url('tindakanPasien') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-plus-medical"></i>
         <div data-i18n="Analytics">Tindakan Pasien</div>
       </a>
+    @endif
+
 
     </li>
-
+    @if (str_contains(Auth::user()->role, 'dokter') || str_contains(Auth::user()->role, 'admin'))
     <li class="menu-item">
       <a href="{{ url('rekapPendapatan') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-data"></i>
         <div data-i18n="Analytics">Rekap Pendapatan</div>
       </a>
     </li>
+    @endif
 
+    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
     <li class="menu-item">
       <a href="{{ url('rekapfeersia') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
         <div data-i18n="Analytics">Rekap Fee RSIA</div>
       </a>
     </li>
+    @endif
+
 
     <li class="menu-item">
-      <a href="{{ url('login') }}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-log-out"></i>
-        <div data-i18n="Analytics" style="color: red">Log Out</div>
-      </a>
-    </li>
+      <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn menu-link btn-logout">
+              <i class="menu-icon tf-icons bx bx-log-out"></i>
+              <div>Logout</div>
+          </button>
+      </form>
+  </li>
   </ul>
 </aside>

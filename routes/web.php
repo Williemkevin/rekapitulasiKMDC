@@ -2,14 +2,11 @@
 
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\DokterController;
-use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\JenisTindakanController;
-use App\Http\Controllers\PasienController;
-use App\Http\Controllers\RekapDataRSIAController;
-use App\Http\Controllers\RekapFeeaRSIAController;
 use App\Http\Controllers\RekapFeeRSIAController;
 use App\Http\Controllers\RekapPendapatanController;
 use App\Http\Controllers\TindakanPasienController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,30 +21,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/logout', function () {
-    return view('login');
+    if (!Auth::check()) {
+        return redirect('/login');
+    } else {
+        if (Auth::user()->role === 'admin') {
+            return redirect('/admin');
+        } else if (Auth::user()->role === 'superAdmin') {
+            return redirect('/super');
+        } else if (Auth::user()->role === 'dokter') {
+            return redirect('/dokter');
+        }
+    }
 });
 
 Route::get('/forgot', function () {
     return view('forgot');
 });
 
+Route::middleware(['auth', 'dokter'])->group(function () {
+});
+
 Route::resource('dokter', DokterController::class);
+
+Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
+Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
+
 Route::resource('jenistindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
 Route::resource('rekapPendapatan', RekapPendapatanController::class);
 
-Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
-Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
+
 
 Route::post('diagnosa/aktifkan', [DiagnosaController::class, 'aktifkan'])->name('diagnosa.aktifkan');
 Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])->name('diagnosa.nonaktifkan');
@@ -57,3 +62,7 @@ Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonak
 Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
 
 Route::post('rekappendapatan/getRekap', [RekapPendapatanController::class, 'getRekapPendapatan'])->name('rekappendapatan.getRekap');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
