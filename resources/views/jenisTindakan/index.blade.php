@@ -16,9 +16,11 @@
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         List Tindakan
     </div>
+    @if(str_contains(Auth::user()->role, 'superadmin'))
     <div style="float: right; margin: 15px;">
         <a href="{{url('jenistindakan/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
     </div>
+    @endif
 </div>
 @endsection
 
@@ -29,15 +31,21 @@
         <div>
             <strong> Persentasi Pembagian Fee : </strong>
         </div>
+        
+        @php
+            $roleCheck = str_contains(Auth::user()->role, 'superadmin');
+        @endphp
+        
         <div>
-            Fee RSIA : <input type="number" style="width: 50px;" name="feersia" value={{$persentaseFee->feersia}}> %
+            Fee RSIA : <input type="number" style="width: 50px;" name="feersia" value="{{$persentaseFee->feersia}}" {{$roleCheck ? '' : 'readonly'}}> %
         </div>
         <div>
-            Fee Dokter : <input type="number" style="width: 50px;" name="feedokter" value={{$persentaseFee->feedokter}}> %
+            Fee Dokter : <input type="number" style="width: 50px;" name="feedokter" value="{{$persentaseFee->feedokter}}" {{$roleCheck ? '' : 'readonly'}}> %
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Perbarui</button>
-        </div>
+        
+        @if(str_contains(Auth::user()->role, 'superadmin'))
+            <div><button type="submit" class="btn btn-primary">Perbarui</button></div>
+        @endif
     </div>
 </form>
 

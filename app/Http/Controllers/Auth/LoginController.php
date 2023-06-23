@@ -27,7 +27,7 @@ class LoginController extends Controller
         $role = Auth::user()->role;
         if ($role == 'admin') {
             return '/admin';
-        } else if ($role == 'superAdmin') {
+        } else if ($role == 'superadmin') {
             return '/super';
         } else if ($role == 'dokter') {
             return '/dokter';

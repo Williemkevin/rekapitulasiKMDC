@@ -3,7 +3,7 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Dokter 
+        List Admin 
     </div>
 
     @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -22,10 +22,10 @@
 @endif
 
 <div style="margin: 15px; font-size: 20px;">
-    <strong>List Dokter Aktif</strong>
+    <strong>List Admin Aktif</strong>
 </div>
 <div class="table-responsive">
-    <table id="dokterAktif" class="table table-striped" style="width:100%">
+    <table id="adminAktif" class="table table-striped" style="width:100%">
         <thead class="table-border-bottom-0">
             <tr>
                 <th>ID</th>
@@ -42,26 +42,26 @@
             </tr>
         </thead>
         <tbody>
-            @if (count($dokterAktif) == 0)
+            @if (count($adminAktif) == 0)
             <tr>
-                <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+                <td class="text-center" colspan="8">Tidak ada Admin yang terdata</td>
             </tr>
             @else
-            @foreach ($dokterAktif as $dokterAktif)
+            @foreach ($adminAktif as $adminAktif)
             <tr>
-                <td>{{ $dokterAktif->id }}</td>
-                <td>{{ $dokterAktif->nama_lengkap }}</td>
-                <td>{{ $dokterAktif->kode_nama_dokter }}</td>
-                <td>{{ $dokterAktif->status }}</td>
-                <td>{{ $dokterAktif->email }}</td>
-                <td>{{ $dokterAktif->username }}</td>
-                <td>{{ $dokterAktif->last_login }}</td>
+                <td>{{ $adminAktif->id }}</td>
+                <td>{{ $adminAktif->nama_lengkap }}</td>
+                <td>{{ $adminAktif->kode_nama_dokter }}</td>
+                <td>{{ $adminAktif->status }}</td>
+                <td>{{ $adminAktif->email }}</td>
+                <td>{{ $adminAktif->username }}</td>
+                <td>{{ $adminAktif->last_login }}</td>
 
                 @if(str_contains(Auth::user()->role, 'superadmin'))
-                    <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->id) }}"
+                    <td class="text-center"><a href="{{ route('admin.edit', $adminAktif->id) }}"
                             class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
                     </td>
-                    <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->id }})"
+                    <td class="text-center"><button onclick="nonaktifkan({{ $adminAktif->id }})"
                             class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
                     </td>
                 @endif
@@ -74,9 +74,9 @@
 <br><br>
 <div>
     <div style="margin: 15px; font-size: 20px;">
-        <strong>List Dokter Nonaktif</strong>
+        <strong>List Admin Nonaktif</strong>
     </div>
-    <table id="dokterNonAktif" class="table table-striped" style="width:100%">
+    <table id="adminNonAktif" class="table table-striped" style="width:100%">
         <thead>
         <tr>
             <th>ID</th>
@@ -93,25 +93,25 @@
         </tr>
     </thead>
     <tbody>
-        @if (count($dokterNonaktif) == 0)
+        @if (count($adminNonaktif) == 0)
         <tr>
-            <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+            <td class="text-center" colspan="8">Tidak ada Admin yang terdata</td>
         </tr>
         @else
-        @foreach ($dokterNonaktif as $dokterNonAktif)
+        @foreach ($adminNonaktif as $adminNonaktif)
         <tr>
-            <td>{{ $dokterNonAktif->id }}</td>
-            <td>{{ $dokterNonAktif->nama_lengkap }}</td>
-            <td>{{ $dokterNonAktif->kode_nama_dokter }}</td>
-            <td>{{ $dokterNonAktif->status }}</td>
-            <td>{{ $dokterNonAktif->email }}</td>
-            <td>{{ $dokterNonAktif->username }}</td>
-            <td>{{ $dokterNonAktif->last_login }}</td>
+            <td>{{ $adminNonaktif->id }}</td>
+            <td>{{ $adminNonaktif->nama_lengkap }}</td>
+            <td>{{ $adminNonaktif->kode_nama_dokter }}</td>
+            <td>{{ $adminNonaktif->status }}</td>
+            <td>{{ $adminNonaktif->email }}</td>
+            <td>{{ $adminNonaktif->username }}</td>
+            <td>{{ $adminNonaktif->last_login }}</td>
             @if(str_contains(Auth::user()->role, 'superadmin'))
-                <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->id) }}"
+                <td class="text-center"><a href="{{ route('admin.edit', $adminNonaktif->id) }}"
                         class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
                 </td>
-                <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->id }})"
+                <td class="text-center"><button onclick="aktifkan({{ $adminNonaktif->id }})"
                         class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
                 </td>
             @endif
@@ -127,10 +127,10 @@
 @section('script')
 <script>
     $(document).ready(function () {
-        $('#dokterAktif').DataTable({
+        $('#adminAktif').DataTable({
             "scrollX": true
         });
-        $('#dokterNonAktif').DataTable({
+        $('#adminNonAktif').DataTable({
             "scrollX": true
         });
     });
@@ -138,7 +138,7 @@
     function nonaktifkan(id) {
         $.ajax({
             type: 'POST',
-            url: "{{ route('dokter.nonaktifkan') }}",
+            url: "{{ route('admin.nonaktifkan') }}",
             data: {
                 '_token': '<?php echo csrf_token(); ?>',
                 'id': id,
@@ -154,7 +154,7 @@
     function aktifkan(id) {
         $.ajax({
             type: 'POST',
-            url: "{{ route('dokter.aktifkan')}}",
+            url: "{{ route('admin.aktifkan')}}",
             data: {
                 '_token': '<?php echo csrf_token(); ?>',
                 'id': id,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DiagnosaController;
 use App\Http\Controllers\DokterController;
 use App\Http\Controllers\JenisTindakanController;
@@ -26,7 +27,7 @@ Route::get('/', function () {
     } else {
         if (Auth::user()->role === 'admin') {
             return redirect('/admin');
-        } else if (Auth::user()->role === 'superAdmin') {
+        } else if (Auth::user()->role === 'superadmin') {
             return redirect('/super');
         } else if (Auth::user()->role === 'dokter') {
             return redirect('/dokter');
@@ -42,6 +43,9 @@ Route::middleware(['auth', 'dokter'])->group(function () {
 });
 
 Route::resource('dokter', DokterController::class);
+Route::resource('super', DokterController::class);
+
+Route::resource('admin', AdminController::class);
 
 Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
 Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
@@ -52,7 +56,8 @@ Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
 Route::resource('rekapPendapatan', RekapPendapatanController::class);
 
-
+Route::post('admin/aktifkan', [AdminController::class, 'aktifkan'])->name('admin.aktifkan');
+Route::post('admin/nonaktifkan', [AdminController::class, 'nonaktifkan'])->name('admin.nonaktifkan');
 
 Route::post('diagnosa/aktifkan', [DiagnosaController::class, 'aktifkan'])->name('diagnosa.aktifkan');
 Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])->name('diagnosa.nonaktifkan');

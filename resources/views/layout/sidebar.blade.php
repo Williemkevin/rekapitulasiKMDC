@@ -37,6 +37,15 @@
       </a>
     </li>
 
+    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
+    <li class="menu-item">
+      <a href="{{ url('admin') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-male"></i>
+        <div data-i18n="Analytics">Admin</div>
+      </a>
+    </li>
+    @endif
+
     @if (str_contains(Auth::user()->role, 'admin'))
     <li class="menu-item">
       <a href="{{ url('tindakanPasien') }}" class="menu-link">
@@ -64,7 +73,6 @@
       </a>
     </li>
     @endif
-
 
     <li class="menu-item">
       <form action="{{ route('logout') }}" method="POST">

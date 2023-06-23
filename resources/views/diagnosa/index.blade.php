@@ -8,9 +8,11 @@
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         List Diagnosa
     </div>
-    <div style="float: right; margin: 15px;">
-        <a href="{{url('diagnosa/create')}}" class="btn btn-success btn-sm">Add</a>
-    </div>
+    @if(str_contains(Auth::user()->role, 'superadmin'))
+        <div style="float: right; margin: 15px;">
+            <a href="{{url('diagnosa/create')}}" class="btn btn-success btn-sm">Add</a>
+        </div>
+    @endif
 </div>
 @endsection
 
