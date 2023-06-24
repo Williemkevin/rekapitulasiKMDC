@@ -7,6 +7,7 @@ use App\Http\Controllers\JenisTindakanController;
 use App\Http\Controllers\RekapFeeRSIAController;
 use App\Http\Controllers\RekapPendapatanController;
 use App\Http\Controllers\TindakanPasienController;
+use App\Models\TindakanPasien;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -71,3 +72,6 @@ Route::post('rekappendapatan/getRekap', [RekapPendapatanController::class, 'getR
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/tindakanPasien/{bulan?}/{tahun?}', [TindakanPasienController::class, 'index'])->name('tindakanpasien.index');

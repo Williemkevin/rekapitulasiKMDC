@@ -8,9 +8,9 @@
 @section('menu') 
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Tindakan Pasien
+        List Tindakan Pasien 
     </div>
-    @if(str_contains(Auth::user()->role, 'superadmin'))
+    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
     <div style="float: right; margin: 15px;">
         <a href="{{url('tindakanPasien/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
     </div>
@@ -27,6 +27,30 @@
 <div style="margin: 15px; font-size: 20px;">
     <strong>List Tindakan Pasien</strong>
 </div>
+
+<div>
+    <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Bulanan:</label>
+    <select class="form-select" aria-label="Default select example" name="bulan" id="bulan" style="width: 150px; margin-bottom: 10px;">
+    <?php
+    $selected = false;
+    for ($year = 2023; $year <= date('Y'); $year++) {
+        $endMonth = ($year == date('Y')) ? date('m') : 12;
+        for ($month = 1; $month <= $endMonth; $month++) {
+            $optionValue = sprintf('%02d-%04d', $month, $year);
+
+            if (($month == request()->segment(2) && $year == request()->segment(3)) || ($month == date('m') && !$selected)) {
+                echo "<option value=\"$optionValue\" selected>" . date('F Y', strtotime("$year-$month-01")). "</option>";
+                $selected = true;
+            } else {
+                echo "<option value=\"$optionValue\">" . date('F Y', strtotime("$year-$month-01")). "</option>";
+            }
+
+        }
+      }
+    ?>
+</div>
+</select>
+
 <div class="table-responsive">
     <table id="tindakanPasien" class="table table-striped" style="width:100%">
         <thead class="table-border-bottom-0">
@@ -82,7 +106,12 @@
         $('#tindakanPasien').DataTable();
     });
 
+    $("#bulan").on('change', function() {
+        var bulanSelected = $("#bulan").val().split('-');
+        window.location.href = '/tindakanPasien/' + bulanSelected[0] + '/' + bulanSelected[1] ;
+    });
 </script>
+
 @endsection
 
 

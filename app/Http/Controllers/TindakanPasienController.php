@@ -22,9 +22,13 @@ class TindakanPasienController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($bulan = null, $tahun = null)
     {
-        $bulanSekarang = Carbon::now()->month;
+        if ($bulan == null && $tahun == null) {
+            $bulan = Carbon::now()->month;
+            $tahun = Carbon::now()->year;
+        }
+
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
             ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, Date(jtp.tanggal_kunjungan) as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter', p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan, jtp.total_biaya, jtp.biaya_bahan, CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter")
             ->join('dokters AS d', 'd.id', '=', 'jtp.dokter_id')
@@ -32,7 +36,8 @@ class TindakanPasienController extends Controller
             ->join('diagnosas AS dg', 'dg.id', '=', 'jtp.diagnosa_id')
             ->join('jenis_tindakans AS jt', 'jt.id', '=', 'jtp.jenis_tindakan_id')
             ->join('fees AS f', 'f.id', '=', 'jtp.fees_id')
-            ->whereRaw("MONTH(jtp.tanggal_kunjungan) = $bulanSekarang")
+            ->whereRaw("MONTH(jtp.tanggal_kunjungan) = $bulan")
+            ->whereRaw("YEAR(jtp.tanggal_kunjungan) = $tahun")
             ->orderBy('jtp.id')
             ->get();
         return view('tindakanPasien.index', compact('dataTindakan'));

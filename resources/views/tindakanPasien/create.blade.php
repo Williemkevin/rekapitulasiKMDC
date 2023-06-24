@@ -21,7 +21,7 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        Add New Dokter
+        Add New Tindakan
     </div>
 </div>
 @endsection
