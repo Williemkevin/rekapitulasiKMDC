@@ -16,6 +16,42 @@
  @if (session('status'))
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
+
+<div>
+    <div style="float: left;">
+        <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Bulanan:</label>
+        <select class="form-select" aria-label="Default select example" name="bulan" id="bulan" style="width: 150px; margin-bottom: 10px;">
+        <?php
+        $selected = false;
+        for ($year = 2023; $year <= date('Y'); $year++) {
+            $endMonth = ($year == date('Y')) ? date('m') : 12;
+            for ($month = 1; $month <= $endMonth; $month++) {
+                $optionValue = sprintf('%02d-%04d', $month, $year);
+    
+                if (($month == request()->segment(2) && $year == request()->segment(3)) || ($month == date('m') && !$selected)) {
+                    echo "<option value=\"$optionValue\" selected>" . date('F Y', strtotime("$year-$month-01")). "</option>";
+                    $selected = true;
+                } else {
+                    echo "<option value=\"$optionValue\">" . date('F Y', strtotime("$year-$month-01")). "</option>";
+                }
+            }
+          }
+        ?>
+        </select>
+    </div>
+
+    <div style="float: right; margin-top: 7px; margin-right: 7px;">
+        <form action="{{url('print/feersia')}}">
+            <input type="hidden" value="{{$total[0]->totalRSIAFee}}" name="rekapFeeRSIA">
+            <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
 <div class="table-responsive">
     <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">
@@ -77,3 +113,14 @@
 </div>
 
 @endsection
+
+@section('script')
+<script>
+    $("#bulan").on('change', function() {
+        var bulanSelected = $("#bulan").val().split('-');
+        window.location.href = '/rekapfeersia/' + bulanSelected[0] + '/' + bulanSelected[1] ;
+    });
+</script>
+
+@endsection
+

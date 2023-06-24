@@ -48,8 +48,8 @@
         }
       }
     ?>
+    </select>
 </div>
-</select>
 
 <div class="table-responsive">
     <table id="tindakanPasien" class="table table-striped" style="width:100%">

@@ -75,3 +75,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/tindakanPasien/{bulan?}/{tahun?}', [TindakanPasienController::class, 'index'])->name('tindakanpasien.index');
+Route::get('/rekapfeersia/{bulan?}/{tahun?}', [RekapFeeRSIAController::class, 'index'])->name('tindakanpasien.index');
+Route::get('/print/feersia', [RekapFeeRSIAController::class, 'printPdf'])->name('feersia.print');
+Route::view('/print', 'rekapFeeRSIA.pdf')->name('feersia.print');

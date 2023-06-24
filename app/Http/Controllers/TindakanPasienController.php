@@ -80,7 +80,6 @@ class TindakanPasienController extends Controller
             $i = 0;
             foreach ($tindakan as $t) {
                 if ($t != '-') {
-                    $jenis = new JenisTindakan();
                     $jenisTindakan = app(JenisTindakanController::class);
 
                     $tindakan = new JenisTindakanPasien();
