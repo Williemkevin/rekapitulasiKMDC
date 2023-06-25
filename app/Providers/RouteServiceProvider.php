@@ -24,6 +24,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    public function map()
+    {
+        $this->mapWebRoutes();
+
+        // ...
+    }
     public function boot()
     {
         $this->configureRateLimiting();
@@ -48,5 +54,12 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60);
         });
+    }
+
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 }

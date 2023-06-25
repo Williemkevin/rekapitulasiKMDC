@@ -44,13 +44,13 @@
             <p style="font-weight: bold;">RSIA KENDANGSARI MERR SURABAYA</p>
         </div>
         <div class="info">
-            <p style="text-align: center; font-weight: bold;">TANDA TERIMA SHARED FEE RSIA KENDANGSARI MERR</p>
+            <p style="text-align: center; font-weight: bold;">TANDA TERIMA HONORARIUM DOKTER GIGI</p>
         </div>
         <table class="table">
             <tr>
                 <th>No Kwitansi</th>
                 <th style="width: 5px;">:</th>
-                <th style="font-weight: normal;">KMDC-JUN-001-RSIA</th>
+                <th style="font-weight: normal;">KMDC-{{Str::upper(date('M', mktime(0, 0, 0, $bulan, 1)))}}-{{$tahun}}-{{Str::upper($dokterSelect->kode_nama_dokter)}}</th>
             </tr>
             <tr>
                 <th>Tanggal</th>
@@ -60,7 +60,7 @@
             <tr>
                 <th>Penerima</th>
                 <th>:</th>
-                <th style="font-weight: normal;">PT. MERR MEDIKA MULIA</th>
+                <th style="font-weight: normal;">{{$dokterSelect->nama_lengkap}}</th>
             </tr>
             <tr>
                 <th>Nominal Total (Rp.)</th>
@@ -83,7 +83,7 @@
                 <tr><th style="height: 70px;"></th></tr>
                 <tr>
                     <th style="text-align: center; font-weight: normal;">(Drg. Muthyah Ardhani, Sp.KGA)</th>
-                    <th style="text-align: center; font-weight: normal;">(PT. MERR MEDIKA MULIA)</th>
+                    <th style="text-align: center; font-weight: normal;">({{$dokterSelect->nama_lengkap}})</th>
                 </tr>
             </table>
         </div>

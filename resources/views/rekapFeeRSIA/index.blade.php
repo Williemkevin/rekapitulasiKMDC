@@ -48,10 +48,6 @@
     </div>
 </div>
 
-
-
-
-
 <div class="table-responsive">
     <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">

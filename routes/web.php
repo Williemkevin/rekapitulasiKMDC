@@ -67,14 +67,16 @@ Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan
 Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
 Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
 
-Route::post('rekappendapatan/getRekap', [RekapPendapatanController::class, 'getRekapPendapatan'])->name('rekappendapatan.getRekap');
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/tindakanPasien/{bulan?}/{tahun?}', [TindakanPasienController::class, 'index'])->name('tindakanpasien.index');
-Route::get('/rekapfeersia/{bulan?}/{tahun?}', [RekapFeeRSIAController::class, 'index'])->name('tindakanpasien.index');
+Route::get('/rekapfeersia/{bulan?}/{tahun?}', [RekapFeeRSIAController::class, 'index'])->name('rekapRSIA.index');
+Route::get('/rekapPendapatan/{bulan?}/{tahun?}/{dokter?}', [RekapPendapatanController::class, 'index'])->name('rekapPendapatan.index');
+
 Route::get('/print/feersia', [RekapFeeRSIAController::class, 'printPdf'])->name('feersia.print');
+Route::get('/print/feedokter', [RekapPendapatanController::class, 'printPdf'])->name('feedokter.print');
+
 Route::view('/print', 'rekapFeeRSIA.pdf')->name('feersia.print');

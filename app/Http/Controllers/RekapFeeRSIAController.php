@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
 use Mpdf\Mpdf;
-
+use PhpParser\Node\Stmt\Echo_;
 
 class RekapFeeRSIAController extends Controller
 {
@@ -65,7 +65,8 @@ class RekapFeeRSIAController extends Controller
         $mpdf = new Mpdf();
         $html = view('rekapFeeRSIA.pdf', compact('totalFee', 'terbilang'))->render();
         $mpdf->WriteHTML($html);
-        $mpdf->Output('kwitansi.pdf', 'D');
+        $tanggal = date("dmY");
+        $mpdf->Output($tanggal . 'kwitansiRSIA.pdf', 'D');
     }
 
     public function terbilang($angka)
