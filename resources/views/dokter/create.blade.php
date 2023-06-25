@@ -27,10 +27,12 @@
         <label for="exampleInputEmaill">username</label>
         <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp">
 
+        <label for="exampleInputEmaill">Password</label>
+        <input type="password" name="password" class="form-control" id="password" aria-describedby="nameHelp">
+
         <label for="exampleInputEmaill">Singkatan</label>
         <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>
-
 @endsection

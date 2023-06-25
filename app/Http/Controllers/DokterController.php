@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dokter;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DokterController extends Controller
 {
@@ -47,7 +48,7 @@ class DokterController extends Controller
         $user->name = $request->get('namaDokter');
         $user->email = $request->get('emailDokter');
         $user->username = $request->get('usernameDokter');
-        $user->password = "MASIH DEFAULT";
+        $user->password = Hash::make($request->get('password'));
         $user->role = "dokter";
         $user->last_login = now("Asia/Bangkok");
         $user->created_at = now("Asia/Bangkok");

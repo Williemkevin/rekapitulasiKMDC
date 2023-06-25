@@ -10,26 +10,23 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        Add New Dokter
+        Add New Admin
     </div>
 </div>
 @endsection
 @section('content')
-<form method="POST" action="{{route('dokter.update', $dokter->id)}}">
+<form method="POST" action="{{route('admin.update', $admin->id)}}">
     @csrf
     @method("PUT")
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp" value={{$dokter->nama_lengkap}}>
+        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp" value={{$admin->nama_lengkap}}>
 
         <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp" value= {{$user->email}}>
+        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp" value= {{$user->email}}>
 
         <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp"  value= {{$user->username}}>
-
-        <label for="exampleInputEmaill">Singkatan</label>
-        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"  value={{$dokter->kode_nama_dokter}}>
+        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp"  value= {{$user->username}}>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

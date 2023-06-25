@@ -1,6 +1,3 @@
-<?php
-use App\Models\Dokter;
-?>
 
 <style>
     tr{

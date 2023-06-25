@@ -8,7 +8,7 @@
 
     @if(str_contains(Auth::user()->role, 'superadmin'))
     <div style="float: right; margin: 15px;">
-        <a href="{{url('dokter/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
+        <a href="{{url('admin/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
     </div>
     @endif
 
@@ -30,8 +30,6 @@
             <tr>
                 <th>ID</th>
                 <th>Nama Lengkap</th>
-                <th>Singkatan</th>
-                <th>Status</th>
                 <th>Email</th>
                 <th>Username</th>
                 <th>Last Login</th>
@@ -51,8 +49,6 @@
             <tr>
                 <td>{{ $adminAktif->id }}</td>
                 <td>{{ $adminAktif->nama_lengkap }}</td>
-                <td>{{ $adminAktif->kode_nama_dokter }}</td>
-                <td>{{ $adminAktif->status }}</td>
                 <td>{{ $adminAktif->email }}</td>
                 <td>{{ $adminAktif->username }}</td>
                 <td>{{ $adminAktif->last_login }}</td>
@@ -81,8 +77,6 @@
         <tr>
             <th>ID</th>
             <th>Nama Lengkap</th>
-            <th>Singkatan</th>
-            <th>Status</th>
             <th>Email</th>
             <th>Username</th>
             <th>Last Login</th>
@@ -102,8 +96,6 @@
         <tr>
             <td>{{ $adminNonaktif->id }}</td>
             <td>{{ $adminNonaktif->nama_lengkap }}</td>
-            <td>{{ $adminNonaktif->kode_nama_dokter }}</td>
-            <td>{{ $adminNonaktif->status }}</td>
             <td>{{ $adminNonaktif->email }}</td>
             <td>{{ $adminNonaktif->username }}</td>
             <td>{{ $adminNonaktif->last_login }}</td>
