@@ -1,3 +1,7 @@
+<?php
+use App\Models\Dokter;
+?>
+
 <style>
     tr{
         white-space: nowrap;
@@ -38,21 +42,29 @@
         ?>
         </select>
     </div>
-    <div style="float: left; margin-left: 10px;">
-        <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Dokter:</label>
-        <select class="form-select" aria-label="Default select example" name="dokter" id="dokter" style="width: 150px; margin-bottom: 10px;">
-        <?php
-            echo (request()->segment(4) == 0) ? '<option value="0" selected>All</option>' : '<option value="0">All</option>';
-            foreach ($dokter as $d) {
-                if($d->id == request()->segment(4)) {
-                    echo "<option value=\"$d->id\" selected>$d->nama_lengkap</option>";
-                }else{
-                    echo "<option value=\"$d->id\">$d->nama_lengkap</option>";
+
+    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
+        <div style="float: left; margin-left: 10px;">
+            <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Dokter:</label>
+            <select class="form-select" aria-label="Default select example" name="dokter" id="dokter" style="width: 150px; margin-bottom: 10px;">
+            <?php
+                echo (request()->segment(4) == 0) ? '<option value="0" selected>All</option>' : '<option value="0">All</option>';
+                foreach ($dokter as $d) {
+                    if($d->id == request()->segment(4)) {
+                        echo "<option value=\"$d->id\" selected>$d->nama_lengkap</option>";
+                    }else{
+                        echo "<option value=\"$d->id\">$d->nama_lengkap</option>";
+                    }
                 }
-            }
-        ?> 
-        </select>
-    </div>
+            ?> 
+            </select>
+        </div>
+    @else
+        @php
+            $dokter = Dokter::where('user_id',Auth::user()->id)->first();
+        @endphp
+        <input type="hidden" value={{$dokter->id}} name="dokter" id="dokter">
+    @endif
 
     <div style="float: right; margin-top: 7px; margin-right: 7px;" id="printContainer">
         <form action="{{url('print/feedokter')}}">
@@ -136,7 +148,6 @@
         var dokter = $("#dokter").val();
         window.location.href = '/rekapPendapatan/' + bulanSelected[0] + '/' + bulanSelected[1] + '/' + dokter;
     });
-
 </script>
 @endsection
 
