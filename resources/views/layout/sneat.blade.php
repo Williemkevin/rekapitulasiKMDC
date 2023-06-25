@@ -63,12 +63,12 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('../assets/js/config.js')}}"></script>
-    
+
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('../assets/DataTables/datatables.css') }}">
 
-    
+
   </head>
 
   <body>
@@ -90,9 +90,11 @@
           <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y" >
               <div class="text-end" style="margin-right: 25px;">
-                @php
-                    echo date('l, d F Y');
-                @endphp
+                <span id="current-time">
+                    @php
+                    echo now()->format("d-m-Y H:i:s");
+                    @endphp
+                </span>
               </div>
               <div class="card">
                     @yield('menu')
@@ -138,6 +140,15 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('assets/DataTables/datatables.js') }}"></script>
+    <script>
+        function updateCurrentTime() {
+            var currentTimeElement = document.getElementById('current-time');
+            var currentTime = new Date().toLocaleString();
+            currentTimeElement.innerText = currentTime;
+        }
+
+        setInterval(updateCurrentTime, 1000);
+    </script>
     @yield('script')
   </body>
 </html>
