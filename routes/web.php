@@ -26,13 +26,14 @@ Route::get('/', function () {
     if (!Auth::check()) {
         return redirect('/login');
     } else {
-        if (Auth::user()->role === 'admin') {
-            return redirect('/admin');
-        } else if (Auth::user()->role === 'superadmin') {
-            return redirect('/super');
-        } else if (Auth::user()->role === 'dokter') {
-            return redirect('/dokter');
-        }
+        // if (Auth::user()->role === 'admin') {
+        //     return redirect('/tindakanPasien');
+        // } else if (Auth::user()->role === 'superadmin') {
+        //     return redirect('/super');
+        // } else if (Auth::user()->role === 'dokter') {
+        //     return redirect('/rekapPendapatan');
+        // }
+        return view('welcome');
     }
 });
 
@@ -69,3 +70,7 @@ Route::get('/rekapPendapatan/{bulan?}/{tahun?}/{dokter?}', [RekapPendapatanContr
 
 Route::get('/print/feersia', [RekapFeeRSIAController::class, 'printPdf'])->name('feersia.print');
 Route::get('/print/feedokter', [RekapPendapatanController::class, 'printPdf'])->name('feedokter.print');
+
+Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan'])->name('jenistindakan.aktifkan');
+Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
+Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');

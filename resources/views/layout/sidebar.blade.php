@@ -13,7 +13,7 @@ use App\Models\Dokter;
 
   <ul class="menu-inner py-1">
     <!-- Dashboard -->
-    <li class="{{ (request()->is('admin') || request()->is('dokter') || request()->is('super')) ? 'menu-item active': 'menu-item'}}">
+    <li class="{{ (request()->is('/')) ? 'menu-item active': 'menu-item'}}">
       <a href="{{ url('/') }}" class="menu-link">
         <i class="menu-icon bx bx-grid-alt"></i>
         <div data-i18n="Analytics">Dashboard</div>

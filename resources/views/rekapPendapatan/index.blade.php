@@ -12,11 +12,11 @@ use App\Models\Dokter;
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         List Rekap Pendapatan
     </div>
-</div> 
+</div>
 @endsection
 
 @section('content')
- 
+
 @if (session('status'))
 <div class="alert alert-success">{{session('status')}}</div>
 @endif
@@ -55,7 +55,7 @@ use App\Models\Dokter;
                         echo "<option value=\"$d->id\">$d->nama_lengkap</option>";
                     }
                 }
-            ?> 
+            ?>
             </select>
         </div>
     @else
@@ -80,7 +80,7 @@ use App\Models\Dokter;
         <tbody class="table-border-bottom-0">
             <tr style="white-space: nowrap;">
                 <th>No</th>
-                <th>Tahun</th>
+                {{-- <th>Tahun</th> --}}
                 <th>Tanggal</th>
                 <th>Dokter Gigi</th>
                 <th>Nama Pasien</th>
@@ -105,7 +105,7 @@ use App\Models\Dokter;
             @foreach ($dataTindakan as $dt)
             <tr>
                 <td>{{ $no++ }}</td>
-                <td>{{ $dt->tahun }}</td>
+                {{-- <td>{{ $dt->tahun }}</td> --}}
                 <td>{{ $dt->tanggal_kunjungan }}</td>
                 <td>{{ $dt->namaDokter }}</td>
                 <td>{{ $dt->nama_lengkap }}</td>
@@ -116,12 +116,12 @@ use App\Models\Dokter;
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->Sharing) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->FeeRSIA) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->FeeDokter) }}</td>
-            </tr> 
+            </tr>
             @endforeach
-            
+
             @foreach ($total as $t)
             <tr style="white-space: nowrap;">
-                @for ($i = 0; $i < 7; $i++)
+                @for ($i = 0; $i < 6; $i++)
                     <td></td>
                 @endfor
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totaltarif)}}</strong></td>

@@ -27,7 +27,7 @@
             $endMonth = ($year == date('Y')) ? date('m') : 12;
             for ($month = 1; $month <= $endMonth; $month++) {
                 $optionValue = sprintf('%02d-%04d', $month, $year);
-    
+
                 if (($month == request()->segment(2) && $year == request()->segment(3)) || ($month == date('m') && !$selected)) {
                     echo "<option value=\"$optionValue\" selected>" . date('F Y', strtotime("$year-$month-01")). "</option>";
                     $selected = true;
@@ -53,8 +53,8 @@
         <tbody class="table-border-bottom-0">
             <tr style="white-space: nowrap;">
                 <th>No</th>
-                <th>Bulan</th>
-                <th>Tahun</th>
+                {{-- <th>Bulan</th>
+                <th>Tahun</th> --}}
                 <th>Tanggal</th>
                 <th>Dokter</th>
                 <th>Pasien</th>
@@ -78,8 +78,8 @@
             <tr  style="white-space: nowrap;">
 
                 <td>{{ $no++}}</td>
-                <td>{{ $rekapFee->bulan }}</td>
-                <td>{{ $rekapFee->tahun }}</td>
+                {{-- <td>{{ $rekapFee->bulan }}</td>
+                <td>{{ $rekapFee->tahun }}</td> --}}
                 <td>{{ $rekapFee->tanggal }}</td>
                 <td>{{ $rekapFee->dokter}}</td>
                 <td>{{ $rekapFee->pasien}}</td>
@@ -94,7 +94,7 @@
             @endforeach
             @foreach ($total as $t)
             <tr  style="white-space: nowrap;">
-                @for ($i = 0; $i <= 7; $i++)
+                @for ($i = 0; $i <= 5; $i++)
                     <td></td>
                 @endfor
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totaltarif)}}</strong></td>

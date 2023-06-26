@@ -25,13 +25,14 @@ class LoginController extends Controller
     public function redirectTo()
     {
         $role = Auth::user()->role;
-        if ($role == 'admin') {
-            return '/admin';
-        } else if ($role == 'superadmin') {
-            return '/super';
-        } else if ($role == 'dokter') {
-            return '/dokter';
-        }
+        return '/';
+        // if ($role == 'admin') {
+        //     return '/admin';
+        // } else if ($role == 'superadmin') {
+        //     return '/super';
+        // } else if ($role == 'dokter') {
+        //     return '/dokter';
+        // }
     }
 
     /**
