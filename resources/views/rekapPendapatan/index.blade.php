@@ -1,4 +1,6 @@
-
+<?php
+use App\Models\Dokter;
+?>
 <style>
     tr{
         white-space: nowrap;

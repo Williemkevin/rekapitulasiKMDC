@@ -14,6 +14,9 @@
         gap: 1em;
         white-space: nowrap;
     }
+    #biaya, #jumlah{
+        width: 100px;
+    }
 
 </style>
 @extends('layout.sneat')
@@ -77,9 +80,9 @@
             '<div id="addTindakan" class=' + count +
             '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan">' +
             '<option value="-">-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
-            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
-            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
-            ')">X</button></div>');
+            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="jumlah" aria-describedby="nameHelp">' +
+            '<label for="exampleInputEmaill">Biaya Tindakan</label><input type="number" name="biaya[]" value="0" class="form-control" id="biaya" aria-describedby="nameHelp" readonly>' +
+            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +')">X</button></div>');
     });
 
     $("#submitt").click(function () {
@@ -90,8 +93,6 @@
             var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
             selectedOptions = selectedOptions.concat(selectedOption);
         });
-
-        alert(selectedOptions);
     });
 
     function submit(id) {
@@ -110,5 +111,28 @@
         $("." + id).remove();
     }
 
+    function getBiaya(id) {
+        $("." + id).remove();
+    }
+
 </script>
 @endsection
+{{-- 
+
+<div id="addTindakan" class='1'>
+    <label>Jenis Tindakan</label>
+<div>
+    <select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan" onchange="">
+        <option value="-">-- Pilih Jenis Tindakan --</option>
+        @foreach ($jenisTindakans as $jenisTindakan)
+        <option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>
+        @endforeach 
+    </select> 
+</div>
+<label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
+            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
+            ')">X</button></div>'
+
+<label for="exampleInputEmaill"> Biaya</label><input type="number" name="biaya[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
+            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
+            ')">X</button></div>' --}}

@@ -40,22 +40,20 @@ Route::get('/forgot', function () {
     return view('forgot');
 });
 
-Route::middleware(['auth', 'dokter'])->group(function () {
+Route::middleware(['auth', 'superadmin'])->group(function () {
 });
 
 Route::resource('dokter', DokterController::class);
 Route::resource('super', DokterController::class);
-
 Route::resource('admin', AdminController::class);
-
-Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
-Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
-
 Route::resource('jenistindakan', JenisTindakanController::class);
 Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
 Route::resource('rekapPendapatan', RekapPendapatanController::class);
+
+Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
+Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
 
 Route::post('admin/aktifkan', [AdminController::class, 'aktifkan'])->name('admin.aktifkan');
 Route::post('admin/nonaktifkan', [AdminController::class, 'nonaktifkan'])->name('admin.nonaktifkan');
@@ -63,14 +61,7 @@ Route::post('admin/nonaktifkan', [AdminController::class, 'nonaktifkan'])->name(
 Route::post('diagnosa/aktifkan', [DiagnosaController::class, 'aktifkan'])->name('diagnosa.aktifkan');
 Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])->name('diagnosa.nonaktifkan');
 
-Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan'])->name('jenistindakan.aktifkan');
-Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
-Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
-
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 Route::get('/tindakanPasien/{bulan?}/{tahun?}', [TindakanPasienController::class, 'index'])->name('tindakanpasien.index');
 Route::get('/rekapfeersia/{bulan?}/{tahun?}', [RekapFeeRSIAController::class, 'index'])->name('rekapRSIA.index');
@@ -78,5 +69,3 @@ Route::get('/rekapPendapatan/{bulan?}/{tahun?}/{dokter?}', [RekapPendapatanContr
 
 Route::get('/print/feersia', [RekapFeeRSIAController::class, 'printPdf'])->name('feersia.print');
 Route::get('/print/feedokter', [RekapPendapatanController::class, 'printPdf'])->name('feedokter.print');
-
-Route::view('/print', 'rekapFeeRSIA.pdf')->name('feersia.print');
