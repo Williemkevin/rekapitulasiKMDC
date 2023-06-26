@@ -22,7 +22,7 @@
     </div>
     @endif
 </div>
-@endsection
+@endsection 
 
 @section('content')
 <form method="POST" action="{{ route('jenistindakan.ubahpersentase') }}">

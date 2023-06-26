@@ -14,7 +14,7 @@
         gap: 1em;
         white-space: nowrap;
     }
-    #biaya, #jumlah{
+    #biayaTindakan, #jumlah{
         width: 100px;
     }
 
@@ -65,7 +65,7 @@
         <div>
             <label for="exampleInputEmaill">Total Biaya</label>
             <input type="number" name="totalBiaya" class="form-control" id="totalBiaya" aria-describedby="nameHelp"
-                step="1000">
+                step="1000" readonly>
         </div>
         <button onclick="submit()" type="submit" class="btn btn-primary" style="margin-top: 20px;" id="submitt">Submit</button>
 </form>
@@ -73,15 +73,17 @@
 
 @section('script')
 <script type="text/javascript">
+    var jenisTindakans = <?php echo json_encode($jenisTindakans); ?>;
     var count = 0;
+
     $("#btnAddTindakan").click(function () {
         count++;
         $("#tindakan").append(
             '<div id="addTindakan" class=' + count +
-            '><label>Jenis Tindakan</label><div><select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan">' +
+            '><label>Jenis Tindakan</label><div><select class="form-select jenisTindakan' + count +'" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan" onchange="getBiaya(' + count +')">' +
             '<option value="-">-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
-            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="jumlah" aria-describedby="nameHelp">' +
-            '<label for="exampleInputEmaill">Biaya Tindakan</label><input type="number" name="biaya[]" value="0" class="form-control" id="biaya" aria-describedby="nameHelp" readonly>' +
+            '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control jumlahTindakan' + count +'" id="jumlah" aria-describedby="nameHelp" onchange="getBiaya(' + count +')">' +
+            '<label for="exampleInputEmaill">Biaya Tindakan</label><input type="number" name="biaya[]" value="0" class="form-control biayaTindakan' + count +'" id="biayaTindakan" aria-describedby="nameHelp" readonly>' +
             '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +')">X</button></div>');
     });
 
@@ -112,27 +114,22 @@
     }
 
     function getBiaya(id) {
-        $("." + id).remove();
-    }
+        var jenisTindakan = parseInt($(".jenisTindakan" + id).val());
+        var jumlahTindakan = $(".jumlahTindakan" + id).val();
 
+        var tindakan = Object.values(jenisTindakans).find(function(item) {
+            return item.id === jenisTindakan;
+        });
+        var biayaTindakan = tindakan ? tindakan.biaya_tindakan : null;
+
+        $(".biayaTindakan" + id).val(biayaTindakan*jumlahTindakan);
+     
+        var biaya = document.getElementsByName('biaya[]');
+        var totalBiaya = 0;
+        for (var i = 0; i < biaya.length; i++) {
+            totalBiaya += parseInt(biaya[i].value);
+        }
+        $("#totalBiaya").val(totalBiaya);
+    }
 </script>
 @endsection
-{{-- 
-
-<div id="addTindakan" class='1'>
-    <label>Jenis Tindakan</label>
-<div>
-    <select class="form-select" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan" onchange="">
-        <option value="-">-- Pilih Jenis Tindakan --</option>
-        @foreach ($jenisTindakans as $jenisTindakan)
-        <option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>
-        @endforeach 
-    </select> 
-</div>
-<label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
-            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
-            ')">X</button></div>'
-
-<label for="exampleInputEmaill"> Biaya</label><input type="number" name="biaya[]" value="1" class="form-control" id="singkatan" aria-describedby="nameHelp">' +
-            '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +
-            ')">X</button></div>' --}}
