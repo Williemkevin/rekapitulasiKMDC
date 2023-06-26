@@ -57,7 +57,7 @@
                 <th>:</th>
                 <th style="font-weight: normal;">@php echo date("d F Y"); @endphp</th>
             </tr>
-            <tr>
+            <tr> 
                 <th>Penerima</th>
                 <th>:</th>
                 <th style="font-weight: normal;">{{$dokterSelect->nama_lengkap}}</th>
@@ -82,7 +82,7 @@
                 </tr>
                 <tr><th style="height: 70px;"></th></tr>
                 <tr>
-                    <th style="text-align: center; font-weight: normal;">(Drg. Muthyah Ardhani, Sp.KGA)</th>
+                    <th style="text-align: center; font-weight: normal;">({{$namaPemimpin}})</th>
                     <th style="text-align: center; font-weight: normal;">({{$dokterSelect->nama_lengkap}})</th>
                 </tr>
             </table>

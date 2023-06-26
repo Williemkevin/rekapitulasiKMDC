@@ -133,8 +133,10 @@ class RekapPendapatanController extends Controller
         $tahun = $request->tahun;
         $terbilang = $this->terbilang($totalFee);
 
+        $namaPemimpin = DB::table('setting')->where('name', 'Nama pemimpin')->value('value');
+
         $mpdf = new Mpdf();
-        $html = view('rekapPendapatan.pdf', compact('totalFee', 'terbilang', 'dokterSelect', 'bulan', 'tahun'))->render();
+        $html = view('rekapPendapatan.pdf', compact('totalFee', 'terbilang', 'dokterSelect', 'bulan', 'tahun', 'namaPemimpin'))->render();
         $mpdf->WriteHTML($html);
         $tanggal = date("dmY");
         $mpdf->Output($tanggal . 'kwitansi' . Str::upper($dokterSelect->kode_nama_dokter) . '.pdf', 'D');

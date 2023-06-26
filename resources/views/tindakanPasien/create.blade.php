@@ -76,6 +76,11 @@
     var jenisTindakans = <?php echo json_encode($jenisTindakans); ?>;
     var count = 0;
 
+    var today = new Date();
+    var formattedDate = today.toISOString().substr(0, 10);
+
+    $("#tanggalKunjungan").val(formattedDate);
+
     $("#btnAddTindakan").click(function () {
         count++;
         $("#tindakan").append(

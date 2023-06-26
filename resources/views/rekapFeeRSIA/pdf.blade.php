@@ -45,12 +45,14 @@
         </div>
         <div class="info">
             <p style="text-align: center; font-weight: bold;">TANDA TERIMA SHARED FEE RSIA KENDANGSARI MERR</p>
+            
         </div>
         <table class="table">
             <tr>
                 <th>No Kwitansi</th>
                 <th style="width: 5px;">:</th>
-                <th style="font-weight: normal;">KMDC-JUN-001-RSIA</th>
+                <th style="font-weight: normal;">KMDC-{{Str::upper(date('M', mktime(0, 0, 0, $bulan, 1)))}}-{{$tahun}}-RSIA</th>
+
             </tr>
             <tr>
                 <th>Tanggal</th>
@@ -60,7 +62,7 @@
             <tr>
                 <th>Penerima</th>
                 <th>:</th>
-                <th style="font-weight: normal;">PT. MERR MEDIKA MULIA</th>
+                <th style="font-weight: normal;">{{$namaPenerima}}</th>
             </tr>
             <tr>
                 <th>Nominal Total (Rp.)</th>
@@ -82,8 +84,8 @@
                 </tr>
                 <tr><th style="height: 70px;"></th></tr>
                 <tr>
-                    <th style="text-align: center; font-weight: normal;">(Drg. Muthyah Ardhani, Sp.KGA)</th>
-                    <th style="text-align: center; font-weight: normal;">(PT. MERR MEDIKA MULIA)</th>
+                    <th style="text-align: center; font-weight: normal;">({{$namaPemimpin}})</th>
+                    <th style="text-align: center; font-weight: normal;">({{$namaPenerima}})</th>
                 </tr>
             </table>
         </div>

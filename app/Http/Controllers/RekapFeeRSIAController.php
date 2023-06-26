@@ -62,9 +62,15 @@ class RekapFeeRSIAController extends Controller
     {
         $totalFee = $request->rekapFeeRSIA;
         $terbilang = $this->terbilang($totalFee);
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+
+        $namaPemimpin = DB::table('setting')->where('name', 'Nama pemimpin')->value('value');
+        $namaPenerima = DB::table('setting')->where('name', 'Nama penerima Fee Rumah Sakit')->value('value');
+
 
         $mpdf = new Mpdf();
-        $html = view('rekapFeeRSIA.pdf', compact('totalFee', 'terbilang'))->render();
+        $html = view('rekapFeeRSIA.pdf', compact('totalFee', 'terbilang', 'bulan', 'tahun', 'namaPemimpin', 'namaPenerima'))->render();
         $mpdf->WriteHTML($html);
         $tanggal = date("dmY");
         $mpdf->Output($tanggal . 'kwitansiRSIA.pdf', 'D');
