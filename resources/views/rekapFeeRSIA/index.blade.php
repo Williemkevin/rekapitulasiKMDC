@@ -60,6 +60,7 @@
                 <th>Pasien</th>
                 <th>Diagnosa</th>
                 <th>Tindakan</th>
+                <th>Jumlah Tindakan</th>
                 <th>Tarif</th>
                 <th>Bahan Habis Pakai (BHP)</th>
                 <th>Sharing</th>
@@ -85,6 +86,7 @@
                 <td>{{ $rekapFee->pasien}}</td>
                 <td>{{ $rekapFee->diagnosa}}</td>
                 <td>{{ $rekapFee->tindakan}}</td>
+                <td>{{ $rekapFee->jumlahTindakan}}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($rekapFee->tarif)}}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($rekapFee->BHP)}}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($rekapFee->sharing)}}</td>

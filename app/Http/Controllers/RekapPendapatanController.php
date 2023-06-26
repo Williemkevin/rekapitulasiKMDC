@@ -27,7 +27,8 @@ class RekapPendapatanController extends Controller
 
         $dokter = ModelsDokter::select('id', 'nama_lengkap', 'kode_nama_dokter')->where('status', "1")->get();
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
-            ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter', p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan, jtp.total_biaya, jtp.biaya_bahan, CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter")
+            ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter', 
+            p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan, jtp.jumlah_tindakan as jumlahTindakan, jtp.biaya_tindakan AS total, jtp.biaya_bahan, CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter")
             ->join('dokters AS d', 'd.id', '=', 'jtp.dokter_id')
             ->join('pasiens AS p', 'p.id', '=', 'jtp.pasien_id')
             ->join('diagnosas AS dg', 'dg.id', '=', 'jtp.diagnosa_id')

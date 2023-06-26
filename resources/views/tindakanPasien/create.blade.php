@@ -18,7 +18,7 @@
         width: 100px;
     }
 
-</style>
+</style> 
 @extends('layout.sneat')
 
 @section('menu')

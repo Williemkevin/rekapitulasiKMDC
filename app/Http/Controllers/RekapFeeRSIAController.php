@@ -28,11 +28,12 @@ class RekapFeeRSIAController extends Controller
             "p.nama_lengkap as pasien",
             "dig.kode_diagnosa as diagnosa",
             "jt.nama_tindakan as tindakan",
-            DB::raw("(jt.biaya_tindakan + jt.biaya_bahan) as tarif"),
-            "jt.biaya_bahan as BHP",
-            "jt.biaya_tindakan as sharing",
-            DB::raw("(0.3 * jt.biaya_tindakan) as RSIAFee"),
-            DB::raw("(0.7 * jt.biaya_tindakan) + jt.biaya_bahan as THPDRG")
+            "jenis_tindakan_pasiens.jumlah_tindakan as jumlahTindakan",
+            DB::raw("jenis_tindakan_pasiens.biaya_tindakan as tarif"),
+            "jenis_tindakan_pasiens.biaya_bahan as BHP",
+            DB::raw("CEILING(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing",),
+            DB::raw("(0.3 * jenis_tindakan_pasiens.biaya_tindakan) as RSIAFee"),
+            DB::raw("(0.7 * jenis_tindakan_pasiens.biaya_tindakan) as THPDRG")
         )
             ->join('jenis_tindakans as jt', 'jt.id', '=', 'jenis_tindakan_pasiens.jenis_tindakan_id')
             ->join('dokters as d', 'd.id', '=', 'jenis_tindakan_pasiens.dokter_id')

@@ -62,6 +62,7 @@
                 <th>Nama Pasien</th>
                 <th>Diagnosa</th>
                 <th>Tindakan</th>
+                <th>Jumlah Tindakan</th>
                 <th>Total</th>
                 <th>BHP</th>
                 <th>Sharing</th>
@@ -87,7 +88,8 @@
                 <td>{{ $dt->nama_lengkap }}</td>
                 <td>{{ $dt->kode_diagnosa }}</td>
                 <td>{{ $dt->nama_tindakan }}</td>
-                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->total_biaya) }}</td>
+                <td>{{ $dt->jumlahTindakan}}</td>
+                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->total) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->biaya_bahan) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->Sharing) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->FeeRSIA) }}</td>

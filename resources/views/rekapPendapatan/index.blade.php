@@ -86,6 +86,7 @@ use App\Models\Dokter;
                 <th>Nama Pasien</th>
                 <th>Diagnosa</th>
                 <th>Tindakan</th>
+                <th>Jumlah Tindakan</th>
                 <th>Total</th>
                 <th>BHP</th>
                 <th>Sharing</th>
@@ -103,7 +104,7 @@ use App\Models\Dokter;
                 $no = 1;
             @endphp
             @foreach ($dataTindakan as $dt)
-            <tr>
+            <tr> 
                 <td>{{ $no++ }}</td>
                 {{-- <td>{{ $dt->tahun }}</td> --}}
                 <td>{{ $dt->tanggal_kunjungan }}</td>
@@ -111,7 +112,8 @@ use App\Models\Dokter;
                 <td>{{ $dt->nama_lengkap }}</td>
                 <td>{{ $dt->kode_diagnosa }}</td>
                 <td>{{ $dt->nama_tindakan }}</td>
-                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->total_biaya) }}</td>
+                <td>{{ $dt->jumlahTindakan}}</td>
+                <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->total) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->biaya_bahan) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->Sharing) }}</td>
                 <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($dt->FeeRSIA) }}</td>
