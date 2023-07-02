@@ -47,7 +47,6 @@ use App\Models\Dokter;
             <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Dokter:</label>
             <select class="form-select" aria-label="Default select example" name="dokter" id="dokter" style="width: 150px; margin-bottom: 10px;">
             <?php
-                echo (request()->segment(4) == 0) ? '<option value="0" selected>All</option>' : '<option value="0">All</option>';
                 foreach ($dokter as $d) {
                     if($d->id == request()->segment(4)) {
                         echo "<option value=\"$d->id\" selected>$d->nama_lengkap</option>";
@@ -71,7 +70,9 @@ use App\Models\Dokter;
             <input type="hidden" value={{request()->segment(4)}}  name="idDokter">
             <input type="hidden" value={{request()->segment(2)}} name="bulan">
             <input type="hidden" value={{request()->segment(3)}} name="tahun">
-            <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
+            @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
+                <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
+            @endif
         </form>
     </div>
 </div>
@@ -106,7 +107,6 @@ use App\Models\Dokter;
             @foreach ($dataTindakan as $dt)
             <tr> 
                 <td>{{ $no++ }}</td>
-                {{-- <td>{{ $dt->tahun }}</td> --}}
                 <td>{{ $dt->tanggal_kunjungan }}</td>
                 <td>{{ $dt->namaDokter }}</td>
                 <td>{{ $dt->nama_lengkap }}</td>
@@ -123,7 +123,7 @@ use App\Models\Dokter;
 
             @foreach ($total as $t)
             <tr style="white-space: nowrap;">
-                @for ($i = 0; $i < 6; $i++)
+                @for ($i = 0; $i < 7; $i++)
                     <td></td>
                 @endfor
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totaltarif)}}</strong></td>
