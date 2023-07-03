@@ -47,6 +47,7 @@ use App\Models\Dokter;
             <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Dokter:</label>
             <select class="form-select" aria-label="Default select example" name="dokter" id="dokter" style="width: 150px; margin-bottom: 10px;">
             <?php
+                echo "<option value='-'" . (request()->segment(4) == '-' ? "selected>All</option>" : "'>All</option>");            
                 foreach ($dokter as $d) {
                     if($d->id == request()->segment(4)) {
                         echo "<option value=\"$d->id\" selected>$d->nama_lengkap</option>";
@@ -71,7 +72,7 @@ use App\Models\Dokter;
             <input type="hidden" value={{request()->segment(2)}} name="bulan">
             <input type="hidden" value={{request()->segment(3)}} name="tahun">
             @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
-                <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
+                <button class="btn btn-info btn-sm" id="btnCetak"><i class="bx bx-printer"></i>Cetak</button>
             @endif
         </form>
     </div>
@@ -81,7 +82,6 @@ use App\Models\Dokter;
         <tbody class="table-border-bottom-0">
             <tr style="white-space: nowrap;">
                 <th>No</th>
-                {{-- <th>Tahun</th> --}}
                 <th>Tanggal</th>
                 <th>Dokter Gigi</th>
                 <th>Nama Pasien</th>
@@ -101,12 +101,9 @@ use App\Models\Dokter;
                 <td class="text-center" colspan="8">Tidak ada data tindakan yang terdata</td>
             </tr>
             @else
-            @php
-                $no = 1;
-            @endphp
             @foreach ($dataTindakan as $dt)
             <tr> 
-                <td>{{ $no++ }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $dt->tanggal_kunjungan }}</td>
                 <td>{{ $dt->namaDokter }}</td>
                 <td>{{ $dt->nama_lengkap }}</td>
@@ -143,12 +140,18 @@ use App\Models\Dokter;
 <script>
     $(document).ready(function () {
         $('#tindakanPasien').DataTable();
+        var dokter = $("#dokter").val();
     });
     $("#bulan, #dokter").on('change', function() {
         var bulanSelected = $("#bulan").val().split('-');
         var dokter = $("#dokter").val();
         window.location.href = '/rekapPendapatan/' + bulanSelected[0] + '/' + bulanSelected[1] + '/' + dokter;
     });
+
+    var dokter = $("#dokter").val();
+    if(dokter == '-'){
+        document.getElementById("btnCetak").disabled = true;
+    }
 </script>
 @endsection
 

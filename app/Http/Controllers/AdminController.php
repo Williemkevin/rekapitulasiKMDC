@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -44,13 +45,22 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8',
+        ], [
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal harus terdiri dari 8 karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $user = new User();
         $user->name = $request->get('namaAdmin');
         $user->email = $request->get('emailAdmin');
         $user->username = $request->get('usernameAdmin');
         $user->password = Hash::make($request->get('password'));
         $user->role = "admin";
-        $user->last_login = now("Asia/Bangkok");
         $user->created_at = now("Asia/Bangkok");
         $user->updated_at = now("Asia/Bangkok");
         $user->save();

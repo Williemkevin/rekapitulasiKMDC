@@ -14,7 +14,6 @@
 
 </div>
 @endsection
-
 @section('content')
 
 @if (session('status'))
@@ -49,19 +48,19 @@
             @else
             @foreach ($dokterAktif as $dokterAktif)
             <tr>
-                <td>{{ $dokterAktif->id }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $dokterAktif->nama_lengkap }}</td>
                 <td>{{ $dokterAktif->kode_nama_dokter }}</td>
-                <td>{{ $dokterAktif->status }}</td>
+                <td>{{ $dokterAktif->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
                 <td>{{ $dokterAktif->email }}</td>
                 <td>{{ $dokterAktif->username }}</td>
                 <td>{{ $dokterAktif->last_login }}</td>
 
                 @if(str_contains(Auth::user()->role, 'superadmin'))
-                    <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->id) }}"
+                    <td class="text-center"><a href="{{ route('dokter.edit', $dokterAktif->user_id) }}"
                             class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
                     </td>
-                    <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->id }})"
+                    <td class="text-center"><button onclick="nonaktifkan({{ $dokterAktif->user_id }})"
                             class="btn btn-sm btn-danger"><i class='bx bx-power-off'></i></button>
                     </td>
                 @endif
@@ -103,15 +102,15 @@
             <td>{{ $dokterNonAktif->id }}</td>
             <td>{{ $dokterNonAktif->nama_lengkap }}</td>
             <td>{{ $dokterNonAktif->kode_nama_dokter }}</td>
-            <td>{{ $dokterNonAktif->status }}</td>
+            <td>{{ $dokterNonAktif->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
             <td>{{ $dokterNonAktif->email }}</td>
             <td>{{ $dokterNonAktif->username }}</td>
             <td>{{ $dokterNonAktif->last_login }}</td>
             @if(str_contains(Auth::user()->role, 'superadmin'))
-                <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->id) }}"
+                <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->user_id) }}"
                         class="btn btn-sm btn-primary"><i class='bx bx-edit-alt'></i></a>
                 </td>
-                <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->id }})"
+                <td class="text-center"><button onclick="aktifkan({{ $dokterNonAktif->user_id }})"
                         class="btn btn-sm btn-success"><i class='bx bx-power-off'></i></button>
                 </td>
             @endif

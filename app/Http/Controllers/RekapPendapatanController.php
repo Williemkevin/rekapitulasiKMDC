@@ -18,7 +18,7 @@ class RekapPendapatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($bulan = null, $tahun = null, $dokterSelected = 0)
+    public function index($bulan = null, $tahun = null, $dokterSelected = '-')
     {
         if ($bulan == null && $tahun == null) {
             $bulan = Carbon::now()->month;
@@ -34,7 +34,7 @@ class RekapPendapatanController extends Controller
             ->join('diagnosas AS dg', 'dg.id', '=', 'jtp.diagnosa_id')
             ->join('jenis_tindakans AS jt', 'jt.id', '=', 'jtp.jenis_tindakan_id')
             ->where(function ($query) use ($dokterSelected) {
-                if ($dokterSelected != 0) {
+                if ($dokterSelected != '-') {
                     $query->where('jtp.dokter_id', $dokterSelected);
                 }
             })

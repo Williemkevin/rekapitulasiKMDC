@@ -18,20 +18,23 @@
 <form method="POST" action="{{route('dokter.store')}}">
     @csrf
     <div class="form-group">
-        <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp" required>
+        <label>Nama Lengkap</label>
+        <input type="text" name="namaDokter" class="form-control" id="namaDokter" required value="{{ old('namaDokter') }}">
 
-        <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp" required>
+        <label>Email</label>
+        <input type="email" name="emailDokter" class="form-control" id="emailDokter" required value="{{ old('emailDokter') }}">
 
-        <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp" required>
+        <label>username</label>
+        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" required value="{{ old('usernameDokter') }}">
 
-        <label for="exampleInputEmaill">Password</label>
-        <input type="password" name="password" class="form-control" id="password" aria-describedby="nameHelp" required>
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" id="password" required value="{{ old('password') }}">
+        @error('password')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
 
-        <label for="exampleInputEmaill">Singkatan</label>
-        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp" required>
+        <label>Singkatan</label>
+        <input type="text" name="singkatan" class="form-control" id="singkatan" required value="{{ old('singkatan') }}">
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

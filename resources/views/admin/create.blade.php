@@ -18,17 +18,20 @@
 <form method="POST" action="{{route('admin.store')}}">
     @csrf
     <div class="form-group">
-        <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp" required>
+        <label>Nama Lengkap</label>
+        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" required value="{{ old('namaAdmin') }}">
 
-        <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp" required>
+        <label>Email</label>
+        <input type="email" name="emailAdmin" class="form-control" id="emailAdmin" required value="{{ old('emailAdmin') }}">
 
-        <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp" required>
+        <label>username</label>
+        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" required value="{{ old('usernameAdmin') }}">
 
-        <label for="exampleInputEmaill">Password</label>
-        <input type="text" name="password" class="form-control" id="password" aria-describedby="nameHelp" required>
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" id="password" required value="{{ old('password') }}">
+        @error('password')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

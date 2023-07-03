@@ -6,6 +6,7 @@ use App\Models\Dokter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DokterController extends Controller
 {
@@ -44,13 +45,23 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8',
+        ], [
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal harus terdiri dari 8 karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $user = new User();
         $user->name = $request->get('namaDokter');
         $user->email = $request->get('emailDokter');
         $user->username = $request->get('usernameDokter');
         $user->password = Hash::make($request->get('password'));
         $user->role = "dokter";
-        $user->last_login = now("Asia/Bangkok");
         $user->created_at = now("Asia/Bangkok");
         $user->updated_at = now("Asia/Bangkok");
         $user->save();
@@ -86,8 +97,8 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        $dokter = Dokter::find($id);
-        $user = User::find($dokter->user_id);
+        $dokter = Dokter::where('user_id', $id)->first();
+        $user = User::find($id);
         return view('dokter.edit', compact('dokter', 'user'));
     }
 
@@ -100,8 +111,8 @@ class DokterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $dokter = Dokter::find($id);
-        $user = User::find($dokter->user_id);
+        $dokter = Dokter::where('user_id', $id)->first();
+        $user = User::find($id);
 
         $user->name = $request->get('namaDokter');
         $user->email = $request->get('emailDokter');
@@ -131,7 +142,7 @@ class DokterController extends Controller
 
     public function nonaktifkan(Request $request)
     {
-        $data = Dokter::find($request->get('id'));
+        $data = Dokter::where('user_id', $request->get('id'))->first();
         $data->status = '0';
         $data->save();
         return response()->json(array('status' => 'success'), 200);
@@ -139,7 +150,7 @@ class DokterController extends Controller
 
     public function aktifkan(Request $request)
     {
-        $data = Dokter::find($request->get('id'));
+        $data = Dokter::where('user_id', $request->get('id'))->first();
         $data->status = '1';
         $data->save();
         return response()->json(array('status' => 'success'), 200);
