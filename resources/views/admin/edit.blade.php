@@ -20,13 +20,13 @@
     @method("PUT")
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp" value={{$admin->nama_lengkap}}>
+        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp" value='{{$admin->nama_lengkap}}' required>
 
         <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp" value= {{$user->email}}>
+        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp" value= '{{$user->email}}'  required>
 
         <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp"  value= {{$user->username}}>
+        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp"  value= '{{$user->username}}'  required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

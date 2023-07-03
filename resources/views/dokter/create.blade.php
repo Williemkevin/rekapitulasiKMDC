@@ -19,19 +19,19 @@
     @csrf
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp">
+        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp">
+        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp">
+        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">Password</label>
-        <input type="password" name="password" class="form-control" id="password" aria-describedby="nameHelp">
+        <input type="password" name="password" class="form-control" id="password" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">Singkatan</label>
-        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp">
+        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp" required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

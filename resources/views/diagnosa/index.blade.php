@@ -30,7 +30,7 @@
             <tr>
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
-                <td><strong>Keterangan</strong></td>
+                <td><strong>Nama</strong></td>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
                     <td><strong>Edit</strong></td>
                     <td><strong>Action</strong></td>
@@ -73,7 +73,7 @@
             <tr>
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
-                <td><strong>Keterangan</strong></td>
+                <td><strong>Nama</strong></td>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
                     <td><strong>Edit</strong></td>
                     <td><strong>Action</strong></td>

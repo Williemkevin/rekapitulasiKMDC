@@ -33,7 +33,7 @@
     @csrf
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Pasien</label>
-        <input type="text" name="namaPasien" class="form-control" id="namaPasien" aria-describedby="nameHelp">
+        <input type="text" name="namaPasien" class="form-control" id="namaPasien" aria-describedby="nameHelp" required>
         <label for="exampleInputEmaill">Dokter</label>
 
         <div>

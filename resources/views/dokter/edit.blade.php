@@ -20,16 +20,16 @@
     @method("PUT")
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp" value={{$dokter->nama_lengkap}}>
+        <input type="text" name="namaDokter" class="form-control" id="namaDokter" aria-describedby="nameHelp" value='{{$dokter->nama_lengkap}}' required>
 
         <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp" value= {{$user->email}}>
+        <input type="text" name="emailDokter" class="form-control" id="emailDokter" aria-describedby="nameHelp" value= '{{$user->email}}' required>
 
         <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp"  value= {{$user->username}}>
+        <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" aria-describedby="nameHelp"  value= '{{$user->username}}' required>
 
         <label for="exampleInputEmaill">Singkatan</label>
-        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"  value={{$dokter->kode_nama_dokter}}>
+        <input type="text" name="singkatan" class="form-control" id="singkatan" aria-describedby="nameHelp"  value='{{$dokter->kode_nama_dokter}}' required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

@@ -19,16 +19,16 @@
     @csrf
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Lengkap</label>
-        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp">
+        <input type="text" name="namaAdmin" class="form-control" id="namaAdmin" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">Email</label>
-        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp">
+        <input type="text" name="emailAdmin" class="form-control" id="emailAdmin" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">username</label>
-        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp">
+        <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" aria-describedby="nameHelp" required>
 
         <label for="exampleInputEmaill">Password</label>
-        <input type="text" name="password" class="form-control" id="password" aria-describedby="nameHelp">
+        <input type="text" name="password" class="form-control" id="password" aria-describedby="nameHelp" required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

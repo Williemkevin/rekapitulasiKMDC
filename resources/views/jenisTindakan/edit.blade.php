@@ -20,13 +20,13 @@
     @method("PUT")
     <div class="form-group">
         <label>Nama Tindakan</label>
-        <input type="text" name="nama_tindakan" class="form-control" id="nama_tindakan" aria-describedby="nameHelp" value={{$jenisTindakan->nama_tindakan}}>
-
+        <input type="text" name="nama_tindakan" class="form-control" id="nama_tindakan" aria-describedby="nameHelp" value='{{$jenisTindakan->nama_tindakan}}' required>
+ 
         <label>Biaya Tindakan</label>
-        <input type="number" name="biaya_tindakan" class="form-control" id="biaya_tindakan" aria-describedby="nameHelp" value={{$jenisTindakan->biaya_tindakan}} step="1000">
+        <input type="number" name="biaya_tindakan" class="form-control" id="biaya_tindakan" aria-describedby="nameHelp" value='{{$jenisTindakan->biaya_tindakan}}' required>
 
         <label>Biaya Bahan</label>
-        <input type="number" name="biaya_bahan" class="form-control" id="biaya_bahan" aria-describedby="nameHelp" value={{$jenisTindakan->biaya_bahan}} step="1000">
+        <input type="number" name="biaya_bahan" class="form-control" id="biaya_bahan" aria-describedby="nameHelp" value='{{$jenisTindakan->biaya_bahan}}' required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

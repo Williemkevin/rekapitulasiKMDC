@@ -19,10 +19,10 @@
     @csrf
     <div class="form-group">
         <label>Kode Diagnosa</label>
-        <input type="text" name="kodeDiagnosa" class="form-control" id="kodeDiagnosa" aria-describedby="nameHelp">
+        <input type="text" name="kodeDiagnosa" class="form-control" id="kodeDiagnosa" required>
 
         <label>Nama Diagnosa</label>
-        <input type="text" name="namaDiagnosa" class="form-control" id="namaDiagnosa" aria-describedby="nameHelp">
+        <input type="text" name="namaDiagnosa" class="form-control" id="namaDiagnosa" required>
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

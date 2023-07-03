@@ -21,10 +21,10 @@
     <div class="form-group">
         <div class="form-group">
             <label>Kode Diagnosa</label>
-            <input type="text" name="kodeDiagnosa" class="form-control" id="kodeDiagnosa" aria-describedby="nameHelp" value={{$diagnosa->kode_diagnosa}}>
+            <input type="text" name="kodeDiagnosa" class="form-control" id="kodeDiagnosa" aria-describedby="nameHelp" value= '{{$diagnosa->kode_diagnosa}}' required>
     
             <label>Nama Diagnosa</label>
-            <input type="text" name="namaDiagnosa" class="form-control" id="namaDiagnosa" aria-describedby="nameHelp"value={{$diagnosa->nama_diagnosa}}>
+            <input type="text" name="namaDiagnosa" class="form-control" id="namaDiagnosa" aria-describedby="nameHelp" value='{{$diagnosa->nama_diagnosa}}' required>
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
     </div>
