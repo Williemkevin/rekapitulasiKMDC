@@ -16,6 +16,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- Select2 -->
+    <link href="{{ asset('assets/vendor/css/select2.css') }}" rel="stylesheet">
+
+
     <!-- Styles -->
     <link href="{{ asset('assets/vendor/css/core.css') }}" rel="stylesheet">
 </head>

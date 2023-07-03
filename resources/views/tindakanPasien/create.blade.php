@@ -37,7 +37,7 @@
         <label for="exampleInputEmaill">Dokter</label>
 
         <div>
-            <select class="form-select" aria-label="Default select example" name="namaDokter" id="namaDokter">
+            <select class="form-select autoComplete" aria-label="Default select example" name="namaDokter" id="namaDokter">
                 <option>-- Pilih Dokter --</option>
                 @foreach ($dokters as $dokter)
                 <option value="{{ $dokter->id }}">{{$dokter->nama_lengkap}}</option>
@@ -47,7 +47,7 @@
 
         <label for="exampleInputEmaill">Diagnosa</label>
         <div>
-            <select class="form-select" aria-label="Default select example" name="diagnosa" id="diagnosa">
+            <select class="form-select autoComplete"aria-label="Default select example" name="diagnosa" id="diagnosa">
                 <option>-- Pilih Diagnosa --</option>
                 @foreach ($diagnosas as $diagnosa)
                 <option value="{{ $diagnosa->id }}">{{ $diagnosa->kode_diagnosa }} - {{ $diagnosa->nama_diagnosa }}
@@ -72,6 +72,9 @@
 
 @section('script')
 <script type="text/javascript">
+    $(document).ready(function() {
+        $('.autoComplete').select2();
+    });
     var jenisTindakans = <?php echo json_encode($jenisTindakans); ?>;
     var count = 0;
 
