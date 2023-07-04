@@ -75,6 +75,11 @@
             <form id="formAuthentication" class="mb-3" method="GET" action="{{ route('newPassword') }}">
               @csrf
               <div class="mb-3">
+              @if (session('error'))
+                  <div class="alert alert-danger" role="alert">
+                      {{ session('error') }}
+                  </div>
+              @endif
               </div>
               <div class="mb-3 form-password-toggle">
                 <div class="d-flex justify-content-between">
@@ -89,13 +94,9 @@
                     placeholder="Old Password"
                     aria-describedby="password"
                     required autocomplete="current-password"
+                    value="{{ old('oldPassword') }}"
                   />
                   <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  @error('oldPassword')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
                 </div>
               </div>
 
@@ -112,6 +113,7 @@
                     placeholder="New Password"
                     aria-describedby="password"
                     required autocomplete="current-password"
+                    value="{{ old('newPassword') }}"
                   />
                   <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   @error('newPassword')
@@ -135,6 +137,7 @@
                     placeholder="Confirm New Password"
                     aria-describedby="password"
                     required autocomplete="current-password"
+                    value="{{ old('KonfNewPassword') }}"
                   />
                   <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   @error('KonfNewPassword')

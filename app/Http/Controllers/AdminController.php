@@ -160,7 +160,7 @@ class AdminController extends Controller
     public function newPassword(Request $request)
     {
         if ((Hash::check($request->oldPassword, auth()->user()->password)) == false) {
-            return back()->with("oldPassword", "Old Password Doesn't match!");
+            return back()->with("error", "Old Password Doesn't match!");
         }
 
         $validator = Validator::make($request->all(), [
