@@ -88,7 +88,15 @@ use App\Models\Dokter;
         <div data-i18n="Analytics">Rekap Fee RSIA</div>
       </a>
     </li>
+    
     @endif
+    <li class="{{ (request()->is('ubahpassword*')) ? 'menu-item active': 'menu-item'}}">
+      <a href="{{ url('ubahpassword') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-key"></i>
+        <div data-i18n="Analytics">Ubah Password</div>
+      </a>
+    </li>
+
 
     <li class="menu-item">
       <form action="{{ route('logout') }}" method="POST">

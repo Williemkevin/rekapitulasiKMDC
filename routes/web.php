@@ -74,3 +74,6 @@ Route::get('/print/feedokter', [RekapPendapatanController::class, 'printPdf'])->
 Route::post('jenistindakan/aktifkan', [JenisTindakanController::class, 'aktifkan'])->name('jenistindakan.aktifkan');
 Route::post('jenistindakan/nonaktifkan', [JenisTindakanController::class, 'nonaktifkan'])->name('jenistindakan.nonaktifkan');
 Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ubahpersentase'])->name('jenistindakan.ubahpersentase');
+
+Route::get('/ubahpassword', [AdminController::class, 'ubahPassword'])->name('ubahPassword');
+Route::get('/newPassword', [AdminController::class, 'newPassword'])->name('newPassword');

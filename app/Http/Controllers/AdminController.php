@@ -152,4 +152,32 @@ class AdminController extends Controller
         $admin->save();
         return response()->json(array('status' => 'success'), 200);
     }
+
+    public function ubahPassword()
+    {
+        return view('ubahpassword');
+    }
+    public function newPassword(Request $request)
+    {
+        if ((Hash::check($request->oldPassword, auth()->user()->password)) == false) {
+            return back()->with("oldPassword", "Old Password Doesn't match!");
+        }
+
+        $validator = Validator::make($request->all(), [
+            'newPassword' => 'required|min:8',
+            'KonfNewPassword' => ['same:newPassword'],
+        ], [
+            'newPassword.required' => 'Password harus diisi.',
+            'KonfNewPassword.required' => 'Confirm Password harus diisi.',
+
+            'newPassword.min' => 'Password minimal harus terdiri dari 8 karakter.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            User::find(auth()->user()->id)->update(['password' => Hash::make($request->newPassword)]);
+            return back();
+        }
+    }
 }
