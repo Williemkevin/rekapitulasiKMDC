@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diagnosa;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class DiagnosaController extends Controller
@@ -38,14 +39,23 @@ class DiagnosaController extends Controller
      */
     public function store(Request $request)
     {
-        $diagnosa = new Diagnosa();
-        $diagnosa->kode_diagnosa = $request->get('kodeDiagnosa');
-        $diagnosa->nama_diagnosa = $request->get('namaDiagnosa');
-        $diagnosa->created_at = now("Asia/Bangkok");
-        $diagnosa->updated_at = now("Asia/Bangkok");
-        $diagnosa->save();
+        try {
+            $diagnosa = new Diagnosa();
+            $diagnosa->kode_diagnosa = $request->get('kodeDiagnosa');
+            $diagnosa->nama_diagnosa = $request->get('namaDiagnosa');
+            $diagnosa->created_at = now("Asia/Bangkok");
+            $diagnosa->updated_at = now("Asia/Bangkok");
+            $diagnosa->save();
 
-        return redirect()->route('diagnosa.index')->with('status', 'New Diagnosa ' .  $diagnosa->nama_diagnosa . ' is already inserted');
+            return redirect()->route('diagnosa.index')->with('status', 'New Diagnosa ' .  $diagnosa->nama_diagnosa . ' is already inserted');
+        }catch (QueryException $e) {
+        $errorCode = $e->errorInfo[1];
+        if ($errorCode === 1062) {
+            echo "Kode diagnosa sudah ada di database.";
+        } else {
+            echo "Terjadi kesalahan saat menyimpan data diagnosa.";
+        }
+    }
     }
 
     /**
@@ -115,4 +125,15 @@ class DiagnosaController extends Controller
         $data->save();
         return response()->json(array('status' => 'success'), 200);
     }
+
+    public function CheckKodeDiagnosa($kode)
+    {
+        $diagnosa = Diagnosa::where('kode_diagnosa', $kode)->get();
+        if($diagnosa != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
