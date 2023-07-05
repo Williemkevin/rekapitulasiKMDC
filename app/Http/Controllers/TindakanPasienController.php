@@ -9,7 +9,6 @@ use App\Models\Fee;
 use App\Models\JenisTindakan;
 use App\Models\JenisTindakanPasien;
 use App\Models\Pasien;
-use App\Models\TindakanPasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;

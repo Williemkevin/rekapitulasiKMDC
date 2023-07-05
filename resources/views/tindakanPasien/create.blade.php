@@ -38,7 +38,7 @@
 
         <div>
             <select class="form-select autoComplete" aria-label="Default select example" name="namaDokter" id="namaDokter">
-                <option>-- Pilih Dokter --</option>
+                <option value="-">-- Pilih Dokter --</option>
                 @foreach ($dokters as $dokter)
                 <option value="{{ $dokter->id }}">{{$dokter->nama_lengkap}}</option>
                 @endforeach
@@ -48,7 +48,7 @@
         <label for="exampleInputEmaill">Diagnosa</label>
         <div>
             <select class="form-select autoComplete"aria-label="Default select example" name="diagnosa" id="diagnosa">
-                <option>-- Pilih Diagnosa --</option>
+                <option  value="-">-- Pilih Diagnosa --</option>
                 @foreach ($diagnosas as $diagnosa)
                 <option value="{{ $diagnosa->id }}">{{ $diagnosa->kode_diagnosa }} - {{ $diagnosa->nama_diagnosa }}
                 </option>
@@ -66,7 +66,7 @@
             <label for="exampleInputEmaill">Total Biaya</label>
             <input type="number" name="totalBiaya" class="form-control" id="totalBiaya" readonly>
         </div>
-        <button onclick="submit()" type="submit" class="btn btn-primary" style="margin-top: 20px;" id="submitt">Submit</button>
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;" id="submitt">Submit</button>
 </form>
 @endsection
 
@@ -94,27 +94,30 @@
             '<button type="submit" class="btn btn-danger" onclick="deletetindakan(' + count +')">X</button></div>');
     });
 
-    $("#submitt").click(function () {
-        var selectElements = document.querySelectorAll('[name="jenisTindakan[]"]');
-        var selectedOptions = [];
+        $("#submitt").click(function (event) {
+            var fields = [{ name: 'namaPasien', message: 'Nama Pasien Wajib diisi' },
+                { name: 'namaDokter', message: 'Nama Dokter Wajib dipilih' },
+                { name: 'diagnosa', message: 'Diagnosa wajib dipilih' },
+                { name: 'jenisTindakan', message: 'Jenis Tindakan wajib diisi' }];
 
-        selectElements.forEach(function (selectElement) {
-            var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
-            selectedOptions = selectedOptions.concat(selectedOption);
+            for (var i = 0; i < fields.length; i++) {
+                var field = fields[i];
+                var value = $('#' + field.name).val();
+                if (!value || value === '-') {
+                    event.preventDefault();
+                    alert(field.message);
+                    break;
+                }
+            }
+
+            var selectElements = document.querySelectorAll('[name="jenisTindakan[]"]');
+            var selectedOptions = [];
+
+            selectElements.forEach(function (selectElement) {
+                var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
+                selectedOptions = selectedOptions.concat(selectedOption);
+            });
         });
-    });
-
-    function submit(id) {
-        var selectElements = document.querySelectorAll('[name="jenisTindakan[]"]');
-        var selectedOptions = [];
-
-        selectElements.forEach(function (selectElement) {
-            var selectedOption = Array.from(selectElement.selectedOptions).map(option => option.value);
-            selectedOptions = selectedOptions.concat(selectedOption);
-        });
-
-        alert(selectedOptions);
-    }
 
     function deletetindakan(id) {
         $("." + id).remove();
