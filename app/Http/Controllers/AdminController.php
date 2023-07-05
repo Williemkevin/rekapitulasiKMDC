@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -180,4 +181,29 @@ class AdminController extends Controller
             return back();
         }
     }
-}
+    public function saveData(Request $request)
+    {
+        $id= $request->get('id');
+        $name=$request->get('name');
+        $value=$request->get('value');
+        $setting = Setting::find($id);
+
+        if($name == 'name'){
+            $setting->name=$value;
+        }else{
+            $setting->value=$value;
+        }
+
+        $setting->save();
+        // return response()->json(array(
+        //     'status'=>'ok',
+        //     'msg'=>'Updated Data Done'
+        //     ),200);
+        // }
+    }
+    public function setting()
+    {
+        $settings = Setting::all();
+        return view('setting', compact('settings'));
+    }
+}   

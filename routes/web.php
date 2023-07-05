@@ -77,3 +77,12 @@ Route::post('jenistindakan/ubahpersentase', [JenisTindakanController::class, 'ub
 
 Route::get('/ubahpassword', [AdminController::class, 'ubahPassword'])->name('ubahPassword');
 Route::get('/newPassword', [AdminController::class, 'newPassword'])->name('newPassword');
+
+
+Route::get('/setting', function () {
+    return view('setting');
+});
+Route::get('/setting', [AdminController::class, 'setting'])->name('setting');
+
+Route::post('/saveData', [AdminController::class, 'saveData'])->name('admin.saveData');
+Route::post('/save', [AdminController::class, 'saveData'])->name('save');

@@ -88,14 +88,23 @@ use App\Models\Dokter;
         <div data-i18n="Analytics">Rekap Fee RSIA</div>
       </a>
     </li>
-    
     @endif
+
     <li class="{{ (request()->is('ubahpassword*')) ? 'menu-item active': 'menu-item'}}">
       <a href="{{ url('ubahpassword') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-key"></i>
         <div data-i18n="Analytics">Ubah Password</div>
       </a>
     </li>
+
+    @if (str_contains(Auth::user()->role, 'superadmin'))
+    <li class="{{ (request()->is('setting*')) ? 'menu-item active': 'menu-item'}}">
+      <a href="{{ url('setting') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-cog"></i>
+        <div data-i18n="Analytics">Setting</div>
+      </a>
+    </li>
+    @endif
 
 
     <li class="menu-item">
