@@ -47,7 +47,7 @@ use App\Models\Dokter;
             <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Dokter:</label>
             <select class="form-select" aria-label="Default select example" name="dokter" id="dokter" style="width: 150px; margin-bottom: 10px;">
             <?php
-                echo "<option value='-'" . (request()->segment(4) == '-' ? "selected>All</option>" : "'>All</option>");            
+                echo "<option value='-'" . (request()->segment(4) == '-' ? "selected>All</option>" : "'>All</option>");
                 foreach ($dokter as $d) {
                     if($d->id == request()->segment(4)) {
                         echo "<option value=\"$d->id\" selected>$d->nama_lengkap</option>";
@@ -67,7 +67,7 @@ use App\Models\Dokter;
 
     <div style="float: right; margin-top: 7px; margin-right: 7px;" id="printContainer">
         <form action="{{url('print/feedokter')}}">
-            <input type="hidden" value="{{$total[0]->totalTHPDokter}}" name="totalFeeDokter">
+            <input type="hidden" value="{{$total[0]->dokter_fee}}" name="totalFeeDokter">
             <input type="hidden" value={{request()->segment(4)}}  name="idDokter">
             <input type="hidden" value={{request()->segment(2)}} name="bulan">
             <input type="hidden" value={{request()->segment(3)}} name="tahun">
@@ -102,7 +102,7 @@ use App\Models\Dokter;
             </tr>
             @else
             @foreach ($dataTindakan as $dt)
-            <tr> 
+            <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $dt->tanggal_kunjungan }}</td>
                 <td>{{ $dt->namaDokter }}</td>
@@ -123,11 +123,11 @@ use App\Models\Dokter;
                 @for ($i = 0; $i < 7; $i++)
                     <td></td>
                 @endfor
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totaltarif)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalBHP)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalSharing)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalRSIAFee)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalTHPDokter)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->total)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->sharing)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->rsia_fee)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->dokter_fee)}}</strong></td>
             </tr>
             @endforeach
             @endif

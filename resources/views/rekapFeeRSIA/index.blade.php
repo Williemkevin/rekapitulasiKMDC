@@ -42,7 +42,7 @@
 
     <div style="float: right; margin-top: 7px; margin-right: 7px;">
         <form action="{{url('print/feersia')}}">
-            <input type="hidden" value="{{$total[0]->totalRSIAFee}}" name="rekapFeeRSIA">
+            <input type="hidden" value="{{$total[0]->rsia_fee}}" name="rekapFeeRSIA">
             <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
         </form>
     </div>
@@ -96,14 +96,14 @@
             @endforeach
             @foreach ($total as $t)
             <tr  style="white-space: nowrap;">
-                @for ($i = 0; $i <= 5; $i++)
+                @for ($i = 0; $i <= 6; $i++)
                     <td></td>
                 @endfor
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totaltarif)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalBHP)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalSharing)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalRSIAFee)}}</strong></td>
-                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->totalTHPDokter)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->total)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->sharing)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->rsia_fee)}}</strong></td>
+                <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->dokter_fee)}}</strong></td>
             </tr>
             @endforeach
             @endif

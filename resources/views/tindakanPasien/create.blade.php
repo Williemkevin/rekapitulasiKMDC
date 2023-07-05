@@ -18,7 +18,7 @@
         width: 100px;
     }
 
-</style> 
+</style>
 @extends('layout.sneat')
 
 @section('menu')
@@ -87,7 +87,7 @@
         count++;
         $("#tindakan").append(
             '<div id="addTindakan" class=' + count +
-            '><label>Jenis Tindakan</label><div><select class="form-select jenisTindakan' + count +'" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan" onchange="getBiaya(' + count +')">' +
+            '><label>Jenis Tindakan</label><div><select class="form-select autoComplete jenisTindakan' + count +'" aria-label="Default select example" name="jenisTindakan[]" id="jenisTindakan" onchange="getBiaya(' + count +')">' +
             '<option value="-">-- Pilih Jenis Tindakan --</option>@foreach ($jenisTindakans as $jenisTindakan)<option value="{{ $jenisTindakan->id }}">{{ $jenisTindakan->nama_tindakan }}</option>' +
             '@endforeach </select> </div><label for="exampleInputEmaill">Jumlah Tindakan</label><input type="number" name="jumlah[]" value="1" class="form-control jumlahTindakan' + count +'" id="jumlah"  onchange="getBiaya(' + count +')">' +
             '<label for="exampleInputEmaill">Biaya Tindakan</label><input type="number" name="biaya[]" value="0" class="form-control biayaTindakan' + count +'" id="biayaTindakan"  readonly>' +
@@ -133,7 +133,7 @@
         var biayaTindakan = tindakan ? tindakan.biaya_tindakan : null;
 
         $(".biayaTindakan" + id).val(biayaTindakan*jumlahTindakan);
-     
+
         var biaya = document.getElementsByName('biaya[]');
         var totalBiaya = 0;
         for (var i = 0; i < biaya.length; i++) {

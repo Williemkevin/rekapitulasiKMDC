@@ -22,7 +22,7 @@
     </div>
     @endif
 </div>
-@endsection 
+@endsection
 
 @section('content')
 <form method="POST" action="{{ route('jenistindakan.ubahpersentase') }}">
@@ -31,18 +31,18 @@
         <div>
             <strong> Persentasi Pembagian Fee : </strong>
         </div>
-        
+
         @php
             $roleCheck = str_contains(Auth::user()->role, 'superadmin');
         @endphp
-        
+
         <div>
             Fee RSIA : <input type="number" style="width: 50px;" name="feersia" value="{{$persentaseFee->feersia}}" {{$roleCheck ? '' : 'readonly'}}> %
         </div>
         <div>
             Fee Dokter : <input type="number" style="width: 50px;" name="feedokter" value="{{$persentaseFee->feedokter}}" {{$roleCheck ? '' : 'readonly'}}> %
         </div>
-        
+
         @if(str_contains(Auth::user()->role, 'superadmin'))
             <div><button type="submit" class="btn btn-primary">Perbarui</button></div>
         @endif
@@ -50,7 +50,7 @@
 </form>
 
 @if (session('status'))
-<div class="alert alert-success">{{session('status')}}</div>    
+<div class="alert alert-success">{{session('status')}}</div>
 @elseif(session('failed'))
 <div class="alert alert-danger">{{session('failed')}}</div>
 @endif
@@ -189,4 +189,5 @@
     }
 
 </script>
+
 @endsection

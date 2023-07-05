@@ -27,7 +27,7 @@ class RekapPendapatanController extends Controller
 
         $dokter = ModelsDokter::select('id', 'nama_lengkap', 'kode_nama_dokter')->where('status', "1")->get();
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
-            ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter', 
+            ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter',
             p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan, jtp.jumlah_tindakan as jumlahTindakan, jtp.biaya_tindakan AS total, jtp.biaya_bahan, CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter")
             ->join('dokters AS d', 'd.id', '=', 'jtp.dokter_id')
             ->join('pasiens AS p', 'p.id', '=', 'jtp.pasien_id')
@@ -41,13 +41,15 @@ class RekapPendapatanController extends Controller
             ->whereRaw("MONTH(jtp.tanggal_kunjungan) = $bulan")
             ->whereRaw("YEAR(jtp.tanggal_kunjungan) = $tahun")
             ->get();
+
+
         $total = JenisTindakanPasien::join('jenis_tindakans as jt', 'jt.id', '=', 'jenis_tindakan_pasiens.jenis_tindakan_id')
             ->select(
-                DB::raw("SUM(jt.biaya_tindakan + jt.biaya_bahan) as totaltarif"),
-                DB::raw("SUM(jt.biaya_bahan) as totalBHP"),
-                DB::raw("SUM(jt.biaya_tindakan) as totalSharing"),
-                DB::raw("SUM(0.3 * jt.biaya_tindakan) as totalRSIAFee"),
-                DB::raw("SUM(0.7 * jt.biaya_tindakan + jt.biaya_bahan) as totalTHPDokter")
+                DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan) AS total'),
+                DB::raw('SUM(jenis_tindakan_pasiens.biaya_bahan) AS biaya_bahan'),
+                DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing'),
+                DB::raw('SUM(0.3 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
+                DB::raw('SUM(0.7 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
             )
             ->where(function ($query) use ($dokterSelected) {
                 if ($dokterSelected != 0) {
@@ -133,7 +135,7 @@ class RekapPendapatanController extends Controller
         $tahun = $request->tahun;
         $terbilang = $this->terbilang($totalFee);
 
-        $namaPemimpin = DB::table('setting')->where('name', 'Nama pemimpin')->value('value');
+        $namaPemimpin = DB::table('settings')->where('name', 'Nama pemimpin')->value('value');
 
         $mpdf = new Mpdf();
         $html = view('rekapPendapatan.pdf', compact('totalFee', 'terbilang', 'dokterSelect', 'bulan', 'tahun', 'namaPemimpin'))->render();
