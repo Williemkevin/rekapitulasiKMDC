@@ -5,9 +5,6 @@
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         List Rekapan Fee RSIA
     </div>
-    <div style="float: right; margin: 15px;">
-        <a href="{{url('dokter/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</a>
-    </div>
 </div>
 @endsection
 

@@ -25,6 +25,7 @@
 @endsection
 
 @section('content')
+@if(str_contains(Auth::user()->role, 'superadmin'))
 <form method="POST" action="{{ route('jenistindakan.ubahpersentase') }}">
     @csrf
     <div id="feeCalculator">
@@ -48,6 +49,7 @@
         @endif
     </div>
 </form>
+@endif
 
 @if (session('status'))
 <div class="alert alert-success">{{session('status')}}</div>
@@ -99,12 +101,17 @@
     </tbody>
 </table>
 
-
+@if(str_contains(Auth::user()->role, 'superadmin'))
 <div style="margin: 20px; font-size: 20px;">
     <strong>List Jenis Tindakan Nonaktif</strong>
 </div>
 <table id="jenisTindakanNonaktif" class="table table-striped" style="width:100%">
     <thead>
+        @if (count($jenisTindakanNonAktif) == 0)
+        <tr>
+            <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+        </tr>
+        @else
         <tr>
             <td>Id</td>
             <td>Nama Tindakan</td>
@@ -114,15 +121,11 @@
                 <td>Edit</td>
                 <td>Action</td>
             @endif
-
         </tr>
+        @endif
     </thead>
     <tbody>
-        @if (count($jenisTindakanNonAktif) == 0)
-        <tr>
-            <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
-        </tr>
-        @else
+
         @foreach ($jenisTindakanNonAktif as $t)
         <tr>
             <td>{{ $t->id }}</td>
@@ -139,9 +142,9 @@
             @endif
         </tr>
         @endforeach
-        @endif
     </thead>
 </table>
+@endif
 @endsection
 
 

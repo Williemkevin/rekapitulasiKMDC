@@ -3,10 +3,10 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        Setting Nama
+        Setting Kuitansi
     </div>
 </div>
-@endsection 
+@endsection
 
 @section('content')
 <table id="setting" class="table table-striped" style="width:100%">

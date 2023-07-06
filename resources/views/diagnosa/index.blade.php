@@ -64,12 +64,18 @@
     </table>
 </div>
 
+@if(str_contains(Auth::user()->role, 'superadmin'))
 <div class="table-responsive text-nowrap">
     <div style="margin: 20px; font-size: 20px;">
         <strong>List Diagnosa Nonaktif</strong>
     </div>
     <table id="diagnosaNonAktif" class="table table-striped" style="width:100%">
         <thead>
+            @if (count($diagnosaNonAktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
+            </tr>
+            @else
             <tr>
                 <td><strong>Id</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
@@ -78,15 +84,11 @@
                     <td><strong>Edit</strong></td>
                     <td><strong>Action</strong></td>
                 @endif
-
             </tr>
+            @endif
         </thead>
         <tbody>
-            @if (count($diagnosaNonAktif) == 0)
-            <tr>
-                <td class="text-center" colspan="8">Tidak ada Diagnosa yang terdata</td>
-            </tr>
-            @else
+
             @foreach ($diagnosaNonAktif as $d)
             <tr>
                 <td>{{ $d->id }}</td>
@@ -102,11 +104,10 @@
                 @endif
             </tr>
             @endforeach
-            @endif
         </tbody>
     </table>
 </div>
-
+@endif
 
 @endsection
 

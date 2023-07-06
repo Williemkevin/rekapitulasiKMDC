@@ -3,7 +3,7 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Dokter 
+        List Dokter
     </div>
 
     @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -77,26 +77,27 @@
     </div>
     <table id="dokterNonAktif" class="table table-striped" style="width:100%">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nama Lengkap</th>
-            <th>Singkatan</th>
-            <th>Status</th>
-            <th>Email</th>
-            <th>Username</th>
-            <th>Last Login</th>
-            @if(str_contains(Auth::user()->role, 'superadmin'))
-                <th>Edit</th>
-                <th>Non Aktifkan</th>
+            @if (count($dokterNonaktif) == 0)
+            <tr>
+                <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+            </tr>
+            @else
+            <tr>
+                <th>ID</th>
+                <th>Nama Lengkap</th>
+                <th>Singkatan</th>
+                <th>Status</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Last Login</th>
+                @if(str_contains(Auth::user()->role, 'superadmin'))
+                    <th>Edit</th>
+                    <th>Non Aktifkan</th>
+                @endif
+            </tr>
             @endif
-        </tr>
-    </thead>
+        </thead>
     <tbody>
-        @if (count($dokterNonaktif) == 0)
-        <tr>
-            <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
-        </tr>
-        @else
         @foreach ($dokterNonaktif as $dokterNonAktif)
         <tr>
             <td>{{ $dokterNonAktif->id }}</td>
@@ -116,7 +117,7 @@
             @endif
         </tr>
         @endforeach
-        @endif
+
     </tbody>
     </table>
 </div>

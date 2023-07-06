@@ -3,7 +3,7 @@
 @section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Admin 
+        List Admin
     </div>
 
     @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -74,6 +74,11 @@
     </div>
     <table id="adminNonAktif" class="table table-striped" style="width:100%">
         <thead>
+        @if (count($adminNonaktif) == 0)
+        <tr>
+            <td class="text-center" colspan="8">Tidak ada Admin yang terdata</td>
+        </tr>
+        @else
         <tr>
             <th>ID</th>
             <th>Nama Lengkap</th>
@@ -85,13 +90,9 @@
                 <th>Non Aktifkan</th>
             @endif
         </tr>
+        @endif
     </thead>
     <tbody>
-        @if (count($adminNonaktif) == 0)
-        <tr>
-            <td class="text-center" colspan="8">Tidak ada Admin yang terdata</td>
-        </tr>
-        @else
         @foreach ($adminNonaktif as $adminNonaktif)
         <tr>
             <td>{{ $adminNonaktif->id }}</td>
@@ -109,7 +110,6 @@
             @endif
         </tr>
         @endforeach
-        @endif
     </tbody>
     </table>
 </div>

@@ -69,7 +69,7 @@
       <div class="authentication-inner">
         <div class="card">
           <div class="card-body">
-          
+
             <h4 class="mb-2">Change Password</h4>
 
             <form id="formAuthentication" class="mb-3" method="GET" action="{{ route('newPassword') }}">
@@ -89,7 +89,7 @@
                   <input
                     type="password"
                     id="oldPassword"
-                    class="form-control @error('oldPassword') is-invalid @enderror" 
+                    class="form-control @error('oldPassword') is-invalid @enderror"
                     name="oldPassword"
                     placeholder="Old Password"
                     aria-describedby="password"
@@ -108,7 +108,7 @@
                   <input
                     type="password"
                     id="newPassword"
-                    class="form-control @error('newPassword') is-invalid @enderror" 
+                    class="form-control @error('newPassword') is-invalid @enderror"
                     name="newPassword"
                     placeholder="New Password"
                     aria-describedby="password"
@@ -132,7 +132,7 @@
                   <input
                     type="password"
                     id="KonfNewPassword"
-                    class="form-control @error('KonfNewPassword') is-invalid @enderror" 
+                    class="form-control @error('KonfNewPassword') is-invalid @enderror"
                     name="KonfNewPassword"
                     placeholder="Confirm New Password"
                     aria-describedby="password"
@@ -148,7 +148,7 @@
                 </div>
               </div>
               <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">Change</button>
+                <button class="btn btn-primary d-grid w-100" type="submit" onclick="goBack()">Change</button>
                 <br>
                 <button class="btn btn-danger d-grid w-100" onclick="goBack()">Cancel</button>
               </div>

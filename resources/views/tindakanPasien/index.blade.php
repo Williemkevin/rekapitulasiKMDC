@@ -2,13 +2,14 @@
     tr{
         white-space: nowrap;
     }
+
 </style>
 @extends('layout.sneat')
 
-@section('menu') 
+@section('menu')
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
-        List Tindakan Pasien 
+        List Tindakan Pasien
     </div>
     @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
     <div style="float: right; margin: 15px;">
@@ -19,7 +20,7 @@
 @endsection
 
 @section('content')
- 
+
 @if (session('status'))
 <div class="alert alert-success">{{session('status')}}</div>
 @endif

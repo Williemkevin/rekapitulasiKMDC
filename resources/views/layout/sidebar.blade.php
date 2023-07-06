@@ -20,12 +20,14 @@ use App\Models\Dokter;
       </a>
     </li>
 
+    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
     <li class="{{ (request()->is('diagnosa*')) ? 'menu-item active': 'menu-item'}}">
       <a href="{{ url('diagnosa') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-first-aid"></i>
         <div data-i18n="Analytics">Jenis Diagnosa</div>
       </a>
     </li>
+    @endif
 
     <li class="{{ (request()->is('jenistindakan*')) ? 'menu-item active': 'menu-item'}}">
       <a href="{{ url('jenistindakan') }}" class="menu-link">
@@ -34,14 +36,16 @@ use App\Models\Dokter;
       </a>
     </li>
 
+    @if (str_contains(Auth::user()->role, 'superadmin'))
     <li class="{{ (request()->is('dokter*')) ? 'menu-item active': 'menu-item'}}">
       <a href={{ url('dokter') }} class="menu-link">
         <i class="menu-icon tf-icons bx bx-user"></i>
         <div data-i18n="Analytics">Doctor</div>
       </a>
     </li>
+    @endif
 
-    @if (str_contains(Auth::user()->role, 'superadmin') || str_contains(Auth::user()->role, 'admin'))
+    @if (str_contains(Auth::user()->role, 'superadmin'))
     <li class="{{ (request()->is('admin*')) ? 'menu-item active': 'menu-item'}}">
       <a href="{{ url('admin') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-male"></i>
