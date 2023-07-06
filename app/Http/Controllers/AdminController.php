@@ -178,20 +178,20 @@ class AdminController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             User::find(auth()->user()->id)->update(['password' => Hash::make($request->newPassword)]);
-            return back();
+            return redirect('/');
         }
     }
     public function saveData(Request $request)
     {
-        $id= $request->get('id');
-        $name=$request->get('name');
-        $value=$request->get('value');
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $value = $request->get('value');
         $setting = Setting::find($id);
 
-        if($name == 'name'){
-            $setting->name=$value;
-        }else{
-            $setting->value=$value;
+        if ($name == 'name') {
+            $setting->name = $value;
+        } else {
+            $setting->value = $value;
         }
 
         $setting->save();
@@ -206,4 +206,4 @@ class AdminController extends Controller
         $settings = Setting::all();
         return view('setting', compact('settings'));
     }
-}   
+}
