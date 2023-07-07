@@ -11,8 +11,13 @@
 <div class="portlet-title">
     <div style="display: inline-block; margin: 15px; font-size: 25px; font-weight: bold;">
         Add New Diagnosa
-    </div>
+    </div> 
 </div>
+@if(Session::has('alert'))
+    <div class="alert alert-danger">
+        {{ Session::get('alert') }}
+    </div>
+@endif
 @endsection
 @section('content')
 <form method="POST" action="{{route('diagnosa.store')}}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diagnosa;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class DiagnosaController extends Controller
 {
@@ -48,14 +49,15 @@ class DiagnosaController extends Controller
             $diagnosa->save();
 
             return redirect()->route('diagnosa.index')->with('status', 'New Diagnosa ' .  $diagnosa->nama_diagnosa . ' is already inserted');
-        }catch (QueryException $e) {
-        $errorCode = $e->errorInfo[1];
-        if ($errorCode === 1062) {
-            echo "Kode diagnosa sudah ada di database.";
-        } else {
-            echo "Terjadi kesalahan saat menyimpan data diagnosa.";
+        } catch (QueryException $e) {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode === 1062) {
+                Session::flash('alert', 'Add new diagnosa gagal !!. Kode diagnosa sudah pernah digunakan');
+                return redirect()->back();
+            } else {
+                echo "Terjadi kesalahan saat menyimpan data diagnosa.";
+            }
         }
-    }
     }
 
     /**
@@ -129,11 +131,10 @@ class DiagnosaController extends Controller
     public function CheckKodeDiagnosa($kode)
     {
         $diagnosa = Diagnosa::where('kode_diagnosa', $kode)->get();
-        if($diagnosa != null){
+        if ($diagnosa != null) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-
 }
