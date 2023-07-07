@@ -94,7 +94,7 @@
               <div class="text-end" style="margin-right: 25px;">
                 <span id="current-time">
                     @php
-                    echo now()->format("d-m-Y H:i:s");
+                    echo now()->format("d-M-Y H:i:s");
                     @endphp
                 </span>
               </div>
@@ -147,7 +147,9 @@
     <script>
         function updateCurrentTime() {
             var currentTimeElement = document.getElementById('current-time');
-            var currentTime = new Date().toLocaleString();
+
+            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',second: 'numeric'};
+            var currentTime = new Date().toLocaleString('id-ID', options);
             currentTimeElement.innerText = currentTime;
         }
 

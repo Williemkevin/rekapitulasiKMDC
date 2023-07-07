@@ -21,7 +21,7 @@
         @foreach ($settings as $set)
         <tr>
             <td class="editable">{{ $loop->iteration }}</td>
-            <td class="editable" id="td_name_{{ $set->id}}">{{ $set->name }}</td>
+            <td id="td_name_{{ $set->id}}">{{ $set->name }}</td>
             <td class="editable" id="td_value_{{ $set->id}}">{{ $set->value }}</td>
         </tr>
         @endforeach
