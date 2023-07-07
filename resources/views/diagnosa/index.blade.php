@@ -28,7 +28,7 @@
     <table id="diagnosaAktif" class="table table-striped" style="width:100%">
         <thead>
             <tr>
-                <td><strong>Id</strong></td>
+                <td><strong>#</strong></td>
                 <td><strong>Kode Diagnosa</strong></td>
                 <td><strong>Nama</strong></td>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -46,7 +46,7 @@
             @else
             @foreach ($diagnosaAktif as $d)
             <tr>
-                <td>{{ $d->id }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->kode_diagnosa }}</td>
                 <td>{{ $d->nama_diagnosa }}</td>
                 @if(str_contains(Auth::user()->role, 'superadmin'))

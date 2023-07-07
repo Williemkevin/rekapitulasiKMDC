@@ -56,9 +56,10 @@
     <table id="tindakanPasien" class="table table-striped" style="width:100%">
         <thead class="table-border-bottom-0">
             <tr>
-                <th>No</th>
+                <th>#</th>
                 <th>Tahun</th>
                 <th>Tanggal</th>
+                <th>Nomor Rekam Medis</th>
                 <th>Dokter Gigi</th>
                 <th>Nama Pasien</th>
                 <th>Diagnosa</th>
@@ -77,14 +78,12 @@
                 <td class="text-center" colspan="8">Tidak ada data tindakan yang terdata</td>
             </tr>
             @else
-            @php
-                $no = 1;
-            @endphp
             @foreach ($dataTindakan as $dt)
             <tr>
-                <td>{{ $no++ }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $dt->tahun }}</td>
                 <td>{{ $dt->tanggal_kunjungan }}</td>
+                <td>{{ $dt->nomorRekamMedis }}</td>
                 <td>{{ $dt->namaDokter }}</td>
                 <td>{{ $dt->nama_lengkap }}</td>
                 <td>{{ $dt->kode_diagnosa }}</td>

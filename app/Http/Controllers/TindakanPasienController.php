@@ -30,7 +30,9 @@ class TindakanPasienController extends Controller
 
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
             ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, Date(jtp.tanggal_kunjungan) as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter', 
-                        p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan,jtp.jumlah_tindakan as jumlahTindakan, jtp.biaya_tindakan AS total, jtp.biaya_bahan, CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter")
+                        p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan,jtp.jumlah_tindakan as jumlahTindakan, jtp.biaya_tindakan AS total, jtp.biaya_bahan,
+                        CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, 
+                        CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter, jtp.nomor_rekam_medis as nomorRekamMedis")
             ->join('dokters AS d', 'd.id', '=', 'jtp.dokter_id')
             ->join('pasiens AS p', 'p.id', '=', 'jtp.pasien_id')
             ->join('diagnosas AS dg', 'dg.id', '=', 'jtp.diagnosa_id')
@@ -71,6 +73,7 @@ class TindakanPasienController extends Controller
         $pasien->save();
 
         $tindakan = $request->get('jenisTindakan');
+
         $jumlah = $request->get('jumlah');
         $idFee = Fee::orderBy('id', 'desc')->value('id');
 
@@ -88,6 +91,7 @@ class TindakanPasienController extends Controller
                     $tindakan->dokter_id = $request->get('namaDokter');
                     $tindakan->admin_id = 1;
                     $tindakan->tanggal_kunjungan = $request->get('tanggalKunjungan');
+                    $tindakan->nomor_rekam_medis = $request->get('nomorRekamMedis');
                     $tindakan->diagnosa_id = $request->get('diagnosa');
                     $tindakan->jumlah_tindakan = $jumlah[$i];
                     $tindakan->total_biaya = $request->get('totalBiaya');

@@ -81,8 +81,9 @@ use App\Models\Dokter;
     <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">
             <tr style="white-space: nowrap;">
-                <th>No</th>
+                <th>#</th>
                 <th>Tanggal</th>
+                <th>Nomor Rekam Medis</th>
                 <th>Dokter Gigi</th>
                 <th>Nama Pasien</th>
                 <th>Diagnosa</th>
@@ -105,6 +106,7 @@ use App\Models\Dokter;
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $dt->tanggal_kunjungan }}</td>
+                <td>{{ $dt->nomorRekamMedis }}</td>
                 <td>{{ $dt->namaDokter }}</td>
                 <td>{{ $dt->nama_lengkap }}</td>
                 <td>{{ $dt->kode_diagnosa }}</td>

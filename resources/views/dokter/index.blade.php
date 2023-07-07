@@ -27,7 +27,7 @@
     <table id="dokterAktif" class="table table-striped" style="width:100%">
         <thead class="table-border-bottom-0">
             <tr>
-                <th>ID</th>
+                <th>#</th>
                 <th>Nama Lengkap</th>
                 <th>Singkatan</th>
                 <th>Status</th>

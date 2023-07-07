@@ -49,10 +49,9 @@
     <table class="table w-auto text-start">
         <tbody class="table-border-bottom-0">
             <tr style="white-space: nowrap;">
-                <th>No</th>
-                {{-- <th>Bulan</th>
-                <th>Tahun</th> --}}
+                <th>#</th>
                 <th>Tanggal</th>
+                <th>Nomor Rekam Medis</th>
                 <th>Dokter</th>
                 <th>Pasien</th>
                 <th>Diagnosa</th>
@@ -69,16 +68,11 @@
                 <td class="text-center" colspan="8">Tidak ada yang terdata</td>
             </tr>
             @else
-            @php
-                $no = 1;
-            @endphp
             @foreach ($rekapFeeRSIA as $rekapFee)
             <tr  style="white-space: nowrap;">
-
-                <td>{{ $no++}}</td>
-                {{-- <td>{{ $rekapFee->bulan }}</td>
-                <td>{{ $rekapFee->tahun }}</td> --}}
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $rekapFee->tanggal }}</td>
+                <td>{{ $rekapFee->nomorRekamMedis }}</td>
                 <td>{{ $rekapFee->dokter}}</td>
                 <td>{{ $rekapFee->pasien}}</td>
                 <td>{{ $rekapFee->diagnosa}}</td>

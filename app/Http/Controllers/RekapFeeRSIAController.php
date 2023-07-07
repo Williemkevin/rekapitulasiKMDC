@@ -29,6 +29,7 @@ class RekapFeeRSIAController extends Controller
             "dig.kode_diagnosa as diagnosa",
             "jt.nama_tindakan as tindakan",
             "jenis_tindakan_pasiens.jumlah_tindakan as jumlahTindakan",
+            "jenis_tindakan_pasiens.nomor_rekam_medis as nomorRekamMedis",
             DB::raw("jenis_tindakan_pasiens.biaya_tindakan as tarif"),
             "jenis_tindakan_pasiens.biaya_bahan as BHP",
             DB::raw("CEILING(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing",),

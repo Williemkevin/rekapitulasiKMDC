@@ -34,8 +34,11 @@
     <div class="form-group">
         <label for="exampleInputEmaill">Nama Pasien</label>
         <input type="text" name="namaPasien" class="form-control" id="namaPasien" required>
-        <label for="exampleInputEmaill">Dokter</label>
 
+        <label for="exampleInputEmaill">Nomor Rekam Medis</label>
+        <input type="text" name="nomorRekamMedis" class="form-control" id="nomorRekamMedis" required>
+        
+        <label for="exampleInputEmaill">Dokter</label>
         <div>
             <select class="form-select autoComplete" aria-label="Default select example" name="namaDokter" id="namaDokter">
                 <option value="-">-- Pilih Dokter --</option>

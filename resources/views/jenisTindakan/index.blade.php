@@ -64,7 +64,7 @@
 <table id="jenisTindakanAktif" class="table table-striped" style="width:100%">
     <thead>
         <tr>
-            <td>Id</td>
+            <td>#</td>
             <td>Nama Tindakan</td>
             <td>Biaya Tindakan</td>
             <td>Biaya Bahan</td>
@@ -83,7 +83,7 @@
         @else
         @foreach ($jenisTindakanAktif as $t)
         <tr>
-            <td>{{ $t->id }}</td>
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $t->nama_tindakan }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_tindakan) }}</td>
             <td>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</td>
