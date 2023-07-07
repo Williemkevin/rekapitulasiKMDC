@@ -12,6 +12,7 @@ use App\Models\Pasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TindakanPasienController extends Controller
@@ -89,7 +90,10 @@ class TindakanPasienController extends Controller
                     $tindakan->pasien_id = $pasien->id;
                     $tindakan->jenis_tindakan_id = $t;
                     $tindakan->dokter_id = $request->get('namaDokter');
-                    $tindakan->admin_id = 1;
+
+                    $idAdmin = Admin::where('user_id', auth()->user()->id)->pluck('id')->first();
+
+                    $tindakan->admin_id = $idAdmin;
                     $tindakan->tanggal_kunjungan = $request->get('tanggalKunjungan');
                     $tindakan->nomor_rekam_medis = $request->get('nomorRekamMedis');
                     $tindakan->diagnosa_id = $request->get('diagnosa');

@@ -46,12 +46,13 @@ class RekapPendapatanController extends Controller
 
 
         $total = JenisTindakanPasien::join('jenis_tindakans as jt', 'jt.id', '=', 'jenis_tindakan_pasiens.jenis_tindakan_id')
+            ->join('fees', 'fees.id', '=', 'jenis_tindakan_pasiens.fees_id')
             ->select(
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan) AS total'),
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_bahan) AS biaya_bahan'),
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing'),
-                DB::raw('SUM(0.3 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
-                DB::raw('SUM(0.7 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
+                DB::raw('SUM((feersia/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
+                DB::raw('SUM((feedokter/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
             )
             ->where(function ($query) use ($dokterSelected) {
                 if ($dokterSelected != 0) {

@@ -33,24 +33,26 @@ class RekapFeeRSIAController extends Controller
             DB::raw("jenis_tindakan_pasiens.biaya_tindakan as tarif"),
             "jenis_tindakan_pasiens.biaya_bahan as BHP",
             DB::raw("CEILING(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing",),
-            DB::raw("(0.3 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) as RSIAFee"),
-            DB::raw("(0.7 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) as THPDRG")
+            DB::raw("((feersia/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) as RSIAFee"),
+            DB::raw("((feedokter/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) as THPDRG")
         )
             ->join('jenis_tindakans as jt', 'jt.id', '=', 'jenis_tindakan_pasiens.jenis_tindakan_id')
             ->join('dokters as d', 'd.id', '=', 'jenis_tindakan_pasiens.dokter_id')
             ->join('diagnosas as dig', 'dig.id', '=', 'jenis_tindakan_pasiens.diagnosa_id')
             ->join('pasiens as p', 'p.id', '=', 'jenis_tindakan_pasiens.pasien_id')
+            ->join('fees AS f', 'f.id', '=', 'jenis_tindakan_pasiens.fees_id')
             ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
 
         $total = JenisTindakanPasien::join('jenis_tindakans as jt', 'jt.id', '=', 'jenis_tindakan_pasiens.jenis_tindakan_id')
+            ->join('fees', 'fees.id', '=', 'jenis_tindakan_pasiens.fees_id')
             ->select(
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan) AS total'),
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_bahan) AS biaya_bahan'),
                 DB::raw('SUM(jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan) AS sharing'),
-                DB::raw('SUM(0.3 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
-                DB::raw('SUM(0.7 * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
+                DB::raw('SUM((feersia/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
+                DB::raw('SUM((feedokter/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
             )
             ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
