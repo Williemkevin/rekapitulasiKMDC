@@ -92,7 +92,6 @@ class TindakanPasienController extends Controller
                     $tindakan->dokter_id = $request->get('namaDokter');
 
                     $idAdmin = Admin::where('user_id', auth()->user()->id)->pluck('id')->first();
-
                     $tindakan->admin_id = $idAdmin;
                     $tindakan->tanggal_kunjungan = $request->get('tanggalKunjungan');
                     $tindakan->nomor_rekam_medis = $request->get('nomorRekamMedis');

@@ -122,7 +122,7 @@ use App\Models\Dokter;
 
             @foreach ($total as $t)
             <tr style="white-space: nowrap;">
-                @for ($i = 0; $i < 7; $i++)
+                @for ($i = 0; $i < 8; $i++)
                     <td></td>
                 @endfor
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->total)}}</strong></td>

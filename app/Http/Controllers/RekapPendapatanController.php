@@ -29,12 +29,13 @@ class RekapPendapatanController extends Controller
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
             ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter',
             p.nama_lengkap, dg.kode_diagnosa, jt.nama_tindakan, jtp.jumlah_tindakan as jumlahTindakan, jtp.biaya_tindakan AS total, jtp.biaya_bahan, 
-            CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feersia/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeRSIA, 
-            CEILING((jtp.biaya_tindakan - jtp.biaya_bahan) * (SELECT (feedokter/100) FROM fees ORDER BY id DESC LIMIT 1)) AS FeeDokter,  jtp.nomor_rekam_medis as nomorRekamMedis")
+            CEILING(jtp.biaya_tindakan - jtp.biaya_bahan) AS Sharing, ((feersia/100) * (jtp.biaya_tindakan - jtp.biaya_bahan)) as FeeRSIA,
+            ((feedokter/100) * (jtp.biaya_tindakan - jtp.biaya_bahan)) as FeeDokter , nomor_rekam_medis as nomorRekamMedis")
             ->join('dokters AS d', 'd.id', '=', 'jtp.dokter_id')
             ->join('pasiens AS p', 'p.id', '=', 'jtp.pasien_id')
             ->join('diagnosas AS dg', 'dg.id', '=', 'jtp.diagnosa_id')
             ->join('jenis_tindakans AS jt', 'jt.id', '=', 'jtp.jenis_tindakan_id')
+            ->join('fees', 'fees.id', '=', 'jtp.fees_id')
             ->where(function ($query) use ($dokterSelected) {
                 if ($dokterSelected != '-') {
                     $query->where('jtp.dokter_id', $dokterSelected);
@@ -55,7 +56,7 @@ class RekapPendapatanController extends Controller
                 DB::raw('SUM((feedokter/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
             )
             ->where(function ($query) use ($dokterSelected) {
-                if ($dokterSelected != 0) {
+                if ($dokterSelected != '-') {
                     $query->where('dokter_id', $dokterSelected);
                 }
             })
