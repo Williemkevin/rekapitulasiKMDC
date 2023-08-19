@@ -99,7 +99,7 @@ use App\Models\Dokter;
         <tbody>
             @if (count($dataTindakan) == 0)
             <tr>
-                <td class="text-center" colspan="8">Tidak ada data tindakan yang terdata</td>
+                <td class="text-center" colspan="8">Tidak ada data rekap pendapatan yang terdata</td>
             </tr>
             @else
             @foreach ($dataTindakan as $dt)
