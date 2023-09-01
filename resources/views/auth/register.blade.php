@@ -20,6 +20,9 @@
                             <label>Email</label>
                             <input type="email" name="email" class="form-control" id="email" required value="{{ old('email') }}">
                     
+                            <label>Nomor Telepon</label>
+                            <input type="number" name="nomorTelepon" class="form-control" id="nomorTelepon" required value="{{ old('nomorTelepon') }}">
+                    
                             <label>username</label>
                             <input type="text" name="username" class="form-control" id="username" required value="{{ old('username') }}">
                     
