@@ -129,10 +129,11 @@
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Log In</button>
-                  <br>
-                  <button class="btn btn-secondary d-grid w-100" type="submit">Sign Up</button>
-                </div>
               </form>
+                  <br>
+                  <a href="{{ route('register') }}" class="btn btn-secondary d-grid w-100">Sign Up</a>
+                </div>
+              
             </div>
           </div>
           <!-- /Register -->
