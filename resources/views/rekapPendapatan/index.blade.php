@@ -122,9 +122,10 @@ use App\Models\Dokter;
 
             @foreach ($total as $t)
             <tr style="white-space: nowrap;">
-                @for ($i = 0; $i < 8; $i++)
+                @for ($i = 0; $i < 7; $i++)
                     <td></td>
                 @endfor
+                <td>Total</td>
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->total)}}</strong></td>
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->biaya_bahan)}}</strong></td>
                 <td><strong>{{ App\Http\Controllers\JenisTindakanController::rupiah($t->sharing)}}</strong></td>
@@ -135,10 +136,13 @@ use App\Models\Dokter;
             @endif
         </tbody>
     </table>
+    <button id="downloadButton" class="btn btn-primary">Download CSV</button>
+    <button id="downloadExcelButton" class="btn btn-success">Download Excel</button>
 </div>
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#tindakanPasien').DataTable();
@@ -154,6 +158,71 @@ use App\Models\Dokter;
     if(dokter == '-'){
         document.getElementById("btnCetak").disabled = true;
     }
+
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        var table = document.querySelector('.table');
+
+        var csvHeader = [];
+        var headers = table.querySelectorAll('th');
+        headers.forEach(function(header) {
+            csvHeader.push(header.textContent);
+        });
+
+        var csvData = [];
+        var rows = table.querySelectorAll('tbody tr');
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll('td');
+            cells.forEach(function(cell) {
+                rowData.push('"' + cell.textContent + '"');
+            });
+            csvData.push(rowData.join(','));
+        });
+
+        var csvContent = csvHeader.join(',') + '\n' + csvData.join('\n');
+
+        var blob = new Blob([csvContent], { type: 'text/csv' });
+
+        var url = window.URL.createObjectURL(blob);
+
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.csv';
+        document.body.appendChild(a);
+
+        a.click();
+        document.body.removeChild(a);
+    });
+
+    document.getElementById('downloadExcelButton').addEventListener('click', function() {
+        var table = document.querySelector('.table');
+
+        var workbook = XLSX.utils.book_new();
+
+        var wsData = [];
+
+        var headerRow = [];
+        var headers = table.querySelectorAll('th');
+        headers.forEach(function(header) {
+            headerRow.push(header.textContent);
+        });
+        wsData.push(headerRow);
+
+        var rows = table.querySelectorAll('tbody tr');
+        rows.forEach(function(row) {
+            var rowData = [];
+            var cells = row.querySelectorAll('td');
+            cells.forEach(function(cell) {
+                rowData.push(cell.textContent);
+            });
+            wsData.push(rowData);
+        });
+
+        var worksheet = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Data Tabel');
+
+        XLSX.writeFile(workbook, 'data.xlsx');
+    });
 </script>
 @endsection
 
