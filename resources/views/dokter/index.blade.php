@@ -33,6 +33,7 @@
                 <th>Status</th>
                 <th>Email</th>
                 <th>Username</th>
+                <th>No Telepon</th>
                 <th>Last Login</th>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
                     <th>Edit</th>
@@ -43,7 +44,7 @@
         <tbody>
             @if (count($dokterAktif) == 0)
             <tr>
-                <td class="text-center" colspan="8">Tidak ada Dokter yang terdata</td>
+                <td class="text-center" colspan="9">Tidak ada Dokter yang terdata</td>
             </tr>
             @else
             @foreach ($dokterAktif as $dokterAktif)
@@ -54,6 +55,7 @@
                 <td>{{ $dokterAktif->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
                 <td>{{ $dokterAktif->email }}</td>
                 <td>{{ $dokterAktif->username }}</td>
+                <td>{{ $dokterAktif->nomor_telp }}</td>
                 <td>{{ $dokterAktif->last_login }}</td>
 
                 @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -89,10 +91,11 @@
                 <th>Status</th>
                 <th>Email</th>
                 <th>Username</th>
+                <th>No Telepon</th>
                 <th>Last Login</th>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
                     <th>Edit</th>
-                    <th>Non Aktifkan</th>
+                    <th>Aktifkan</th>
                 @endif
             </tr>
             @endif
@@ -106,6 +109,7 @@
             <td>{{ $dokterNonAktif->status == 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
             <td>{{ $dokterNonAktif->email }}</td>
             <td>{{ $dokterNonAktif->username }}</td>
+            <td>{{ $dokterNonAktif->nomor_telp }}</td>
             <td>{{ $dokterNonAktif->last_login }}</td>
             @if(str_contains(Auth::user()->role, 'superadmin'))
                 <td class="text-center"><a href="{{ route('dokter.edit', $dokterNonAktif->user_id) }}"

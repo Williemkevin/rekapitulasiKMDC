@@ -27,6 +27,9 @@
         <label>username</label>
         <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" required value="{{ old('usernameAdmin') }}">
 
+        <label>nomor telepon</label>
+        <input type="number" name="nomorTeleponAdmin" class="form-control" id="nomorTeleponAdmin" required value="{{ old('nomorTeleponAdmin') }}">
+
         <label>Password</label>
         <input type="password" name="password" class="form-control" id="password" required value="{{ old('password') }}">
         @error('password')

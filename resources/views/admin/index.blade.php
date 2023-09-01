@@ -32,6 +32,7 @@
                 <th>Nama Lengkap</th>
                 <th>Email</th>
                 <th>Username</th>
+                <th>No Telepon</th>
                 <th>Last Login</th>
                 @if(str_contains(Auth::user()->role, 'superadmin'))
                     <th>Edit</th>
@@ -51,6 +52,7 @@
                 <td>{{ $adminAktif->nama_lengkap }}</td>
                 <td>{{ $adminAktif->email }}</td>
                 <td>{{ $adminAktif->username }}</td>
+                <td>{{ $adminAktif->nomor_telp }}</td>
                 <td>{{ $adminAktif->last_login }}</td>
 
                 @if(str_contains(Auth::user()->role, 'superadmin'))
@@ -84,10 +86,11 @@
             <th>Nama Lengkap</th>
             <th>Email</th>
             <th>Username</th>
+            <th>No Telepon</th>
             <th>Last Login</th>
             @if(str_contains(Auth::user()->role, 'superadmin'))
                 <th>Edit</th>
-                <th>Non Aktifkan</th>
+                <th>Aktifkan</th>
             @endif
         </tr>
         @endif
@@ -99,6 +102,7 @@
             <td>{{ $adminNonaktif->nama_lengkap }}</td>
             <td>{{ $adminNonaktif->email }}</td>
             <td>{{ $adminNonaktif->username }}</td>
+            <td>{{ $adminAktif->nomor_telp }}</td>
             <td>{{ $adminNonaktif->last_login }}</td>
             @if(str_contains(Auth::user()->role, 'superadmin'))
                 <td class="text-center"><a href="{{ route('admin.edit', $adminNonaktif->id) }}"

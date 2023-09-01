@@ -28,6 +28,9 @@
         <label>username</label>
         <input type="text" name="usernameDokter" class="form-control" id="usernameDokter" value= '{{$user->username}}' required>
 
+        <label>nomor telepon</label>
+        <input type="number" name="nomorTeleponDokter" class="form-control" id="nomorTeleponDokter" value= '{{$user->nomor_telp}}' required>
+
         <label>Singkatan</label>
         <input type="text" name="singkatan" class="form-control" id="singkatan" value='{{$dokter->kode_nama_dokter}}' required>
     </div>

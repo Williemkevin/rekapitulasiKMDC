@@ -110,6 +110,15 @@ use App\Models\Dokter;
     </li>
     @endif
 
+    @if (str_contains(Auth::user()->role, 'superadmin'))
+    <li class="{{ (request()->is('verification*')) ? 'menu-item active': 'menu-item'}}">
+      <a href="{{ url('verification') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-key"></i>
+        <div data-i18n="Analytics">Verification</div>
+      </a>
+    </li>
+    @endif
+
 
     <li class="menu-item">
       <form action="{{ route('logout') }}" method="POST">

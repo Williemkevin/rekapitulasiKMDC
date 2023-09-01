@@ -19,11 +19,14 @@ class DokterController extends Controller
     {
         $dokterAktif = Dokter::join('users', 'dokters.user_id', '=', 'users.id')
             ->select('dokters.*', 'users.*')
-            ->where('status', '1')->get();
+            ->where('status', '1')
+            ->where('users.verification', 'verification')
+            ->get();
         $dokterNonaktif = Dokter::join('users', 'dokters.user_id', '=', 'users.id')
             ->select('dokters.*', 'users.*')
-            ->where('status', '0')->get();
-
+            ->where('status', '0')
+            ->where('users.verification', 'verification')
+            ->get();
         return view('dokter.index', compact('dokterAktif', 'dokterNonaktif'));
     }
 
@@ -61,6 +64,7 @@ class DokterController extends Controller
         $user->email = $request->get('emailDokter');
         $user->username = $request->get('usernameDokter');
         $user->password = Hash::make($request->get('password'));
+        $user->nomor_telp = $request->get('nomorTeleponDokter');
         $user->role = "dokter";
         $user->created_at = now("Asia/Bangkok");
         $user->updated_at = now("Asia/Bangkok");
@@ -117,6 +121,7 @@ class DokterController extends Controller
         $user->name = $request->get('namaDokter');
         $user->email = $request->get('emailDokter');
         $user->username = $request->get('usernameDokter');
+        $user->nomor_telp = $request->get('nomorTeleponDokter');
         $user->updated_at = now("Asia/Bangkok");
         $user->save();
 

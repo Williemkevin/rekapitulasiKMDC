@@ -27,6 +27,10 @@
 
         <label>username</label>
         <input type="text" name="usernameAdmin" class="form-control" id="usernameAdmin" value='{{$user->username}}' required>
+
+        <label>nomor telepon</label>
+        <input type="number" name="nomorTeleponAdmin" class="form-control" id="nomorTeleponAdmin" value='{{$user->nomor_telp}}' required>
+
     </div>
     <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
 </form>

@@ -20,10 +20,14 @@ class AdminController extends Controller
     {
         $adminAktif = Admin::join('users', 'admins.user_id', '=', 'users.id')
             ->select('admins.*', 'users.*')
-            ->where('status', '1')->get();
+            ->where('status', '1')
+            ->where('users.verification', 'verification')
+            ->get();
         $adminNonaktif = Admin::join('users', 'admins.user_id', '=', 'users.id')
             ->select('admins.*', 'users.*')
-            ->where('status', '0')->get();
+            ->where('status', '0')
+            ->where('users.verification', 'verification')
+            ->get();
 
         return view('admin.index', compact('adminAktif', 'adminNonaktif'));
     }
@@ -59,6 +63,7 @@ class AdminController extends Controller
         $user = new User();
         $user->name = $request->get('namaAdmin');
         $user->email = $request->get('emailAdmin');
+        $user->nomor_telp = $request->get('nomorTeleponAdmin');
         $user->username = $request->get('usernameAdmin');
         $user->password = Hash::make($request->get('password'));
         $user->role = "admin";
@@ -115,6 +120,7 @@ class AdminController extends Controller
 
         $user->name = $request->get('namaAdmin');
         $user->email = $request->get('emailAdmin');
+        $user->nomor_telp = $request->get('nomorTeleponAdmin');
         $user->username = $request->get('usernameAdmin');
         $user->updated_at = now("Asia/Bangkok");
         $user->save();

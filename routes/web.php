@@ -7,6 +7,7 @@ use App\Http\Controllers\JenisTindakanController;
 use App\Http\Controllers\RekapFeeRSIAController;
 use App\Http\Controllers\RekapPendapatanController;
 use App\Http\Controllers\TindakanPasienController;
+use App\Http\Controllers\VerificationController;
 use App\Models\TindakanPasien;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,8 @@ Route::resource('diagnosa', DiagnosaController::class);
 Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
 Route::resource('rekapPendapatan', RekapPendapatanController::class);
+Route::resource('verification', VerificationController::class);
+
 
 Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
 Route::post('dokter/nonaktifkan', [DokterController::class, 'nonaktifkan'])->name('dokter.nonaktifkan');
@@ -61,6 +64,9 @@ Route::post('admin/nonaktifkan', [AdminController::class, 'nonaktifkan'])->name(
 
 Route::post('diagnosa/aktifkan', [DiagnosaController::class, 'aktifkan'])->name('diagnosa.aktifkan');
 Route::post('diagnosa/nonaktifkan', [DiagnosaController::class, 'nonaktifkan'])->name('diagnosa.nonaktifkan');
+
+Route::post('verification/terima', [VerificationController::class, 'terima'])->name('verification.terima');
+Route::post('verification/tolak', [VerificationController::class, 'tolak'])->name('verification.tolak');
 
 Auth::routes();
 
