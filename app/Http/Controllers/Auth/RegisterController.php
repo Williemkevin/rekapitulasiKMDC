@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\Dokter;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -52,7 +54,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -64,10 +66,47 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $role = ($data['role'] === 'admin') ? 'admin' : 'dokter';
+        // $validator = Validator::make($data), [
+        //     'password' => 'required|min:8',
+        // ], [
+        //     'password.required' => 'Password harus diisi.',
+        //     'password.min' => 'Password minimal harus terdiri dari 8 karakter.',
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect()->back()->withErrors($validator)->withInput();
+        // }
+
+        $user = new User();
+        $user->name = $data['nama'];
+        $user->email = $data['email'];
+        $user->username = $data['username'];
+        $user->password = Hash::make($data['password']);
+        $user->role = $role;
+        $user->created_at = now("Asia/Bangkok");
+        $user->updated_at = now("Asia/Bangkok");
+        $user->save();
+
+        if ($role == 'admin') {
+            $admin = new Admin();
+            $admin->nama_lengkap = $data['nama'];
+            $admin->status = "0";
+            $admin->user_id = $user->id;
+            $admin->created_at = now("Asia/Bangkok");
+            $admin->updated_at = now("Asia/Bangkok");
+            $user->admin()->save($admin);
+        } else {
+            $dokter = new Dokter();
+            $dokter->kode_nama_dokter = $data['namaSingkatan'];
+            $dokter->nama_lengkap = $data['nama'];
+            $dokter->status = "0";
+            $dokter->user_id = $user->id;
+            $dokter->created_at = now("Asia/Bangkok");
+            $dokter->updated_at = now("Asia/Bangkok");
+            $user->dokter()->save($dokter);
+        }
+        return redirect()->route('login')->with('status', 'New Admin  ' .  $admin->nama_lengkap . ' is already inserted');
+        return $user;
     }
 }

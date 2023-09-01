@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -26,13 +28,6 @@ class LoginController extends Controller
     {
         $role = Auth::user()->role;
         return '/';
-        // if ($role == 'admin') {
-        //     return '/admin';
-        // } else if ($role == 'superadmin') {
-        //     return '/super';
-        // } else if ($role == 'dokter') {
-        //     return '/dokter';
-        // }
     }
 
     /**
@@ -50,5 +45,11 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        $user->forceFill([
+            'last_login' => Carbon::now('Asia/Jakarta')->toDateTimeString(),
+        ])->save();
     }
 }

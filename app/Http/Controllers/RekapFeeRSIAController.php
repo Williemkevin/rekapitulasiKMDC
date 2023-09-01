@@ -13,13 +13,8 @@ use PhpParser\Node\Stmt\Echo_;
 
 class RekapFeeRSIAController extends Controller
 {
-    public function index($bulan = null, $tahun = null)
+    public function getDataRekapRSIA($bulan, $tahun)
     {
-        if ($bulan == null && $tahun == null) {
-            $bulan = Carbon::now()->month;
-            $tahun = Carbon::now()->year;
-        }
-
         $rekapFeeRSIA = JenisTindakanPasien::select(
             DB::raw("MONTHNAME(tanggal_kunjungan) as bulan"),
             DB::raw("YEAR(tanggal_kunjungan) as tahun"),
@@ -57,6 +52,18 @@ class RekapFeeRSIAController extends Controller
             ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
+        return ['rekapFeeRSIA' => $rekapFeeRSIA, 'total' => $total];
+    }
+    public function index($bulan = null, $tahun = null)
+    {
+        if ($bulan == null && $tahun == null) {
+            $bulan = Carbon::now()->month;
+            $tahun = Carbon::now()->year;
+        }
+
+        $dataRekap = $this->getDataRekapRSIA($bulan, $tahun);
+        $rekapFeeRSIA = $dataRekap['rekapFeeRSIA'];
+        $total = $dataRekap['total'];
 
         return view('rekapFeeRSIA.index', compact('rekapFeeRSIA', 'total'));
     }
@@ -65,18 +72,31 @@ class RekapFeeRSIAController extends Controller
     {
         $totalFee = $request->rekapFeeRSIA;
         $terbilang = $this->terbilang($totalFee);
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
-
+        $bulan = $request->bulanFeeRSIA;
+        $tahun = $request->tahunFeeRSIA;
+        if ($bulan == null && $tahun == null) {
+            $bulan = Carbon::now()->month;
+            $tahun = Carbon::now()->year;
+        }
         $namaPemimpin = DB::table('settings')->where('name', 'Nama pemimpin')->value('value');
         $namaPenerima = DB::table('settings')->where('name', 'Nama penerima Fee Rumah Sakit')->value('value');
 
-
         $mpdf = new Mpdf();
-        $html = view('rekapFeeRSIA.pdf', compact('totalFee', 'terbilang', 'bulan', 'tahun', 'namaPemimpin', 'namaPenerima'))->render();
-        $mpdf->WriteHTML($html);
+
+        $kuitansi = view('rekapFeeRSIA.pdf', compact('totalFee', 'terbilang', 'bulan', 'tahun', 'namaPemimpin', 'namaPenerima'))->render();
+        $mpdf->WriteHTML($kuitansi);
+
+        $dataRekap = $this->getDataRekapRSIA($bulan, $tahun);
+        $rekapFeeRSIA = $dataRekap['rekapFeeRSIA'];
+        $total = $dataRekap['total'];
+
+        $mpdf->AddPage('L', '', '', '', '', 5, 5, 5, 5);
+        $mpdf->SetAutoPageBreak(true, 10);
+        $rincian = view('rekapFeeRSIA.rincianFeeRsia', compact('rekapFeeRSIA', 'total'))->render();
+        $mpdf->WriteHTML($rincian);
+
         $tanggal = date("dmY");
-        $mpdf->Output($tanggal . 'kwitansiRSIA.pdf', 'D');
+        $mpdf->Output($tanggal . ' - KwitansiRSIA - ' . date('F', mktime(0, 0, 0, $bulan, 1)) . '.pdf', 'D');
     }
 
     public function terbilang($angka)

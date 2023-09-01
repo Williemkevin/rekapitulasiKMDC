@@ -38,10 +38,22 @@
     </div>
 
     <div style="float: right; margin-top: 7px; margin-right: 7px;">
+        @if (count($rekapFeeRSIA) != 0)
         <form action="{{url('print/feersia')}}">
             <input type="hidden" value="{{$total[0]->rsia_fee}}" name="rekapFeeRSIA">
+            <input type="hidden" value="<?=request()->segment(2)?>" name="bulanFeeRSIA">
+            <input type="hidden" value="<?=request()->segment(3)?>" name="tahunFeeRSIA">
+
             <button class="btn btn-info btn-sm"><i class="bx bx-printer"></i>Cetak</button>
         </form>
+        @else
+        <button class="btn btn-info btn-sm" id="showPopup"><i class="bx bx-printer"></i>Cetak</button>
+        <script>
+            document.getElementById('showPopup').addEventListener('click', function() {
+                alert('Tidak ada data rekapan Fee RSIA yang terdata.');
+            });
+        </script>
+        @endif
     </div>
 </div>
 
@@ -65,7 +77,7 @@
             </tr>
             @if (count($rekapFeeRSIA) == 0)
             <tr>
-                <td class="text-center" colspan="8">Tidak ada yang terdata</td>
+                <td class="text-center" colspan="8">Tidak ada data rekapan Fee RSIA yang terdata</td>
             </tr>
             @else
             @foreach ($rekapFeeRSIA as $rekapFee)

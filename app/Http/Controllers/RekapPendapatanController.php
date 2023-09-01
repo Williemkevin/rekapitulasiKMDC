@@ -18,13 +18,8 @@ class RekapPendapatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($bulan = null, $tahun = null, $dokterSelected = '-')
+    public function getDataRekapPendapatan($bulan, $tahun, $dokterSelected)
     {
-        if ($bulan == null && $tahun == null) {
-            $bulan = Carbon::now()->month;
-            $tahun = Carbon::now()->year;
-        }
-
         $dokter = ModelsDokter::select('id', 'nama_lengkap', 'kode_nama_dokter')->where('status', "1")->get();
         $dataTindakan = DB::table('jenis_tindakan_pasiens AS jtp')
             ->selectRaw("YEAR(jtp.tanggal_kunjungan) AS tahun, DATE_FORMAT(jtp.tanggal_kunjungan, '%d %M %Y') as 'tanggal_kunjungan', d.kode_nama_dokter AS 'namaDokter',
@@ -63,74 +58,23 @@ class RekapPendapatanController extends Controller
             ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
+        return ['dataTindakan' => $dataTindakan, 'dokter' => $dokter, 'total' => $total];
+    }
+    public function index($bulan = null, $tahun = null, $dokterSelected = '-')
+    {
+        if ($bulan == null && $tahun == null) {
+            $bulan = Carbon::now()->month;
+            $tahun = Carbon::now()->year;
+        }
+
+        $dataRekap = $this->getDataRekapPendapatan($bulan, $tahun, $dokterSelected);
+        $dataTindakan = $dataRekap['dataTindakan'];
+        $dokter = $dataRekap['dokter'];
+        $total = $dataRekap['total'];
+
         return view('rekappendapatan.index', compact('dataTindakan', 'dokter', 'total'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
     public function printPdf(Request $request)
     {
         $totalFee = $request->totalFeeDokter;
@@ -145,6 +89,19 @@ class RekapPendapatanController extends Controller
         $html = view('rekapPendapatan.pdf', compact('totalFee', 'terbilang', 'dokterSelect', 'bulan', 'tahun', 'namaPemimpin'))->render();
         $mpdf->WriteHTML($html);
         $tanggal = date("dmY");
+
+        $dataRekap = $this->getDataRekapPendapatan($bulan, $tahun, $request->idDokter);
+        $dataTindakan = $dataRekap['dataTindakan'];
+        $dokter = $dataRekap['dokter'];
+        $total = $dataRekap['total'];
+
+        $mpdf->AddPage('L', '', '', '', '', 5, 5, 5, 5);
+        $mpdf->SetAutoPageBreak(true, 10);
+        $rincian = view('rekapPendapatan.rincianFeePendapatan', compact('dataTindakan', 'dokter', 'total'))->render();
+        $mpdf->WriteHTML($rincian);
+
+
+
         $mpdf->Output($tanggal . 'kwitansi' . Str::upper($dokterSelect->kode_nama_dokter) . '.pdf', 'D');
     }
     public function terbilang($angka)

@@ -79,7 +79,8 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2">Welcome👋</h4>
-              <p class="mb-4">Please sign-in to your account    </p>
+              <span class="mb-4">Please sign-in to your account</span>
+              <br>
 
               <form id="formAuthentication" class="mb-3" method="POST" action="{{ route('login') }}">
                 @csrf
@@ -128,8 +129,11 @@
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Log In</button>
-                </div>
               </form>
+                  <br>
+                  <a href="{{ route('register') }}" class="btn btn-secondary d-grid w-100">Sign Up</a>
+                </div>
+              
             </div>
           </div>
           <!-- /Register -->
