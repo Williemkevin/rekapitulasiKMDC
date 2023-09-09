@@ -50,7 +50,9 @@
             <tr>
                 <th>No Kwitansi</th>
                 <th style="width: 5px;">:</th>
-                <th style="font-weight: normal;">KMDC-{{Str::upper(date('M', mktime(0, 0, 0, $bulan, 1)))}}-{{$tahun}}-{{Str::upper($dokterSelect->kode_nama_dokter)}}</th>
+                <th style="font-weight: normal;">
+                    KMDC-{{ $bulan === '-' ? "(Januari-Desember)" : Str::upper(date('M', mktime(0, 0, 0, $bulan, 1))) }}-{{ $tahun }}-{{ Str::upper($dokterSelect->kode_nama_dokter) }}
+                </th>                
             </tr>
             <tr>
                 <th>Tanggal</th>
