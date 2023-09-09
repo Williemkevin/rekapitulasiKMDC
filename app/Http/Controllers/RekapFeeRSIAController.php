@@ -36,7 +36,9 @@ class RekapFeeRSIAController extends Controller
             ->join('diagnosas as dig', 'dig.id', '=', 'jenis_tindakan_pasiens.diagnosa_id')
             ->join('pasiens as p', 'p.id', '=', 'jenis_tindakan_pasiens.pasien_id')
             ->join('fees AS f', 'f.id', '=', 'jenis_tindakan_pasiens.fees_id')
-            ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
+            ->when($bulan != '-', function ($query) use ($bulan) {
+                $query->whereRaw("MONTH(tanggal_kunjungan) = $bulan");
+            })
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
 
@@ -49,7 +51,9 @@ class RekapFeeRSIAController extends Controller
                 DB::raw('SUM((feersia/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS rsia_fee'),
                 DB::raw('SUM((feedokter/100) * (jenis_tindakan_pasiens.biaya_tindakan - jenis_tindakan_pasiens.biaya_bahan)) AS dokter_fee')
             )
-            ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
+            ->when($bulan != '-', function ($query) use ($bulan) {
+                $query->whereRaw("MONTH(tanggal_kunjungan) = $bulan");
+            })
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
         return ['rekapFeeRSIA' => $rekapFeeRSIA, 'total' => $total];

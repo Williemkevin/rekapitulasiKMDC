@@ -16,29 +16,44 @@
 
 <div>
     <div style="float: left;">
-        <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Bulanan:</label>
+        <label for="bulanan" style="float: left; margin-top: 7px; margin-right: 7px;">Bulan:</label>
         <select class="form-select" aria-label="Default select example" name="bulan" id="bulan" style="width: 150px; margin-bottom: 10px;">
         <?php
         $selected = false;
-        for ($year = 2023; $year <= date('Y'); $year++) {
-            $endMonth = ($year == date('Y')) ? date('m') : 12;
-            for ($month = 1; $month <= $endMonth; $month++) {
-                $optionValue = sprintf('%02d-%04d', $month, $year);
-
-                if (($month == request()->segment(2) && $year == request()->segment(3)) || ($month == date('m') && !$selected)) {
-                    echo "<option value=\"$optionValue\" selected>" . date('F Y', strtotime("$year-$month-01")). "</option>";
-                    $selected = true;
-                } else {
-                    echo "<option value=\"$optionValue\">" . date('F Y', strtotime("$year-$month-01")). "</option>";
-                }
+        echo "<option value='-'" . (request()->segment(2)  == '-' ? ' selected' : '') . ">All</option>";
+        for ($month = 1; $month <= 12; $month++) {
+            if ($month == request()->segment(2) || ($month == date('m') && !$selected && request()->segment(2)  != '-')) {
+                echo "<option value=\"$month\" selected>" . date('F', mktime(0, 0, 0, $month, 1)) . "</option>";
+                $selected = true;
+            } 
+            else{
+                echo "<option value=\"$month\">" . date('F', mktime(0, 0, 0, $month, 1)). "</option>";
             }
-          }
+        }
+        ?>
+        </select>
+    </div>
+
+    <div style="float: left;">
+        <label for="tahun" style="float: left; margin-top: 7px; margin-right: 7px;">Tahun:</label>
+        <select class="form-select" aria-label="Default select example" name="tahun" id="tahun" style="width: 150px; margin-bottom: 10px;">
+        <?php
+        $selected = false;
+        for ($year = 2022; $year <= date('Y'); $year++) {
+            // $optionValue = sprintf('%02d-%04d', $month, $year);
+            if (($year == request()->segment(3)) || ($year == date('y') && !$selected)) {
+                echo "<option value=\"$year\" selected>" . $year . "</option>";
+                $selected = true;
+            } else {
+                echo "<option value=\"$year\">" . $year . "</option>";
+            }
+        }
         ?>
         </select>
     </div>
 
     <div style="float: right; margin-top: 7px; margin-right: 7px;">
-        @if (count($rekapFeeRSIA) != 0)
+        @if (count($rekapFeeRSIA) != 0 )
         <form action="{{url('print/feersia')}}">
             <input type="hidden" value="{{$total[0]->rsia_fee}}" name="rekapFeeRSIA">
             <input type="hidden" value="<?=request()->segment(2)?>" name="bulanFeeRSIA">
@@ -117,9 +132,11 @@
 
 @section('script')
 <script>
-    $("#bulan").on('change', function() {
-        var bulanSelected = $("#bulan").val().split('-');
-        window.location.href = '/rekapfeersia/' + bulanSelected[0] + '/' + bulanSelected[1] ;
+    $("#bulan, #tahun").on('change', function() {
+        var bulanSelected = $("#bulan").val();
+        var tahunSelected = $("#tahun").val();
+        window.location.href = '/rekapfeersia/' + bulanSelected + '/' + tahunSelected ;
+
     });
 </script>
 

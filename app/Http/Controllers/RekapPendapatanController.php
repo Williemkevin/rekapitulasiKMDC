@@ -36,7 +36,9 @@ class RekapPendapatanController extends Controller
                     $query->where('jtp.dokter_id', $dokterSelected);
                 }
             })
-            ->whereRaw("MONTH(jtp.tanggal_kunjungan) = $bulan")
+            ->when($bulan != '-', function ($query) use ($bulan) {
+                $query->whereRaw("MONTH(tanggal_kunjungan) = $bulan");
+            })
             ->whereRaw("YEAR(jtp.tanggal_kunjungan) = $tahun")
             ->get();
 
@@ -55,7 +57,9 @@ class RekapPendapatanController extends Controller
                     $query->where('dokter_id', $dokterSelected);
                 }
             })
-            ->whereRaw("MONTH(tanggal_kunjungan) = $bulan")
+            ->when($bulan != '-', function ($query) use ($bulan) {
+                $query->whereRaw("MONTH(tanggal_kunjungan) = $bulan");
+            })
             ->whereRaw("YEAR(tanggal_kunjungan) = $tahun")
             ->get();
         return ['dataTindakan' => $dataTindakan, 'dokter' => $dokter, 'total' => $total];
