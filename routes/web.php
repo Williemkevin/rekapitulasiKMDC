@@ -7,6 +7,7 @@ use App\Http\Controllers\JenisTindakanController;
 use App\Http\Controllers\RekapFeeRSIAController;
 use App\Http\Controllers\RekapPendapatanController;
 use App\Http\Controllers\TindakanPasienController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use App\Models\TindakanPasien;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,8 @@ Route::resource('tindakanPasien', TindakanPasienController::class);
 Route::resource('rekapfeersia', RekapFeeRSIAController::class);
 Route::resource('rekapPendapatan', RekapPendapatanController::class);
 Route::resource('verification', VerificationController::class);
+Route::resource('user', UserController::class);
+
 
 
 Route::post('dokter/aktifkan', [DokterController::class, 'aktifkan'])->name('dokter.aktifkan');
