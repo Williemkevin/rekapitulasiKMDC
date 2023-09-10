@@ -81,7 +81,7 @@ class UserController extends Controller
             $dokter->updated_at = now("Asia/Bangkok");
             $user->dokter()->save($dokter);
         }
-        return redirect()->route('login');
+        return redirect()->route('login')->with('showModal', true);
     }
 
     /**

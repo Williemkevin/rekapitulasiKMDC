@@ -29,8 +29,25 @@
     />
 
     <title>Login Pages</title>
+    <style>
+      /* Animasi putaran satu kali pada ikon check saat load pertama */
+      @keyframes spin-once {
+          0% { transform: rotate(180deg); }
+          100% { transform: rotate(360deg); }
+      }
+
+      /* Terapkan animasi pada ikon check */
+      #check-icon {
+          animation: spin-once 0.5s linear; /* Ubah sesuai dengan kecepatan atau durasi putaran yang Anda inginkan */
+          animation-fill-mode: forwards; /* Tetapkan ikon pada posisi terakhir setelah animasi selesai */
+      }
+
+
+    </style>
 
     <meta name="description" content="" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
@@ -63,9 +80,38 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </head>
 
-  <body>
+  <body>  
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+      Buka Modal
+    </button>
+    
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Menunggu Konfirmasi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <span class="icon-container">
+              <i class='bx bx-check' style="font-size: 20rem; color:green;"  id="check-icon"></i>
+            </span>
+            <p class="mt-2" style="font-size: 1.3rem; color:black;">Akun berhasil didaftarkan. Mohon menunggu konfirmasi dari pihak rumah sakit.</p>
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
     <!-- Content -->
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -130,10 +176,9 @@
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Log In</button>
               </form>
-                  <br>
-                  <a href="{{ route('register') }}" class="btn btn-secondary d-grid w-100">Sign Up</a>
+                  <br> 
+                  <a href="{{ route('user.create') }}" class="btn btn-secondary d-grid w-100">Sign Up</a>
                 </div>
-              
             </div>
           </div>
           <!-- /Register -->
@@ -161,5 +206,17 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          // Periksa apakah flash data "showModal" ada
+          var showModal = {{ session('showModal') ? 'true' : 'false' }};
+          
+          // Jika showModal adalah true, tampilkan modal
+          if (showModal) {
+              $('#myModal').modal('show');
+          }
+      });
+      </script>
   </body>
 </html>
